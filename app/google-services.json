@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "573287645705",
+    "firebase_url": "https://mybookingroom-8e4e4.firebaseio.com",
+    "project_id": "mybookingroom-8e4e4",
+    "storage_bucket": "mybookingroom-8e4e4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:573287645705:android:7985d43579b9c233",
+        "android_client_info": {
+          "package_name": "com.example.meetingroombookingapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "573287645705-vooacfcc6r4vpu0q4lu27on9fooqtjks.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.meetingroombookingapp",
+            "certificate_hash": "735b63a3e8f4bdf54776e01baa2fc705b19e3099"
+          }
+        },
+        {
+          "client_id": "573287645705-6iaj2i2uj2gvfsue2pgf8nu1vglpj7dg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDq2VGrEkl_qjusmBjFf78brMXvi1IWcwQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "573287645705-6iaj2i2uj2gvfsue2pgf8nu1vglpj7dg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">MeetingRoomBookingApp</string>
+    <string name="title_activity_select_date_time">SelectDateTimeActivity</string>
+</resources>
