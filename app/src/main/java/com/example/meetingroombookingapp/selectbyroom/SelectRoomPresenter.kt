@@ -71,6 +71,10 @@ class SelectRoomPresenter(private val view: SelectRoomContract.View) : SelectRoo
     override fun fetchRoomByTime(floorSelect: String, date: Date, dateTimeStart: Date, dateTimeEnd: Date) {
 
         val timeList = mutableListOf<Booking>()
+
+
+
+
         val roomList = mutableListOf<RoomModel>()
 
         fireStoreListenerTime = queryBookingTime
