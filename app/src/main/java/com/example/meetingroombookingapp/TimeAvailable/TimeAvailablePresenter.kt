@@ -16,6 +16,7 @@ class TimeAvailablePresenter(private val view: TimeAvailableContract.View) : Tim
     private var fireStoreListener: ListenerRegistration? = null
     private val timeList = mutableListOf<Booking>()
 
+
     override fun fetchTimeBooked(roomId: String?, date: Date) {
 
         fireStoreListener = query

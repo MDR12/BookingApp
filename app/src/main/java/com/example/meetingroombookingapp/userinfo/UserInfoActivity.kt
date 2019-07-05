@@ -8,8 +8,8 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import com.example.meetingroombookingapp.MainActivity
 import com.example.meetingroombookingapp.R
+import com.example.meetingroombookingapp.home.HomeActivity
 import com.example.meetingroombookingapp.model.BookingModel
 import kotlinx.android.synthetic.main.activity_user_info.*
 import java.text.SimpleDateFormat
@@ -17,7 +17,8 @@ import java.text.SimpleDateFormat
 
 class UserInfoActivity : AppCompatActivity(), AddBookingContract.View {
 
-    private val presenter: AddBookingContract.Presenter = AddBookingPresenter(this)
+    private val presenter: AddBookingContract.Presenter =
+        AddBookingPresenter(this)
     private val PREFNAME = "MyPreferences"
 
     @SuppressLint("SimpleDateFormat")
@@ -32,8 +33,8 @@ class UserInfoActivity : AppCompatActivity(), AddBookingContract.View {
             val roomId = sp.getString("room_id", "")
             val roomName = sp.getString("room_name", "")
             val floor = sp.getString("floor", "")
-            val userName = tv_user_name.text.toString()
-            val userPhone = tv_user_phone.text.toString()
+            val userName = sp.getString("user_name", "No Name")
+            val userPhone = sp.getString("user_phone", "No Telephone")
             val comment = null
             val status = "B"
             val userCancelName = null
@@ -78,7 +79,7 @@ class UserInfoActivity : AppCompatActivity(), AddBookingContract.View {
 
                 presenter.addBookingToDataBase(allData)
 
-                val i = Intent(this, MainActivity::class.java)
+                val i = Intent(this, HomeActivity::class.java)
                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                 startActivity(i)
             }

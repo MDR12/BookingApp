@@ -9,7 +9,7 @@
     android:padding="32dp">
 
     <EditText
-        android:id="@+id/tv_user_name"
+        android:id="@+id/edt_user_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Name"
@@ -19,7 +19,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/tv_user_phone"
+        android:id="@+id/edt_user_phone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -28,7 +28,7 @@
         android:inputType="phone|number"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_user_name" />
+        app:layout_constraintTop_toBottomOf="@+id/edt_user_name" />
 
     <Button
         android:layout_width="wrap_content"
@@ -36,6 +36,6 @@
         android:layout_marginTop="16dp"
         android:text="ok"
         android:id="@+id/bt_add_username"
-        app:layout_constraintEnd_toEndOf="@+id/tv_user_phone"
-        app:layout_constraintTop_toBottomOf="@+id/tv_user_phone" />
+        app:layout_constraintEnd_toEndOf="@+id/edt_user_phone"
+        app:layout_constraintTop_toBottomOf="@+id/edt_user_phone" />
 </androidx.constraintlayout.widget.ConstraintLayout>

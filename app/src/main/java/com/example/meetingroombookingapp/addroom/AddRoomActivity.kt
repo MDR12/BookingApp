@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.meetingroombookingapp.R
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_add_room.*
-import kotlinx.android.synthetic.main.activity_main.bt_add
+import kotlinx.android.synthetic.main.activity_home.bt_add
 
 class AddRoomActivity : AppCompatActivity() {
 
