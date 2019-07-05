@@ -13,7 +13,6 @@ import java.util.*
 class BookByRoomActivity : AppCompatActivity(),BookByRoomContract.View {
 
     private val presenter: BookByRoomContract.Presenter = BookByRoomPresenter(this)
-    private val PREFNAME = "MyPreferences"
 
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {

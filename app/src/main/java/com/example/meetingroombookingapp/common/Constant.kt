@@ -26,6 +26,7 @@ object  Constant {
     const val TEXT_ROOM_USED = "Someone used the room at that time"
     const val TEXT_TIME_PARADOX = "Time start can't be less than time end"
     const val TEXT_TIME_NOT_PICK = "Please pick the time"
+    const val TEXT_TEL = "Tel."
 
     //Firebase collection
     const val FIREBASE_COLLECTION_MEETINGROOM = "MeetingRoom"
