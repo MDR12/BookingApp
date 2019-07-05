@@ -2,6 +2,7 @@ package com.example.meetingroombookingapp.selectbyroom
 
 import android.content.ContentValues.TAG
 import android.util.Log
+import com.example.meetingroombookingapp.common.Constant
 import com.example.meetingroombookingapp.model.Booking
 import com.example.meetingroombookingapp.model.RoomModel
 import com.google.firebase.firestore.EventListener
@@ -13,8 +14,8 @@ import java.util.*
 @Suppress("NAME_SHADOWING", "LABEL_NAME_CLASH")
 class SelectRoomPresenter(private val view: SelectRoomContract.View) : SelectRoomContract.Presenter {
 
-    private val queryRoom = FirebaseFirestore.getInstance().collection("MeetingRoom")
-    private val queryBookingTime = FirebaseFirestore.getInstance().collection("Booking")
+    private val queryRoom = FirebaseFirestore.getInstance().collection(Constant.FIREBASE_COLLECTION_MEETINGROOM)
+    private val queryBookingTime = FirebaseFirestore.getInstance().collection(Constant.FIREBASE_COLLECTION_BOOKING)
 
     private var fireStoreListenerRoom: ListenerRegistration? = null
     private var fireStoreListenerTime: ListenerRegistration? = null
@@ -71,9 +72,6 @@ class SelectRoomPresenter(private val view: SelectRoomContract.View) : SelectRoo
     override fun fetchRoomByTime(floorSelect: String, date: Date, dateTimeStart: Date, dateTimeEnd: Date) {
 
         val timeList = mutableListOf<Booking>()
-
-
-
 
         val roomList = mutableListOf<RoomModel>()
 
@@ -167,8 +165,8 @@ class SelectRoomPresenter(private val view: SelectRoomContract.View) : SelectRoo
                 if (dateTimeStart.after(arrTimeStart[i]) && dateTimeStart.before(arrTimeEnd[i])
                         || dateTimeEnd.after(arrTimeStart[i]) && dateTimeEnd.before(arrTimeEnd[i])) {
                     roomList.removeAll { it.id.equals(arrID[i]) }
-
-                     Log.d("TAG", "-------------------0000${arrID[i]}000----------------------------")
+//
+//                     Log.d("TAG", "-------------------0000${arrID[i]}000----------------------------")
                 }
             }
 
@@ -176,7 +174,7 @@ class SelectRoomPresenter(private val view: SelectRoomContract.View) : SelectRoo
     }
 
     override fun setFloorSpinner() {
-        val category = arrayOf("All", "7", "10", "11")
+        val category = arrayOf(Constant.FLOOR_ALL, Constant.FLOOR_11, Constant.FLOOR_10, Constant.FLOOR_9, Constant.FLOOR_8, Constant.FLOOR_7)
         view.onShowFloorSpinner(category)
     }
 

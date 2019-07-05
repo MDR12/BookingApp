@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.meetingroombookingapp.calendar.CalendarActivity
+import com.example.meetingroombookingapp.common.Constant
 import com.example.meetingroombookingapp.model.Booking
 import com.example.meetingroombookingapp.model.RoomModel
 import com.example.meetingroombookingapp.userinfo.UserInfoActivity
@@ -21,7 +22,6 @@ import java.util.*
 
 class SelectRoomActivity : AppCompatActivity(), SelectRoomContract.View, RoomRecyclerViewAdapter.OnRoomListener {
 
-    private val PREFNAME = "MyPreferences"
     private val presenter: SelectRoomContract.Presenter = SelectRoomPresenter(this)
     private lateinit var show: String
 
@@ -30,19 +30,19 @@ class SelectRoomActivity : AppCompatActivity(), SelectRoomContract.View, RoomRec
         super.onCreate(savedInstanceState)
         setContentView(com.example.meetingroombookingapp.R.layout.activity_select_room)
 
-        show = intent.getStringExtra("show")
+        show = intent.getStringExtra(Constant.EXTRA_SHOW)
 
-        val sp: SharedPreferences = this.getSharedPreferences(PREFNAME, Context.MODE_PRIVATE)
+        val sp: SharedPreferences = this.getSharedPreferences(Constant.PREF_NAME, Context.MODE_PRIVATE)
 
-        val datePick = sp.getString("date_pick", "")
-        val pickStartTime = sp.getString("pick_start_time", "")
-        val pickEndTime = sp.getString("pick_end_time", "")
+        val datePick = sp.getString(Constant.PREF_DATE_PICK, "")
+        val pickStartTime = sp.getString(Constant.PREF_PICK_START_TIME, "")
+        val pickEndTime = sp.getString(Constant.PREF_PICK_END_TIME, "")
 
-        val date = SimpleDateFormat("dd-MM-yyyy").parse(datePick)
+        val date = SimpleDateFormat(Constant.FORMAT_DATE).parse(datePick)
         val start = "$datePick $pickStartTime"
-        val dateTimeStart = SimpleDateFormat("dd-MM-yyyy HH:mm").parse(start)
+        val dateTimeStart = SimpleDateFormat(Constant.FORMAT_DATE_TIME).parse(start)
         val end = "$datePick $pickEndTime"
-        val dateTimeEnd = SimpleDateFormat("dd-MM-yyyy HH:mm").parse(end)
+        val dateTimeEnd = SimpleDateFormat(Constant.FORMAT_DATE_TIME).parse(end)
 
         presenter.setFloorSpinner()
 
@@ -82,11 +82,11 @@ class SelectRoomActivity : AppCompatActivity(), SelectRoomContract.View, RoomRec
     }
 
     override fun onRoomClick(id: String?, itemName: String?, itemFloor: String?) {
-        val sp = getSharedPreferences(PREFNAME, Context.MODE_PRIVATE)
+        val sp = getSharedPreferences(Constant.PREF_NAME, Context.MODE_PRIVATE)
         val editor = sp.edit()
-        editor.putString("room_id", id)
-        editor.putString("room_name", itemName)
-        editor.putString("floor", itemFloor)
+        editor.putString(Constant.PREF_ROOM_ID, id)
+        editor.putString(Constant.PREF_ROOM_NAME, itemName)
+        editor.putString(Constant.PREF_ROOM_FLOOR, itemFloor)
         editor.apply()
 
         if (show == "roomAll") {

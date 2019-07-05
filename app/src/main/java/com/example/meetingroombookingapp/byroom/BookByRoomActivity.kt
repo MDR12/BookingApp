@@ -6,6 +6,7 @@ import android.content.Context
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.meetingroombookingapp.R
+import com.example.meetingroombookingapp.common.Constant
 import kotlinx.android.synthetic.main.activity_book_by_room.*
 import java.util.*
 
@@ -30,9 +31,9 @@ class BookByRoomActivity : AppCompatActivity(),BookByRoomContract.View {
             date = "$dayOfMonth-"+(month + 1)+"-$year"
             date_picker.text = date
 
-            val sp = getSharedPreferences(PREFNAME , Context.MODE_PRIVATE)
+            val sp = getSharedPreferences(Constant.PREF_NAME , Context.MODE_PRIVATE)
             val editor = sp.edit()
-            editor.putString("date_pick", date)
+            editor.putString(Constant.PREF_DATE_PICK, date)
             editor.apply()
 
         }, year, month, day)

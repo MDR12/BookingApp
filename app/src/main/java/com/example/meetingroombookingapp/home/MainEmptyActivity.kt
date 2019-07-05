@@ -7,19 +7,18 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.annotation.Nullable
 import androidx.appcompat.app.AppCompatActivity
+import com.example.meetingroombookingapp.common.Constant
 
 @SuppressLint("Registered")
 class MainEmptyActivity : AppCompatActivity() {
 
-    private val PREFNAME = "MyPreferences"
-
     override fun onCreate(@Nullable savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val sp: SharedPreferences = this.getSharedPreferences(PREFNAME, Context.MODE_PRIVATE)
+        val sp: SharedPreferences = this.getSharedPreferences(Constant.PREF_NAME, Context.MODE_PRIVATE)
 
-            val userName = sp.getString("user_name", null)
-            val userPhone = sp.getString("user_phone", null)
+            val userName = sp.getString(Constant.PREF_USER_NAME, null)
+            val userPhone = sp.getString(Constant.PREF_USER_PHONE, null)
 
         val activityIntent: Intent
 

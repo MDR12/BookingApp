@@ -6,17 +6,17 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.meetingroombookingapp.R
+import com.example.meetingroombookingapp.common.Constant
+import com.example.meetingroombookingapp.common.Constant.TEXT_FILL_ALL_INFO
 import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : AppCompatActivity() {
-
-    private val PREFNAME = "MyPreferences"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        val sp = getSharedPreferences(PREFNAME , Context.MODE_PRIVATE)
+        val sp = getSharedPreferences(Constant.PREF_NAME , Context.MODE_PRIVATE)
 
         bt_register.setOnClickListener {
 
@@ -27,15 +27,15 @@ class LoginActivity : AppCompatActivity() {
             if (name.isNotEmpty() && phone.isNotEmpty() && team.isNotEmpty()){
 
                 val editor = sp.edit()
-                editor.putString("user_name", edt_user_name.text.toString())
-                editor.putString("user_phone", edt_user_phone.text.toString())
+                editor.putString(Constant.PREF_USER_NAME, edt_user_name.text.toString())
+                editor.putString(Constant.PREF_USER_PHONE, edt_user_phone.text.toString())
                 editor.apply()
 
                 val intent = Intent(this, HomeActivity::class.java)
                 startActivity(intent)
 
             }else{
-                Toast.makeText(this, "please fill all information", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, TEXT_FILL_ALL_INFO, Toast.LENGTH_SHORT).show()
             }
 
         }

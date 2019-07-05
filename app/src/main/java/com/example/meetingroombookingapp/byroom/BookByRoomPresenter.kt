@@ -1,6 +1,7 @@
 package com.example.meetingroombookingapp.byroom
 
 import android.annotation.SuppressLint
+import com.example.meetingroombookingapp.common.Constant
 import java.text.SimpleDateFormat
 
 class BookByRoomPresenter(private val view: BookByRoomContract.View) : BookByRoomContract.Presenter {
@@ -8,7 +9,7 @@ class BookByRoomPresenter(private val view: BookByRoomContract.View) : BookByRoo
     @SuppressLint("SimpleDateFormat")
     override fun getTimeCheckBox(date: String?) {
 
-        val date = SimpleDateFormat("dd-MM-yyyy").parse(date)
+        val date = SimpleDateFormat(Constant.FORMAT_DATE).parse(date)
 
 
     }

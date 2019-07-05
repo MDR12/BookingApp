@@ -12,6 +12,7 @@ import android.widget.Toast.makeText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.meetingroombookingapp.R
+import com.example.meetingroombookingapp.common.Constant
 import com.example.meetingroombookingapp.model.Booking
 import com.example.meetingroombookingapp.model.TimeInt
 import com.example.meetingroombookingapp.userinfo.UserInfoActivity
@@ -22,7 +23,6 @@ import java.util.*
 @Suppress("RECEIVER_NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 class TimeAvailableActivity : AppCompatActivity(), TimeAvailableContract.View {
 
-    private val PREFNAME = "MyPreferences"
     private val presenter: TimeAvailableContract.Presenter = TimeAvailablePresenter(this)
 
     @SuppressLint("SimpleDateFormat", "SetTextI18n")
@@ -30,12 +30,12 @@ class TimeAvailableActivity : AppCompatActivity(), TimeAvailableContract.View {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_time_available)
 
-        val sp: SharedPreferences = this.getSharedPreferences(PREFNAME, Context.MODE_PRIVATE)
+        val sp: SharedPreferences = this.getSharedPreferences(Constant.PREF_NAME, Context.MODE_PRIVATE)
         val editor = sp.edit()
 
-        val roomId = sp.getString("room_id", "")
-        val datePick = sp.getString("date_pick", "")
-        val date = SimpleDateFormat("dd-MM-yyyy").parse(datePick)
+        val roomId = sp.getString(Constant.PREF_ROOM_ID, "")
+        val datePick = sp.getString(Constant.PREF_DATE_PICK, "")
+        val date = SimpleDateFormat(Constant.FORMAT_DATE).parse(datePick)
 
         presenter.fetchTimeBooked(roomId, date)
 
@@ -62,16 +62,16 @@ class TimeAvailableActivity : AppCompatActivity(), TimeAvailableContract.View {
                 c.set(Calendar.HOUR_OF_DAY, h)
                 c.set(Calendar.MINUTE, m)
                 c.set(Calendar.SECOND,0)
-                val start = SimpleDateFormat("HH:mm").format(c.time)
+                val start = SimpleDateFormat(Constant.FORNAT_TIME).format(c.time)
                 pick_start_time.text = start
 
                 startTimeInt = TimeInt(h, m)
                 startTime = c.time
 
                 val mStart = "$datePick $start"
-                startTime = SimpleDateFormat("dd-MM-yyyy HH:mm").parse(mStart)
+                startTime = SimpleDateFormat(Constant.FORMAT_DATE_TIME).parse(mStart)
 
-                editor.putString("pick_start_time", start)
+                editor.putString(Constant.PREF_PICK_START_TIME, start)
                 pickStartCheck = "ok"
                 editor.apply()
 
@@ -87,16 +87,16 @@ class TimeAvailableActivity : AppCompatActivity(), TimeAvailableContract.View {
                 c.set(Calendar.HOUR_OF_DAY, h)
                 c.set(Calendar.MINUTE, m)
                 c.set(Calendar.SECOND,0)
-                val end = SimpleDateFormat("HH:mm").format(c.time)
+                val end = SimpleDateFormat(Constant.FORNAT_TIME).format(c.time)
                 pick_end_time.text = end
 
                 endTimeInt = TimeInt(h, m)
                 endTime = c.time
 
                 val mEnd = "$datePick $end"
-                endTime = SimpleDateFormat("dd-MM-yyyy HH:mm").parse(mEnd)
+                endTime = SimpleDateFormat(Constant.FORMAT_DATE_TIME).parse(mEnd)
 
-                editor.putString("pick_end_time", end)
+                editor.putString(Constant.PREF_PICK_END_TIME, end)
                 pickEndCheck = "ok"
                 editor.apply()
 
@@ -119,15 +119,15 @@ class TimeAvailableActivity : AppCompatActivity(), TimeAvailableContract.View {
                         startActivity(intent)
 
                     } else {
-                        makeText(this@TimeAvailableActivity, "Someone used the room at that time", LENGTH_SHORT).show()
+                        makeText(this@TimeAvailableActivity, Constant.TEXT_ROOM_USED, LENGTH_SHORT).show()
                     }
 
                 } else {
-                    makeText(this@TimeAvailableActivity, "Time start can't be less than time end", LENGTH_SHORT).show()
+                    makeText(this@TimeAvailableActivity, Constant.TEXT_TIME_PARADOX, LENGTH_SHORT).show()
                 }
 
             } else {
-                makeText(this@TimeAvailableActivity, "Please pick the time", LENGTH_SHORT).show()
+                makeText(this@TimeAvailableActivity, Constant.TEXT_TIME_NOT_PICK, LENGTH_SHORT).show()
             }
         }
     }

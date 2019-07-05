@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.meetingroombookingapp.R
+import com.example.meetingroombookingapp.common.Constant
 import com.example.meetingroombookingapp.model.Booking
 import java.text.SimpleDateFormat
 
@@ -41,7 +42,7 @@ class TimeAvailableAdapter(private val notesList: MutableList<Booking>)
         @SuppressLint("SetTextI18n", "SimpleDateFormat")
         fun bind(room: Booking){
 
-            val dateFormat = SimpleDateFormat("HH:mm")
+            val dateFormat = SimpleDateFormat(Constant.FORNAT_TIME)
             val dateTimeStart = dateFormat.format(room.date_time_start)
             val dateTimeEnd = dateFormat.format(room.date_time_end)
 

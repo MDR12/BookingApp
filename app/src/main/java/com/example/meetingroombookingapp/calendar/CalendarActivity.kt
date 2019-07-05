@@ -6,12 +6,12 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.meetingroombookingapp.TimeAvailable.TimeAvailableActivity
+import com.example.meetingroombookingapp.common.Constant
 import kotlinx.android.synthetic.main.activity_calendar.*
 
 
 class CalendarActivity : AppCompatActivity() {
 
-    private val PREFNAME = "MyPreferences"
 
     @SuppressLint("SimpleDateFormat")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,9 +27,9 @@ class CalendarActivity : AppCompatActivity() {
 //            val dateFormat = SimpleDateFormat("dd-MM-yyyy")
 //            val todayAsString = dateFormat.format(today)
 
-            val sp = getSharedPreferences(PREFNAME , Context.MODE_PRIVATE)
+            val sp = getSharedPreferences(Constant.PREF_NAME , Context.MODE_PRIVATE)
             val editor = sp.edit()
-            editor.putString("date_pick", date)
+            editor.putString(Constant.PREF_DATE_PICK, date)
             editor.apply()
 
             val intent = Intent(this, TimeAvailableActivity::class.java)
