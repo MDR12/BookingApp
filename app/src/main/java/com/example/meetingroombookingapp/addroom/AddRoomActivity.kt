@@ -14,7 +14,7 @@ class AddRoomActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_room)
 
-        var db = FirebaseFirestore.getInstance()
+        val db = FirebaseFirestore.getInstance()
 
         bt_add.setOnClickListener {
 
