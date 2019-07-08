@@ -46,36 +46,35 @@
 
         <Button
                 android:id="@+id/bt_view_room"
-                android:layout_width="185dp"
-                android:layout_height="70dp"
-                android:text="View room"
+                android:layout_width="150dp"
+                android:layout_height="60dp"
+                android:text="My booking"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
+                app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/bt_time"
+        android:layout_marginTop="16dp"/>
 
         <Button
                 android:id="@+id/bt_room"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="32dp"
-                android:layout_marginEnd="8dp"
                 android:text="book by room"
-                app:layout_constraintEnd_toEndOf="@+id/bt_view_room"
-                app:layout_constraintStart_toStartOf="@+id/bt_view_room"
-                app:layout_constraintTop_toBottomOf="@+id/bt_view_room"/>
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginEnd="8dp" android:layout_marginTop="8dp"
+                app:layout_constraintTop_toTopOf="parent"/>
 
         <Button
                 android:id="@+id/bt_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
                 android:text="book by time"
-                app:layout_constraintEnd_toEndOf="@+id/bt_view_room"
-                app:layout_constraintStart_toStartOf="@+id/bt_view_room"
-                app:layout_constraintTop_toBottomOf="@+id/bt_room"/>
+                android:layout_marginTop="8dp"
+                app:layout_constraintTop_toBottomOf="@+id/bt_room"
+                app:layout_constraintStart_toStartOf="@+id/bt_room"
+                app:layout_constraintEnd_toEndOf="@+id/bt_room"/>
 
         <Button
                 android:visibility="gone"

@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.util.Log
 import com.example.meetingroombookingapp.common.Constant
+import com.example.meetingroombookingapp.model.BookingDataModel
 import com.example.meetingroombookingapp.model.BookingModel
 import com.example.meetingroombookingapp.model.CheckboxAdapterDataModel
 import com.example.meetingroombookingapp.model.TimeModel
@@ -15,8 +16,9 @@ import java.util.*
 
 class BookByRoomPresenter(private val view: BookByRoomContract.View) : BookByRoomContract.Presenter {
 
-    private val queryTime = FirebaseFirestore.getInstance().collection(Constant.FIREBASE_COLLECTION_TIME)
-    private val queryBooking = FirebaseFirestore.getInstance().collection(Constant.FIREBASE_COLLECTION_BOOKING)
+    private val db = FirebaseFirestore.getInstance()
+    private val queryTime = db.collection(Constant.FIREBASE_COLLECTION_TIME)
+    private val queryBooking = db.collection(Constant.FIREBASE_COLLECTION_BOOKING)
     private var fireStoreListenerTime: ListenerRegistration? = null
     private var fireStoreListenerBooking: ListenerRegistration? = null
 
@@ -129,6 +131,19 @@ class BookByRoomPresenter(private val view: BookByRoomContract.View) : BookByRoo
             }
             view.onShowListCheckBox(timeCheckboxListData)
         }
+
+    }
+
+    override fun addBookingToDataBase(allData: BookingDataModel) {
+
+        db.collection("BookingModel")
+            .add(allData)
+            .addOnSuccessListener { documentReference ->
+                view.onShowSuccess()
+            }
+            .addOnFailureListener {
+                view.onShowFail()
+            }
 
     }
 

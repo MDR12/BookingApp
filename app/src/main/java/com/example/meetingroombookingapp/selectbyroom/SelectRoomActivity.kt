@@ -10,6 +10,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.meetingroombookingapp.R
 import com.example.meetingroombookingapp.byroom.BookByRoomActivity
 import com.example.meetingroombookingapp.common.Constant
 import com.example.meetingroombookingapp.model.BookingModel
@@ -28,7 +29,7 @@ class SelectRoomActivity : AppCompatActivity(), SelectRoomContract.View, RoomRec
     @SuppressLint("SimpleDateFormat")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(com.example.meetingroombookingapp.R.layout.activity_select_room)
+        setContentView(R.layout.activity_select_room)
 
         show = intent.getStringExtra(Constant.EXTRA_SHOW)
 
@@ -54,12 +55,10 @@ class SelectRoomActivity : AppCompatActivity(), SelectRoomContract.View, RoomRec
                 if (show == "roomAll") {
 //                    presenter.fetchRoomAll(spinner_floor.getItemAtPosition(position).toString())
                     presenter.setRoomList(spinner_floor.getItemAtPosition(position).toString(), roomList as MutableList<RoomModel>)
-
                 }
 
 //                else if (show == "roomByTime") {
 //                    presenter.fetchRoomByTime(spinner_floor.getItemAtPosition(position).toString(), date, dateTimeStart, dateTimeEnd)
-//
 //                }
             }
             override fun onNothingSelected(parent: AdapterView<*>) {

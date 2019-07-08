@@ -13,6 +13,7 @@ object  Constant {
     const val PREF_ROOM_ID = "room_id"
     const val PREF_ROOM_NAME = "room_name"
     const val PREF_ROOM_FLOOR = "floor"
+    const val PREF_TIME_SLOT = "time_slot"
 
     //Format
     const val FORMAT_DATE = "dd-MM-yyyy"
@@ -28,6 +29,8 @@ object  Constant {
     const val TEXT_TIME_PARADOX = "Time start can't be less than time end"
     const val TEXT_TIME_NOT_PICK = "Please pick the time"
     const val TEXT_TEL = "Tel."
+    const val TEXT_ADD_SUCCESS = "Adding time booking successfully"
+    const val TEXT_ADD_ERROR = "Error adding time booking"
 
     //Firebase collection
     const val FIREBASE_COLLECTION_MEETINGROOM = "MeetingRoom"

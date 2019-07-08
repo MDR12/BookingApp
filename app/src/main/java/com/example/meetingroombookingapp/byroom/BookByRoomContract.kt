@@ -1,5 +1,6 @@
 package com.example.meetingroombookingapp.byroom
 
+import com.example.meetingroombookingapp.model.BookingDataModel
 import com.example.meetingroombookingapp.model.BookingModel
 import com.example.meetingroombookingapp.model.CheckboxAdapterDataModel
 import com.example.meetingroombookingapp.model.TimeModel
@@ -9,6 +10,10 @@ interface BookByRoomContract {
 
     interface View{
         fun onShowListCheckBox(timeList: MutableList<CheckboxAdapterDataModel>)
+        fun onShowSuccess()
+        fun onShowFail()
+        fun onAddTimeSlot()
+        fun onRemoveTimeSlot()
 
     }
     interface Presenter{
@@ -21,5 +26,6 @@ interface BookByRoomContract {
             dateFormat: Date,
             roomId: String?
         )
+        fun addBookingToDataBase(allData: BookingDataModel)
     }
 }

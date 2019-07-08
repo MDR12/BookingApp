@@ -37,31 +37,49 @@ class CheckboxAdapter(private val timeList: MutableList<CheckboxAdapterDataModel
         return timeList[position].status
     }
 
-
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val time = timeList[position]
+
         if(holder is BookedViewHolder){
 
             holder.bind(time)
 
-        }else if(holder is AvailableViewHolder){
+        } else if (holder is AvailableViewHolder) {
 
             holder.bind(time)
-            holder.itemView.setOnClickListener {
 
-            }
+//            holder.setItemClickListener(object : AvailableViewHolder.ItemClickListener {
+//                override fun onItemClick(v: View, pos: Int) {
+//                    val myCheckBox = v as CheckBox
+//                    val currentTimeSlot = timeList[pos]
+//
+//                    if (myCheckBox.isChecked) {
+//                        currentTimeSlot.isSelected = true
+//                        checkedTeachers.add(currentTimeSlot)
+//                    } else if (!myCheckBox.isChecked) {
+//                        currentTimeSlot.isSelected = false
+//                        checkedTeachers.remove(currentTimeSlot)
+//                    }
+//                }
+//            })
+
+//            holder.itemView.setOnClickListener {
+//
+//            }
         }
     }
 
     class AvailableViewHolder internal constructor(view: View) : RecyclerView.ViewHolder(view), View.OnClickListener {
 
-        var mCheckbox: CheckBox = itemView.findViewById(R.id.checkbox_time)
+        var myCheckbox: CheckBox = itemView.findViewById(R.id.checkbox_time)
+        var itemID: Int? = null
 
         fun bind(item: CheckboxAdapterDataModel){
-            mCheckbox.text = item.timeText
+            myCheckbox.text = item.timeText
+            itemID = item.timeSlotID
         }
 
-        lateinit var myItemClickListener: ItemClickListener
+        private lateinit var myItemClickListener: ItemClickListener
 
         init {
             itemView.setOnClickListener(this)
@@ -71,29 +89,28 @@ class CheckboxAdapter(private val timeList: MutableList<CheckboxAdapterDataModel
             this.myItemClickListener = ic
         }
 
-        override fun onClick(v: View?) {
+        override fun onClick(v: View) {
             this.myItemClickListener.onItemClick(v, layoutPosition)
+        }
+
+        interface ItemClickListener {
+
+            fun onItemClick(v: View, pos: Int)
         }
 
     }
 
     class BookedViewHolder internal constructor(view: View) : RecyclerView.ViewHolder(view) {
 
-        var mUserName: TextView = itemView.findViewById(R.id.show_book_by_user_name)
-        var mUserPhone: TextView = itemView.findViewById(R.id.show_book_by_user_phone)
-        var mTime: TextView = itemView.findViewById(R.id.tv_time)
-        var itemID: Int? = null
+        private var mUserName: TextView = itemView.findViewById(R.id.show_book_by_user_name)
+        private var mUserPhone: TextView = itemView.findViewById(R.id.show_book_by_user_phone)
+        private var mTime: TextView = itemView.findViewById(R.id.tv_time)
 
         fun bind(item: CheckboxAdapterDataModel){
 
             mUserName.text = item.userName
             mUserPhone.text = item.userPhone
             mTime.text = item.timeText
-            itemID = item.timeSlotID
         }
-    }
-
-    interface ItemClickListener {
-        fun onItemClick(v: View?, pos: Int)
     }
 }

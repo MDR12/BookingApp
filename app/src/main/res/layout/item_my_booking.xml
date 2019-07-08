@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_my_room_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="Room: MeetingRoom 4"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_my_floor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="Floor: 11"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_my_room_name"
+        app:layout_constraintStart_toEndOf="@+id/tv_my_room_name"
+        app:layout_constraintTop_toTopOf="@+id/tv_my_room_name" />
+
+    <TextView
+        android:id="@+id/tv_my_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Date: 24-12-2019"
+        app:layout_constraintStart_toStartOf="@+id/tv_my_room_name"
+        app:layout_constraintTop_toBottomOf="@+id/tv_my_room_name" />
+
+    <TextView
+        android:id="@+id/tv_my_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="16dp"
+        android:text="Time 9:00 to 10:00"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/tv_my_date"
+        app:layout_constraintTop_toBottomOf="@+id/tv_my_date" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
