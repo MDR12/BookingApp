@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.meetingroombookingapp.R
 import com.example.meetingroombookingapp.model.RoomModel
 
-class RoomRecyclerViewAdapter(private val notesList: MutableList<RoomModel>, private var mOnRoomClickListener: OnRoomListener)
+class RoomRecyclerViewAdapter(private val roomList: MutableList<RoomModel>, private var mOnRoomClickListener: OnRoomListener)
     : RecyclerView.Adapter<RoomRecyclerViewAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -20,12 +20,12 @@ class RoomRecyclerViewAdapter(private val notesList: MutableList<RoomModel>, pri
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val room = notesList[position]
+        val room = roomList[position]
         holder.bind(room)
     }
 
     override fun getItemCount(): Int {
-        return notesList.size
+        return roomList.size
     }
 
     inner class ViewHolder internal constructor(view: View, private val onRoomClickListener: OnRoomListener?) : RecyclerView.ViewHolder(view), View.OnClickListener {

@@ -1,13 +1,13 @@
 package com.example.meetingroombookingapp.TimeAvailable
 
-import com.example.meetingroombookingapp.model.Booking
+import com.example.meetingroombookingapp.model.BookingModel
 import com.example.meetingroombookingapp.model.TimeInt
 import java.util.*
 
 interface TimeAvailableContract {
 
     interface View{
-        fun onShowTimeList(data: MutableList<Booking>)
+        fun onShowTimeList(data: MutableList<BookingModel>)
         fun onShowNoListTime()
     }
 

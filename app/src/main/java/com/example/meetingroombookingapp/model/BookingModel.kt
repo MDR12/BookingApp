@@ -3,21 +3,28 @@ package com.example.meetingroombookingapp.model
 import com.google.firebase.firestore.ServerTimestamp
 import java.util.*
 
-data class BookingModel(
+class BookingModel {
 
-        @ServerTimestamp
-        var date: Date?,
-        @ServerTimestamp
-        var date_time_start: Date?,
-        @ServerTimestamp
-        var date_time_end: Date?,
+    var id: String? = null
 
-        var user_name: String?,
-        var user_phone: String?,
-        var comment: String?,
-        var room_id: String?,
-        var status: String?,
-        var user_cancel_name: String?,
-        var user_cancel_phone: String?
+    @ServerTimestamp
+    var date_time_end: Date? = null
 
-        )
+    @ServerTimestamp
+    var date_time_start: Date? = null
+
+    @ServerTimestamp
+    var date: Date? = null
+
+    var booking_time: IntArray? = null
+
+    var user_name: String? = null
+    var user_phone: String? = null
+    var comment: String? = null
+    var room_id: String? = null
+    var status: String? = null
+    var user_cancel_name: String? = null
+    var user_cancel_phone: String? = null
+
+
+}

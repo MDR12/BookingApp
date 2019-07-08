@@ -1,6 +1,6 @@
 package com.example.meetingroombookingapp.userinfo
 
-import com.example.meetingroombookingapp.model.BookingModel
+import com.example.meetingroombookingapp.model.BookingDataModel
 
 interface AddBookingContract {
 
@@ -10,6 +10,6 @@ interface AddBookingContract {
     }
 
     interface Presenter{
-        fun addBookingToDataBase(allData: BookingModel)
+        fun addBookingToDataBase(allData: BookingDataModel)
     }
 }

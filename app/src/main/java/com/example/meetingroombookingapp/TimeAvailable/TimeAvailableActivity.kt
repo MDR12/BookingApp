@@ -13,7 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.meetingroombookingapp.R
 import com.example.meetingroombookingapp.common.Constant
-import com.example.meetingroombookingapp.model.Booking
+import com.example.meetingroombookingapp.model.BookingModel
 import com.example.meetingroombookingapp.model.TimeInt
 import com.example.meetingroombookingapp.userinfo.UserInfoActivity
 import kotlinx.android.synthetic.main.activity_time_available.*
@@ -132,7 +132,7 @@ class TimeAvailableActivity : AppCompatActivity(), TimeAvailableContract.View {
         }
     }
 
-    override fun onShowTimeList(data: MutableList<Booking>) {
+    override fun onShowTimeList(data: MutableList<BookingModel>) {
 
         val adapt = TimeAvailableAdapter(data)
         tv_text.visibility = View.GONE

@@ -1,15 +1,15 @@
 package com.example.meetingroombookingapp.userinfo
 
-import com.example.meetingroombookingapp.model.BookingModel
+import com.example.meetingroombookingapp.model.BookingDataModel
 import com.google.firebase.firestore.FirebaseFirestore
 
 class AddBookingPresenter(private val view: AddBookingContract.View) : AddBookingContract.Presenter {
 
     var db = FirebaseFirestore.getInstance()
 
-    override fun addBookingToDataBase(allData: BookingModel) {
+    override fun addBookingToDataBase(allData: BookingDataModel) {
 
-        db.collection("Booking")
+        db.collection("BookingModel")
                 .add(allData)
                 .addOnSuccessListener { documentReference ->
                     view.onShowSuccess()

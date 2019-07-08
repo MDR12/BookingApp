@@ -2,7 +2,8 @@ package com.example.meetingroombookingapp.TimeAvailable
 
 import android.content.ContentValues
 import android.util.Log
-import com.example.meetingroombookingapp.model.Booking
+import com.example.meetingroombookingapp.common.Constant
+import com.example.meetingroombookingapp.model.BookingModel
 import com.example.meetingroombookingapp.model.TimeInt
 import com.google.firebase.firestore.EventListener
 import com.google.firebase.firestore.FirebaseFirestore
@@ -12,9 +13,9 @@ import java.util.*
 
 class TimeAvailablePresenter(private val view: TimeAvailableContract.View) : TimeAvailableContract.Presenter {
 
-    private val query = FirebaseFirestore.getInstance().collection("Booking")
+    private val query = FirebaseFirestore.getInstance().collection(Constant.FIREBASE_COLLECTION_BOOKING)
     private var fireStoreListener: ListenerRegistration? = null
-    private val timeList = mutableListOf<Booking>()
+    private val timeList = mutableListOf<BookingModel>()
 
 
     override fun fetchTimeBooked(roomId: String?, date: Date) {
@@ -32,7 +33,7 @@ class TimeAvailablePresenter(private val view: TimeAvailableContract.View) : Tim
                     if (documentSnapshots != null) {
                         timeList.clear()
                         for (doc in documentSnapshots) {
-                            val room = doc.toObject(Booking::class.java)
+                            val room = doc.toObject(BookingModel::class.java)
                             room.id = doc.id
                             timeList.add(room)
                         }

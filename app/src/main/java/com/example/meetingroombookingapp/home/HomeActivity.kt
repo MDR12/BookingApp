@@ -24,8 +24,9 @@ class HomeActivity : AppCompatActivity() {
 
         val name = sp.getString(Constant.PREF_USER_NAME, "")
         val phone = sp.getString(Constant.PREF_USER_PHONE, "")
+        val team = sp.getString(Constant.PREF_USER_TEAM, "")
 
-        tv_show_user_name.text = "Hi, $name"
+        tv_show_user_name.text = "Hi, $name From $team"
         tv_show_user_phone.text = "Tel. $phone"
 
         bt_room.setOnClickListener {
@@ -47,6 +48,11 @@ class HomeActivity : AppCompatActivity() {
         bt_view_room.setOnClickListener {
 //            val intent = Intent(this, ViewRoomActivity::class.java)
 //            startActivity(intent)
+        }
+
+        bt_logout.setOnClickListener {
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
         }
         
 

@@ -3,7 +3,7 @@ package com.example.meetingroombookingapp.selectbyroom
 import android.content.ContentValues.TAG
 import android.util.Log
 import com.example.meetingroombookingapp.common.Constant
-import com.example.meetingroombookingapp.model.Booking
+import com.example.meetingroombookingapp.model.BookingModel
 import com.example.meetingroombookingapp.model.RoomModel
 import com.google.firebase.firestore.EventListener
 import com.google.firebase.firestore.FirebaseFirestore
@@ -20,64 +20,12 @@ class SelectRoomPresenter(private val view: SelectRoomContract.View) : SelectRoo
     private var fireStoreListenerRoom: ListenerRegistration? = null
     private var fireStoreListenerTime: ListenerRegistration? = null
 
-    override fun fetchRoomAll(floorSelect: String) {
-
-        if (floorSelect == "All") {
-            fireStoreListenerRoom = queryRoom
-                    .orderBy("name", Query.Direction.ASCENDING)
-                    .addSnapshotListener(EventListener { documentSnapshots, e ->
-                        if (e != null) {
-                            Log.e(TAG, "Listen failed!", e)
-                            return@EventListener
-                        }
-
-                        val roomList = mutableListOf<RoomModel>()
-
-                        if (documentSnapshots != null) {
-                            for (doc in documentSnapshots) {
-                                val room = doc.toObject(RoomModel::class.java)
-                                room.id = doc.id
-                                roomList.add(room)
-                            }
-                        }
-
-                        view.onShowRoomList(roomList)
-                    })
-
-        } else {
-
-            fireStoreListenerRoom = queryRoom
-                    .orderBy("name", Query.Direction.ASCENDING)
-                    .whereEqualTo("floor", floorSelect.toInt())
-                    .addSnapshotListener(EventListener { documentSnapshots, e ->
-                        if (e != null) {
-                            Log.e(TAG, "Listen failed!", e)
-                            return@EventListener
-                        }
-
-                        val roomList = mutableListOf<RoomModel>()
-
-                        if (documentSnapshots != null) {
-                            for (doc in documentSnapshots) {
-                                val room = doc.toObject(RoomModel::class.java)
-                                room.id = doc.id
-                                roomList.add(room)
-                            }
-                        }
-                        view.onShowRoomList(roomList)
-                    })
-        }
-    }
-
-    override fun fetchRoomByTime(floorSelect: String, date: Date, dateTimeStart: Date, dateTimeEnd: Date) {
-
-        val timeList = mutableListOf<Booking>()
+    override fun getRoomFromFirebase(): List<RoomModel> {
 
         val roomList = mutableListOf<RoomModel>()
 
-        fireStoreListenerTime = queryBookingTime
-                .whereEqualTo("date", date)
-                .orderBy("date_time_start", Query.Direction.ASCENDING)
+        fireStoreListenerRoom = queryRoom
+                .orderBy("name", Query.Direction.ASCENDING)
                 .addSnapshotListener(EventListener { documentSnapshots, e ->
                     if (e != null) {
                         Log.e(TAG, "Listen failed!", e)
@@ -85,71 +33,159 @@ class SelectRoomPresenter(private val view: SelectRoomContract.View) : SelectRoo
                     }
 
                     if (documentSnapshots != null) {
-                        timeList.clear()
+                        roomList.clear()
                         for (doc in documentSnapshots) {
-                            val book = doc.toObject(Booking::class.java)
-                            book.id = doc.id
-                            timeList.add(book)
+                            val room = doc.toObject(RoomModel::class.java)
+                            room.id = doc.id
+                            roomList.add(room)
                         }
                     }
                 })
 
-        if (floorSelect == "All") {
-            fireStoreListenerRoom = queryRoom
-                    .orderBy("name", Query.Direction.ASCENDING)
-                    .addSnapshotListener(EventListener { documentSnapshots, e ->
-                        if (e != null) {
-                            Log.e(TAG, "Listen failed!", e)
-                            return@EventListener
-                        }
+        return roomList
 
-                        if (documentSnapshots != null) {
-                            roomList.clear()
-                            for (doc in documentSnapshots) {
-                                val room = doc.toObject(RoomModel::class.java)
-                                room.id = doc.id
-                                roomList.add(room)
-                            }
+    }
 
-                            if (timeList.size != 0) {
-                                view.onShowRoomList(checkRoomAvaliable(roomList, timeList, dateTimeStart, dateTimeEnd))
-                            } else {
-                                view.onShowRoomList(roomList)
-                            }
+    override fun setRoomList(floorSelect: String, roomList: MutableList<RoomModel>) {
 
-                        }
-                    })
-
+        if (floorSelect == "All"){
+            view.onShowRoomList(roomList)
         } else {
-            fireStoreListenerRoom = queryRoom
-                    .orderBy("name", Query.Direction.ASCENDING)
-                    .whereEqualTo("floor", floorSelect.toInt())
-                    .addSnapshotListener(EventListener { documentSnapshots, e ->
-                        if (e != null) {
-                            Log.e(TAG, "Listen failed!", e)
-                            return@EventListener
-                        }
-
-                        if (documentSnapshots != null) {
-                            roomList.clear()
-                            for (doc in documentSnapshots) {
-                                val room = doc.toObject(RoomModel::class.java)
-                                room.id = doc.id
-                                roomList.add(room)
-                            }
-
-                            if (timeList.size != 0) {
-                                view.onShowRoomList(checkRoomAvaliable(roomList, timeList, dateTimeStart, dateTimeEnd))
-                            } else {
-                                view.onShowRoomList(roomList)
-                            }
-                        }
-                    })
+            val newList = roomList.filter { it.floor == floorSelect.toInt() }
+            view.onShowRoomList(newList as MutableList<RoomModel>)
         }
 
     }
 
-    override fun checkRoomAvaliable(roomList: MutableList<RoomModel>, timeList: MutableList<Booking>, dateTimeStart: Date, dateTimeEnd: Date): MutableList<RoomModel> {
+    override fun fetchRoomAll(floorSelect: String) {
+
+//        if (floorSelect == "All") {
+//            fireStoreListenerRoom = queryRoom
+//                    .orderBy("name", Query.Direction.ASCENDING)
+//                    .addSnapshotListener(EventListener { documentSnapshots, e ->
+//                        if (e != null) {
+//                            Log.e(TAG, "Listen failed!", e)
+//                            return@EventListener
+//                        }
+//
+//                        val roomList = mutableListOf<RoomModel>()
+//
+//                        if (documentSnapshots != null) {
+//                            for (doc in documentSnapshots) {
+//                                val room = doc.toObject(RoomModel::class.java)
+//                                room.id = doc.id
+//                                roomList.add(room)
+//                            }
+//                        }
+//
+//                        view.onShowRoomList(roomList)
+//                    })
+//
+//        } else {
+//
+//            fireStoreListenerRoom = queryRoom
+//                    .orderBy("name", Query.Direction.ASCENDING)
+//                    .whereEqualTo("floor", floorSelect.toInt())
+//                    .addSnapshotListener(EventListener { documentSnapshots, e ->
+//                        if (e != null) {
+//                            Log.e(TAG, "Listen failed!", e)
+//                            return@EventListener
+//                        }
+//
+//                        val roomList = mutableListOf<RoomModel>()
+//
+//                        if (documentSnapshots != null) {
+//                            for (doc in documentSnapshots) {
+//                                val room = doc.toObject(RoomModel::class.java)
+//                                room.id = doc.id
+//                                roomList.add(room)
+//                            }
+//                        }
+//                        view.onShowRoomList(roomList)
+//                    })
+//        }
+    }
+
+    override fun fetchRoomByTime(floorSelect: String, date: Date, dateTimeStart: Date, dateTimeEnd: Date) {
+
+        val timeList = mutableListOf<BookingModel>()
+        val roomList = mutableListOf<RoomModel>()
+
+//        fireStoreListenerTime = queryBookingTime
+//                .whereEqualTo("date", date)
+//                .orderBy("date_time_start", Query.Direction.ASCENDING)
+//                .addSnapshotListener(EventListener { documentSnapshots, e ->
+//                    if (e != null) {
+//                        Log.e(TAG, "Listen failed!", e)
+//                        return@EventListener
+//                    }
+//
+//                    if (documentSnapshots != null) {
+//                        timeList.clear()
+//                        for (doc in documentSnapshots) {
+//                            val book = doc.toObject(BookingModel::class.java)
+//                            book.id = doc.id
+//                            timeList.add(book)
+//                        }
+//                    }
+//                })
+//
+//        if (floorSelect == "All") {
+//            fireStoreListenerRoom = queryRoom
+//                    .orderBy("name", Query.Direction.ASCENDING)
+//                    .addSnapshotListener(EventListener { documentSnapshots, e ->
+//                        if (e != null) {
+//                            Log.e(TAG, "Listen failed!", e)
+//                            return@EventListener
+//                        }
+//
+//                        if (documentSnapshots != null) {
+//                            roomList.clear()
+//                            for (doc in documentSnapshots) {
+//                                val room = doc.toObject(RoomModel::class.java)
+//                                room.id = doc.id
+//                                roomList.add(room)
+//                            }
+//
+//                            if (timeList.size != 0) {
+//                                view.onShowRoomList(checkRoomAvaliable(roomList, timeList, dateTimeStart, dateTimeEnd))
+//                            } else {
+//                                view.onShowRoomList(roomList)
+//                            }
+//
+//                        }
+//                    })
+//
+//        } else {
+//            fireStoreListenerRoom = queryRoom
+//                    .orderBy("name", Query.Direction.ASCENDING)
+//                    .whereEqualTo("floor", floorSelect.toInt())
+//                    .addSnapshotListener(EventListener { documentSnapshots, e ->
+//                        if (e != null) {
+//                            Log.e(TAG, "Listen failed!", e)
+//                            return@EventListener
+//                        }
+//
+//                        if (documentSnapshots != null) {
+//                            roomList.clear()
+//                            for (doc in documentSnapshots) {
+//                                val room = doc.toObject(RoomModel::class.java)
+//                                room.id = doc.id
+//                                roomList.add(room)
+//                            }
+//
+//                            if (timeList.size != 0) {
+//                                view.onShowRoomList(checkRoomAvaliable(roomList, timeList, dateTimeStart, dateTimeEnd))
+//                            } else {
+//                                view.onShowRoomList(roomList)
+//                            }
+//                        }
+//                    })
+//        }
+
+    }
+
+    override fun checkRoomAvaliable(roomList: MutableList<RoomModel>, timeList: MutableList<BookingModel>, dateTimeStart: Date, dateTimeEnd: Date): MutableList<RoomModel> {
 
         val arrTimeStart = arrayListOf<Date?>()
         val arrTimeEnd = arrayListOf<Date?>()

@@ -18,21 +18,28 @@ class LoginActivity : AppCompatActivity() {
 
         val sp = getSharedPreferences(Constant.PREF_NAME , Context.MODE_PRIVATE)
 
+        val name = sp.getString(Constant.PREF_USER_NAME, null)
+        val phone = sp.getString(Constant.PREF_USER_PHONE, null)
+        val team = sp.getString(Constant.PREF_USER_TEAM, null)
+
+        edt_user_name.setText(name)
+        edt_user_phone.setText(phone)
+        edt_user_team.setText(team)
+
         bt_register.setOnClickListener {
 
-            val name = edt_user_name.text.toString()
-            val phone = edt_user_phone.text.toString()
-            val team = edt_user_team.text.toString()
-
-            if (name.isNotEmpty() && phone.isNotEmpty() && team.isNotEmpty()){
+            if (edt_user_name.text.isNotEmpty() && edt_user_phone.text.isNotEmpty() && edt_user_team.text.isNotEmpty()) {
 
                 val editor = sp.edit()
                 editor.putString(Constant.PREF_USER_NAME, edt_user_name.text.toString())
                 editor.putString(Constant.PREF_USER_PHONE, edt_user_phone.text.toString())
+                editor.putString(Constant.PREF_USER_TEAM, edt_user_team.text.toString())
                 editor.apply()
 
-                val intent = Intent(this, HomeActivity::class.java)
-                startActivity(intent)
+                val i = Intent(this, HomeActivity::class.java)
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                startActivity(i)
+                finish()
 
             }else{
                 Toast.makeText(this, TEXT_FILL_ALL_INFO, Toast.LENGTH_SHORT).show()

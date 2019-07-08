@@ -9,6 +9,7 @@ object  Constant {
     const val PREF_PICK_END_TIME = "pick_end_time"
     const val PREF_USER_NAME = "user_name"
     const val PREF_USER_PHONE = "user_phone"
+    const val PREF_USER_TEAM = "user_team"
     const val PREF_ROOM_ID = "room_id"
     const val PREF_ROOM_NAME = "room_name"
     const val PREF_ROOM_FLOOR = "floor"
@@ -31,6 +32,7 @@ object  Constant {
     //Firebase collection
     const val FIREBASE_COLLECTION_MEETINGROOM = "MeetingRoom"
     const val FIREBASE_COLLECTION_BOOKING = "Booking"
+    const val FIREBASE_COLLECTION_TIME = "Time"
 
     //Floor
     const val FLOOR_ALL = "All"

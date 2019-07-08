@@ -9,24 +9,23 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.meetingroombookingapp.R
+import com.example.meetingroombookingapp.common.Constant
 import com.example.meetingroombookingapp.home.HomeActivity
-import com.example.meetingroombookingapp.model.BookingModel
+import com.example.meetingroombookingapp.model.BookingDataModel
 import kotlinx.android.synthetic.main.activity_user_info.*
 import java.text.SimpleDateFormat
 
 
 class UserInfoActivity : AppCompatActivity(), AddBookingContract.View {
 
-    private val presenter: AddBookingContract.Presenter =
-        AddBookingPresenter(this)
-    private val PREFNAME = "MyPreferences"
+    private val presenter: AddBookingContract.Presenter = AddBookingPresenter(this)
 
     @SuppressLint("SimpleDateFormat")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user_info)
 
-        val sp: SharedPreferences = this.getSharedPreferences(PREFNAME, Context.MODE_PRIVATE)
+        val sp: SharedPreferences = this.getSharedPreferences(Constant.PREF_NAME, Context.MODE_PRIVATE)
 
         bt_add_username.setOnClickListener {
 
@@ -50,7 +49,7 @@ class UserInfoActivity : AppCompatActivity(), AddBookingContract.View {
             val end = "$datePick $pickEndTime"
             val dateTimeEnd = SimpleDateFormat("dd-MM-yyyy HH:mm").parse(end)
 
-            val allData = BookingModel(
+            val allData = BookingDataModel(
                     date,
                     dateTimeStart,
                     dateTimeEnd,
@@ -65,7 +64,7 @@ class UserInfoActivity : AppCompatActivity(), AddBookingContract.View {
 
             val builder = AlertDialog.Builder(this)
 
-            builder.setTitle("Confirm Booking")
+            builder.setTitle("Confirm BookingModel")
             builder.setMessage(
                     "Name: $userName Tel.: $userPhone\n" +
                             "Room: $roomName Floor $floor\n" +
