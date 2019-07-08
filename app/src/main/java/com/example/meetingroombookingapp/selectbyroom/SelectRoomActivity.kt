@@ -14,9 +14,9 @@ import com.example.meetingroombookingapp.byroom.BookByRoomActivity
 import com.example.meetingroombookingapp.common.Constant
 import com.example.meetingroombookingapp.model.BookingModel
 import com.example.meetingroombookingapp.model.RoomModel
+import com.example.meetingroombookingapp.selectbyroom.adapter.RoomRecyclerViewAdapter
 import com.example.meetingroombookingapp.userinfo.UserInfoActivity
 import kotlinx.android.synthetic.main.activity_select_room.*
-import java.text.SimpleDateFormat
 import java.util.*
 
 
@@ -34,15 +34,15 @@ class SelectRoomActivity : AppCompatActivity(), SelectRoomContract.View, RoomRec
 
         val sp: SharedPreferences = this.getSharedPreferences(Constant.PREF_NAME, Context.MODE_PRIVATE)
 
-        val datePick = sp.getString(Constant.PREF_DATE_PICK, "")
-        val pickStartTime = sp.getString(Constant.PREF_PICK_START_TIME, "")
-        val pickEndTime = sp.getString(Constant.PREF_PICK_END_TIME, "")
+//        val datePick = sp.getString(Constant.PREF_DATE_PICK, "")
+//        val pickStartTime = sp.getString(Constant.PREF_PICK_START_TIME, "")
+//        val pickEndTime = sp.getString(Constant.PREF_PICK_END_TIME, "")
 
-        val date = SimpleDateFormat(Constant.FORMAT_DATE).parse(datePick)
-        val start = "$datePick $pickStartTime"
-        val dateTimeStart = SimpleDateFormat(Constant.FORMAT_DATE_TIME).parse(start)
-        val end = "$datePick $pickEndTime"
-        val dateTimeEnd = SimpleDateFormat(Constant.FORMAT_DATE_TIME).parse(end)
+//        val date = SimpleDateFormat(Constant.FORMAT_DATE).parse(datePick)
+//        val start = "$datePick $pickStartTime"
+//        val dateTimeStart = SimpleDateFormat(Constant.FORMAT_DATE_TIME).parse(start)
+//        val end = "$datePick $pickEndTime"
+//        val dateTimeEnd = SimpleDateFormat(Constant.FORMAT_DATE_TIME).parse(end)
 
         presenter.setFloorSpinner()
 
@@ -63,7 +63,10 @@ class SelectRoomActivity : AppCompatActivity(), SelectRoomContract.View, RoomRec
 //                }
             }
             override fun onNothingSelected(parent: AdapterView<*>) {
-                //Nothing
+                if (show == "roomAll") {
+//                    presenter.fetchRoomAll(spinner_floor.getItemAtPosition(position).toString())
+                    presenter.setRoomList("All", roomList as MutableList<RoomModel>)
+                }
             }
         }
     }

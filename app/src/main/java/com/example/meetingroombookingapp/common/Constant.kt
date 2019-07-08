@@ -42,6 +42,10 @@ object  Constant {
     const val FLOOR_8 = "8"
     const val FLOOR_7 = "7"
 
+    //view Type
+    const val TYPE_BOOKED = 0
+    const val TYPE_AVALIABLE = 1
+
 
 
 }

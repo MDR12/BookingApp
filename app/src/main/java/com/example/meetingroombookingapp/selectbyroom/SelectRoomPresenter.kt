@@ -57,55 +57,6 @@ class SelectRoomPresenter(private val view: SelectRoomContract.View) : SelectRoo
 
     }
 
-    override fun fetchRoomAll(floorSelect: String) {
-
-//        if (floorSelect == "All") {
-//            fireStoreListenerRoom = queryRoom
-//                    .orderBy("name", Query.Direction.ASCENDING)
-//                    .addSnapshotListener(EventListener { documentSnapshots, e ->
-//                        if (e != null) {
-//                            Log.e(TAG, "Listen failed!", e)
-//                            return@EventListener
-//                        }
-//
-//                        val roomList = mutableListOf<RoomModel>()
-//
-//                        if (documentSnapshots != null) {
-//                            for (doc in documentSnapshots) {
-//                                val room = doc.toObject(RoomModel::class.java)
-//                                room.id = doc.id
-//                                roomList.add(room)
-//                            }
-//                        }
-//
-//                        view.onShowRoomList(roomList)
-//                    })
-//
-//        } else {
-//
-//            fireStoreListenerRoom = queryRoom
-//                    .orderBy("name", Query.Direction.ASCENDING)
-//                    .whereEqualTo("floor", floorSelect.toInt())
-//                    .addSnapshotListener(EventListener { documentSnapshots, e ->
-//                        if (e != null) {
-//                            Log.e(TAG, "Listen failed!", e)
-//                            return@EventListener
-//                        }
-//
-//                        val roomList = mutableListOf<RoomModel>()
-//
-//                        if (documentSnapshots != null) {
-//                            for (doc in documentSnapshots) {
-//                                val room = doc.toObject(RoomModel::class.java)
-//                                room.id = doc.id
-//                                roomList.add(room)
-//                            }
-//                        }
-//                        view.onShowRoomList(roomList)
-//                    })
-//        }
-    }
-
     override fun fetchRoomByTime(floorSelect: String, date: Date, dateTimeStart: Date, dateTimeEnd: Date) {
 
         val timeList = mutableListOf<BookingModel>()

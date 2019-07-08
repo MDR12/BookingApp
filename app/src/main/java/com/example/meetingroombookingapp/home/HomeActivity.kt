@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.text.Html
 import androidx.appcompat.app.AppCompatActivity
 import com.example.meetingroombookingapp.R
 import com.example.meetingroombookingapp.addroom.AddRoomActivity
@@ -25,6 +26,8 @@ class HomeActivity : AppCompatActivity() {
         val name = sp.getString(Constant.PREF_USER_NAME, "")
         val phone = sp.getString(Constant.PREF_USER_PHONE, "")
         val team = sp.getString(Constant.PREF_USER_TEAM, "")
+
+        bt_logout.text = Html.fromHtml("<p><u>Edit Profile</u></p>")
 
         tv_show_user_name.text = "Hi, $name From $team"
         tv_show_user_phone.text = "Tel. $phone"

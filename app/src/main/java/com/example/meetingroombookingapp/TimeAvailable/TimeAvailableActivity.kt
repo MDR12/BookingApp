@@ -57,7 +57,7 @@ class TimeAvailableActivity : AppCompatActivity(), TimeAvailableContract.View {
 
         pick_start_time.setOnClickListener {
 
-            val tpd = TimePickerDialog(this, TimePickerDialog.OnTimeSetListener(function = { view, h, m ->
+            val tpd = TimePickerDialog(this, TimePickerDialog.OnTimeSetListener(function = { _, h, m ->
 
                 c.set(Calendar.HOUR_OF_DAY, h)
                 c.set(Calendar.MINUTE, m)

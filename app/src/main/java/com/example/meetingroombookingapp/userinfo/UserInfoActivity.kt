@@ -50,16 +50,13 @@ class UserInfoActivity : AppCompatActivity(), AddBookingContract.View {
             val dateTimeEnd = SimpleDateFormat("dd-MM-yyyy HH:mm").parse(end)
 
             val allData = BookingDataModel(
+                    roomId,
                     date,
+                0,
                     dateTimeStart,
                     dateTimeEnd,
                     userName,
-                    userPhone,
-                    comment,
-                    roomId,
-                    status,
-                    userCancelName,
-                    userCancelPhone
+                    userPhone
             )
 
             val builder = AlertDialog.Builder(this)

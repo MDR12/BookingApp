@@ -6,6 +6,7 @@ import android.util.Log
 import com.example.meetingroombookingapp.common.Constant
 import com.example.meetingroombookingapp.model.BookingModel
 import com.example.meetingroombookingapp.model.CheckboxAdapterDataModel
+import com.example.meetingroombookingapp.model.TimeModel
 import com.google.firebase.firestore.EventListener
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
@@ -20,9 +21,9 @@ class BookByRoomPresenter(private val view: BookByRoomContract.View) : BookByRoo
     private var fireStoreListenerBooking: ListenerRegistration? = null
 
     @SuppressLint("SimpleDateFormat")
-    override fun getTimeList(): MutableList<String> {
+    override fun getTimeList(): MutableList<TimeModel> {
 
-        val timeList = mutableListOf<String>()
+        val timeList = mutableListOf<TimeModel>()
 
         fireStoreListenerTime = queryTime
                 .orderBy("id", Query.Direction.ASCENDING)
@@ -34,8 +35,8 @@ class BookByRoomPresenter(private val view: BookByRoomContract.View) : BookByRoo
 
                     if (documentSnapshots != null) {
                         for (doc in documentSnapshots) {
-                            val room = doc["text"].toString()
-                            timeList.add(room)
+                            val time = doc.toObject(TimeModel::class.java)
+                            timeList.add(time)
                         }
                     }
                 })
@@ -48,7 +49,6 @@ class BookByRoomPresenter(private val view: BookByRoomContract.View) : BookByRoo
         val bookingList = mutableListOf<BookingModel>()
 
         fireStoreListenerBooking = queryBooking
-                .orderBy("text", Query.Direction.ASCENDING)
                 .addSnapshotListener(EventListener { documentSnapshots, e ->
                     if (e != null) {
                         Log.e(ContentValues.TAG, "Listen failed!", e)
@@ -68,55 +68,47 @@ class BookByRoomPresenter(private val view: BookByRoomContract.View) : BookByRoo
         return bookingList
     }
 
-//    override fun getBookListInDate(date: Date, roomId: String?): MutableList<CheckBoxModel> {
-//
-//        val bookListInDate= mutableListOf<CheckBoxModel>()
-//
-//        fireStoreListenerBooking = queryBooking
-//                .whereEqualTo("date", date)
-//                .whereEqualTo("room_id", roomId)
-//                .addSnapshotListener(EventListener { documentSnapshots, e ->
-//                    if (e != null) {
-//                        Log.e(ContentValues.TAG, "Listen failed!", e)
-//                        return@EventListener
-//                    }
-//
-//                    if (documentSnapshots != null) {
-//                        bookListInDate.clear()
-//
-//                        for (doc in documentSnapshots) {
-//                            val time: IntArray = doc["booking_time"] as IntArray
-//                            val name: String = doc["user_name"] as String
-//                            val phone: String = doc["user_phone"] as String
-//                            bookListInDate.add(CheckBoxModel(time, name, phone))
-//                        }
-//                    }
-//                })
-//
-//        return bookListInDate
-//    }
+    override fun fetchTimeCheckBox(
+        timeList: MutableList<TimeModel>,
+        bookingList: MutableList<BookingModel>,
+        dateFormat: Date,
+        roomId: String?
+    ) {
 
-    override fun fetchTimeCheckBox(timeList: MutableList<String>, bookingList: MutableList<BookingModel>, dateFormat: Date, roomId: String) {
-
-        val checkTimeDate = bookingList.filter { (it.date == dateFormat) && (it.room_id == roomId) }
-
+        val checkTimeDate =
+            bookingList.filter { it.date == dateFormat && it.room_id == roomId } as MutableList<BookingModel>
         val timeCheckboxListData = mutableListOf<CheckboxAdapterDataModel>()
-        val arrTimeSlot: IntArray? = null
 
         if (checkTimeDate.isNotEmpty()) {
 
-            //collect all booking time
-            for (i in 0..checkTimeDate.size) {
-                arrTimeSlot!!.plus(checkTimeDate[i].booking_time!!)
-            }
-
             //create checkbox data model
-            for (i in 0..timeList.size) {
-                if (i in arrTimeSlot!!) {
-                    val str = bookingList.filter { arrTimeSlot contentEquals it.booking_time!! }
-                    timeCheckboxListData.add(CheckboxAdapterDataModel(timeList[i], "Booked by " + str[5].toString(), "Tel. " + str[6].toString(), "x"))
+            for (i in 0 until timeList.size) {
+
+                var hasDateTimeBooking = bookingList.filter { it.time_booking == i }
+
+                if (hasDateTimeBooking.isNotEmpty()) {
+
+                    hasDateTimeBooking.size
+
+                    timeCheckboxListData.add(
+                        CheckboxAdapterDataModel(
+                            timeList[i].text,
+                            "Booked by " + hasDateTimeBooking[0].user_name,
+                            "Tel. " + hasDateTimeBooking[0].user_phone,
+                            hasDateTimeBooking[0].time_booking,
+                            Constant.TYPE_BOOKED
+                        )
+                    )
                 } else {
-                    timeCheckboxListData.add(CheckboxAdapterDataModel(timeList[i], "bob", null, "0"))
+                    timeCheckboxListData.add(
+                        CheckboxAdapterDataModel(
+                            timeList[i].text,
+                            null,
+                            null,
+                            i,
+                            Constant.TYPE_AVALIABLE
+                        )
+                    )
                 }
             }
 
@@ -125,7 +117,15 @@ class BookByRoomPresenter(private val view: BookByRoomContract.View) : BookByRoo
 
         } else {
             for (i in 0 until timeList.size) {
-                timeCheckboxListData.add(CheckboxAdapterDataModel(timeList[i], null, null, "0"))
+                timeCheckboxListData.add(
+                    CheckboxAdapterDataModel(
+                        timeList[i].text,
+                        null,
+                        null,
+                        i,
+                        Constant.TYPE_AVALIABLE
+                    )
+                )
             }
             view.onShowListCheckBox(timeCheckboxListData)
         }

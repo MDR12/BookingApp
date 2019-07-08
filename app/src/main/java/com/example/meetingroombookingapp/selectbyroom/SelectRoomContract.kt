@@ -13,7 +13,6 @@ interface SelectRoomContract {
     }
     interface Presenter{
         fun setFloorSpinner()
-        fun fetchRoomAll(floorSelect : String)
         fun fetchRoomByTime(floorSelect: String, date: Date, dateTimeStart: Date, dateTimeEnd: Date)
         fun checkRoomAvaliable(roomList: MutableList<RoomModel>, timeList: MutableList<BookingModel>, dateTimeStart: Date, dateTimeEnd: Date):  MutableList<RoomModel>
         fun getRoomFromFirebase(): List<RoomModel>
