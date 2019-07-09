@@ -1,4 +1,4 @@
-package com.example.meetingroombookingapp.selectbyroom
+package com.example.meetingroombookingapp.selectmeetingroom
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -15,8 +15,7 @@ import com.example.meetingroombookingapp.byroom.BookByRoomActivity
 import com.example.meetingroombookingapp.common.Constant
 import com.example.meetingroombookingapp.model.BookingModel
 import com.example.meetingroombookingapp.model.RoomModel
-import com.example.meetingroombookingapp.selectbyroom.adapter.RoomRecyclerViewAdapter
-import com.example.meetingroombookingapp.userinfo.UserInfoActivity
+import com.example.meetingroombookingapp.selectmeetingroom.adapter.RoomRecyclerViewAdapter
 import kotlinx.android.synthetic.main.activity_select_room.*
 import java.util.*
 
@@ -85,9 +84,9 @@ class SelectRoomActivity : AppCompatActivity(), SelectRoomContract.View, RoomRec
             startActivity(intent)
 
         } else if (show == "roomByTime") {
-
-            val intent = Intent(this, UserInfoActivity::class.java)
-            startActivity(intent)
+//
+//            val intent = Intent(this, UserInfoActivity::class.java)
+//            startActivity(intent)
 
         }
 

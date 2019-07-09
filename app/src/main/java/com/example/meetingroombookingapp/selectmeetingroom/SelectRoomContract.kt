@@ -1,4 +1,4 @@
-package com.example.meetingroombookingapp.selectbyroom
+package com.example.meetingroombookingapp.selectmeetingroom
 
 import com.example.meetingroombookingapp.model.BookingModel
 import com.example.meetingroombookingapp.model.RoomModel

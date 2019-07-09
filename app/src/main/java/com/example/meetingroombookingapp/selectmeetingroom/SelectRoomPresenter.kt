@@ -1,4 +1,4 @@
-package com.example.meetingroombookingapp.selectbyroom
+package com.example.meetingroombookingapp.selectmeetingroom
 
 import android.content.ContentValues.TAG
 import android.util.Log
@@ -15,10 +15,8 @@ import java.util.*
 class SelectRoomPresenter(private val view: SelectRoomContract.View) : SelectRoomContract.Presenter {
 
     private val queryRoom = FirebaseFirestore.getInstance().collection(Constant.FIREBASE_COLLECTION_MEETINGROOM)
-    private val queryBookingTime = FirebaseFirestore.getInstance().collection(Constant.FIREBASE_COLLECTION_BOOKING)
 
     private var fireStoreListenerRoom: ListenerRegistration? = null
-    private var fireStoreListenerTime: ListenerRegistration? = null
 
     override fun getRoomFromFirebase(): List<RoomModel> {
 

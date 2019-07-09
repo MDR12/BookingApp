@@ -7,7 +7,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.meetingroombookingapp.R
-import com.example.meetingroombookingapp.selectbyroom.SelectRoomActivity
+import com.example.meetingroombookingapp.selectmeetingroom.SelectRoomActivity
 import kotlinx.android.synthetic.main.activity_select_date_time.*
 import java.text.SimpleDateFormat
 import java.util.*

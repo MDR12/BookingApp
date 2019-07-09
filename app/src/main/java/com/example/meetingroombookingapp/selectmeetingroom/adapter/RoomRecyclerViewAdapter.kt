@@ -1,4 +1,4 @@
-package com.example.meetingroombookingapp.selectbyroom.adapter
+package com.example.meetingroombookingapp.selectmeetingroom.adapter
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater

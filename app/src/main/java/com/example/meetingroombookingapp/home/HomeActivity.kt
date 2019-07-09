@@ -11,7 +11,7 @@ import com.example.meetingroombookingapp.R
 import com.example.meetingroombookingapp.addroom.AddRoomActivity
 import com.example.meetingroombookingapp.common.Constant
 import com.example.meetingroombookingapp.mybooking.MyBookingActivity
-import com.example.meetingroombookingapp.selectbyroom.SelectRoomActivity
+import com.example.meetingroombookingapp.selectmeetingroom.SelectRoomActivity
 import com.example.meetingroombookingapp.selectbytime.SelectDateTimeActivity
 import kotlinx.android.synthetic.main.activity_home.*
 

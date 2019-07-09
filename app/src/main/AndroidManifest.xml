@@ -33,7 +33,7 @@
                 android:name=".calendar.CalendarActivity"
                 android:screenOrientation="portrait"/>
         <activity
-                android:name=".selectbyroom.SelectRoomActivity"
+                android:name=".selectmeetingroom.SelectRoomActivity"
                 android:screenOrientation="portrait"/>
         <activity
                 android:name=".addroom.AddRoomActivity"
