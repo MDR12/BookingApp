@@ -47,29 +47,10 @@ class CheckboxAdapter(private val timeList: MutableList<CheckboxAdapterDataModel
         } else if (holder is AvailableViewHolder) {
 
             holder.bind(time)
-
-//            holder.setItemClickListener(object : AvailableViewHolder.ItemClickListener {
-//                override fun onItemClick(v: View, pos: Int) {
-//                    val myCheckBox = v as CheckBox
-//                    val currentTimeSlot = timeList[pos]
-//
-//                    if (myCheckBox.isChecked) {
-//                        currentTimeSlot.isSelected = true
-//                        checkedTeachers.add(currentTimeSlot)
-//                    } else if (!myCheckBox.isChecked) {
-//                        currentTimeSlot.isSelected = false
-//                        checkedTeachers.remove(currentTimeSlot)
-//                    }
-//                }
-//            })
-
-//            holder.itemView.setOnClickListener {
-//
-//            }
         }
     }
 
-    class AvailableViewHolder internal constructor(view: View) : RecyclerView.ViewHolder(view), View.OnClickListener {
+    class AvailableViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
         var myCheckbox: CheckBox = itemView.findViewById(R.id.checkbox_time)
         var itemID: Int? = null
@@ -77,30 +58,16 @@ class CheckboxAdapter(private val timeList: MutableList<CheckboxAdapterDataModel
         fun bind(item: CheckboxAdapterDataModel){
             myCheckbox.text = item.timeText
             itemID = item.timeSlotID
+
+            myCheckbox.setOnCheckedChangeListener(null)
+            myCheckbox.isChecked = item.isCheck
+            myCheckbox.setOnCheckedChangeListener { buttonView, isChecked ->
+                item.isCheck = isChecked
+            }
         }
-
-        private lateinit var myItemClickListener: ItemClickListener
-
-        init {
-            itemView.setOnClickListener(this)
-        }
-
-        fun setItemClickListener(ic: ItemClickListener) {
-            this.myItemClickListener = ic
-        }
-
-        override fun onClick(v: View) {
-            this.myItemClickListener.onItemClick(v, layoutPosition)
-        }
-
-        interface ItemClickListener {
-
-            fun onItemClick(v: View, pos: Int)
-        }
-
     }
 
-    class BookedViewHolder internal constructor(view: View) : RecyclerView.ViewHolder(view) {
+    class BookedViewHolder (view: View) : RecyclerView.ViewHolder(view) {
 
         private var mUserName: TextView = itemView.findViewById(R.id.show_book_by_user_name)
         private var mUserPhone: TextView = itemView.findViewById(R.id.show_book_by_user_phone)
