@@ -134,17 +134,18 @@ class BookByRoomPresenter(private val view: BookByRoomContract.View) : BookByRoo
 
     }
 
-    override fun addBookingToDataBase(allData: BookingDataModel) {
+    override fun addBookingToDataBase(allData: MutableList<BookingDataModel>) {
 
-        db.collection("BookingModel")
-            .add(allData)
-            .addOnSuccessListener { documentReference ->
-                view.onShowSuccess()
-            }
-            .addOnFailureListener {
-                view.onShowFail()
-            }
-
+        for (i in allData){
+            db.collection("Booking")
+                    .add(i)
+//                    .addOnSuccessListener { documentReference ->
+//                        view.onShowSuccess()
+//                    }
+//                    .addOnFailureListener {
+//                        view.onShowFail()
+//                    }
+        }
     }
 
 }

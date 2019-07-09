@@ -18,6 +18,7 @@ import com.example.meetingroombookingapp.model.CheckboxAdapterDataModel
 import kotlinx.android.synthetic.main.activity_book_by_room.*
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 @Suppress("UNCHECKED_CAST", "NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 class BookByRoomActivity : AppCompatActivity(),BookByRoomContract.View {
@@ -25,7 +26,7 @@ class BookByRoomActivity : AppCompatActivity(),BookByRoomContract.View {
     private val presenter: BookByRoomContract.Presenter = BookByRoomPresenter(this)
 
     private lateinit var dateFormat: Date
-    private lateinit var arrTimePick: IntArray
+    private var timeSlotPick = mutableListOf<CheckboxAdapterDataModel>()
 
     @SuppressLint("SetTextI18n", "SimpleDateFormat")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -66,45 +67,57 @@ class BookByRoomActivity : AppCompatActivity(),BookByRoomContract.View {
 
             val roomId = sp.getString(Constant.PREF_ROOM_ID, null)
             val roomName = sp.getString(Constant.PREF_ROOM_NAME, null)
-            val floor = sp.getString(Constant.PREF_NAME, null)
+            val floor = sp.getString(Constant.PREF_ROOM_FLOOR, null)
             val userName = sp.getString(Constant.PREF_USER_NAME, null)
             val userPhone = sp.getString(Constant.PREF_USER_PHONE, null)
+
             val datePick = sp.getString(Constant.PREF_DATE_PICK, null)
-            val bookingTimeSlot = sp.getInt(Constant.PREF_TIME_SLOT, 99)
+            val date = SimpleDateFormat(Constant.FORMAT_DATE).parse(datePick)
 
-            val pickStartTime = sp.getString("pick_start_time", "")
-            val pickEndTime = sp.getString("pick_end_time", "")
+//            val pickStartTime = sp.getString("pick_start_time", "")
+//            val pickEndTime = sp.getString("pick_end_time", "")
 
-            val date = SimpleDateFormat("dd-MM-yyyy").parse(datePick)
-            val start = "$datePick $pickStartTime"
-            val dateTimeStart = SimpleDateFormat("dd-MM-yyyy HH:mm").parse(start)
-            val end = "$datePick $pickEndTime"
-            val dateTimeEnd = SimpleDateFormat("dd-MM-yyyy HH:mm").parse(end)
+//            val start = "$datePick $pickStartTime"
+//            val dateTimeStart = SimpleDateFormat("dd-MM-yyyy HH:mm").parse(start)
+//            val end = "$datePick $pickEndTime"
+//            val dateTimeEnd = SimpleDateFormat("dd-MM-yyyy HH:mm").parse(end)
 
-            val allData = BookingDataModel(
-                roomId,
-                date,
-                bookingTimeSlot,
-                dateTimeStart,
-                dateTimeEnd,
-                userName,
-                userPhone
-            )
+            var allData = mutableListOf<BookingDataModel>()
+            var timeText: ArrayList<String?> = ArrayList()
+            var checkList =  timeSlotPick.filter { it.isCheck }
 
-            if (datePick != null && arrTimePick.isNotEmpty()){
+            for (i in 0 until checkList.size) {
+
+                allData.add(i, BookingDataModel(
+                        date,
+                        roomId,
+                        userName,
+                        userPhone,
+                        checkList[i].timeSlotID
+
+                ))
+
+                timeText.add(checkList[i].timeText)
+            }
+
+            if (datePick != null && allData.isNotEmpty()) {
 
                 val builder = AlertDialog.Builder(this)
+                var str = "Name: $userName Tel.: $userPhone\n" +
+                        "Room: $roomName Floor $floor\n" +
+                        "Date: $datePick\n" +
+                        "Time slot you pick:\n"
 
-                builder.setTitle("Confirm BookingModel")
-                builder.setMessage(
-                    "Name: $userName Tel.: $userPhone\n" +
-                            "Room: $roomName Floor $floor\n" +
-                            "Date: $datePick\n" +
-                            "Time: $pickStartTime to $pickEndTime"
-                )
+                if (timeText != null) {
+                    for (element in timeText)
+                        str += "    $element \n"
+                }
 
-                builder.setPositiveButton("YES") { _, _ ->
-                    // Do something when user press the positive button
+                builder.setTitle("Confirm Booking")
+
+                builder.setMessage(str)
+                builder.setPositiveButton("Confirm Booking") { _, _ ->
+
                     Toast.makeText(applicationContext, "Adding your time booking", Toast.LENGTH_SHORT).show()
 
                     presenter.addBookingToDataBase(allData)
@@ -118,6 +131,7 @@ class BookByRoomActivity : AppCompatActivity(),BookByRoomContract.View {
 
                 val dialog: AlertDialog = builder.create()
                 dialog.show()
+
             }else{
                 Toast.makeText(this, Constant.TEXT_FILL_ALL_INFO, Toast.LENGTH_SHORT).show()
             }
@@ -126,21 +140,12 @@ class BookByRoomActivity : AppCompatActivity(),BookByRoomContract.View {
     }
 
     override fun onShowListCheckBox(timeList: MutableList<CheckboxAdapterDataModel>) {
-
-        val adapt = CheckboxAdapter(timeList, this)
-
+        timeSlotPick = timeList
+        val adapt = CheckboxAdapter(timeSlotPick, this)
         recyclerview_checkbox.apply {
             layoutManager = LinearLayoutManager(applicationContext)
             adapter = adapt
         }
-    }
-
-    override fun onRemoveTimeSlot() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun onAddTimeSlot() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun onShowSuccess() {

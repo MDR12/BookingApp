@@ -11,7 +11,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.meetingroombookingapp.R
 import com.example.meetingroombookingapp.common.Constant
 import com.example.meetingroombookingapp.home.HomeActivity
-import com.example.meetingroombookingapp.model.BookingDataModel
 import kotlinx.android.synthetic.main.activity_user_info.*
 import java.text.SimpleDateFormat
 
@@ -49,15 +48,15 @@ class UserInfoActivity : AppCompatActivity(), AddBookingContract.View {
             val end = "$datePick $pickEndTime"
             val dateTimeEnd = SimpleDateFormat("dd-MM-yyyy HH:mm").parse(end)
 
-            val allData = BookingDataModel(
-                    roomId,
-                    date,
-                0,
-                    dateTimeStart,
-                    dateTimeEnd,
-                    userName,
-                    userPhone
-            )
+//            val allData = BookingDataModel(
+//                    roomId,
+//                    date,
+//                0,
+//                    dateTimeStart,
+//                    dateTimeEnd,
+//                    userName,
+//                    userPhone
+//            )
 
             val builder = AlertDialog.Builder(this)
 
@@ -73,7 +72,7 @@ class UserInfoActivity : AppCompatActivity(), AddBookingContract.View {
                 // Do something when user press the positive button
                 Toast.makeText(applicationContext, "Adding your time booking", Toast.LENGTH_SHORT).show()
 
-                presenter.addBookingToDataBase(allData)
+                //presenter.addBookingToDataBase(allData)
 
                 val i = Intent(this, HomeActivity::class.java)
                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
