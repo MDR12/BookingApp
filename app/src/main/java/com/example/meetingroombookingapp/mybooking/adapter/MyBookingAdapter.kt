@@ -7,11 +7,9 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.meetingroombookingapp.R
-import com.example.meetingroombookingapp.common.Constant
-import com.example.meetingroombookingapp.model.BookingModel
-import java.text.SimpleDateFormat
+import com.example.meetingroombookingapp.model.MyBookingModel
 
-class MyBookingAdapter(private val bookingList: MutableList<BookingModel>): RecyclerView.Adapter<MyBookingAdapter.ViewHolder>() {
+class MyBookingAdapter(private val bookingList: MutableList<MyBookingModel>): RecyclerView.Adapter<MyBookingAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -29,7 +27,7 @@ class MyBookingAdapter(private val bookingList: MutableList<BookingModel>): Recy
         holder.bind(book)
     }
 
-    inner class ViewHolder internal constructor(view: View) : RecyclerView.ViewHolder(view) {
+    inner class ViewHolder (view: View) : RecyclerView.ViewHolder(view) {
 
         var mRoomNameView: TextView? = itemView.findViewById(R.id.tv_my_room_name)
         var mMyFloorView: TextView? = itemView.findViewById(R.id.tv_my_floor)
@@ -37,11 +35,11 @@ class MyBookingAdapter(private val bookingList: MutableList<BookingModel>): Recy
         var mTimeView: TextView? = itemView.findViewById(R.id.tv_my_time)
 
         @SuppressLint("SetTextI18n", "SimpleDateFormat")
-        fun bind(booking: BookingModel){
-            mRoomNameView?.text = "Room: Meeting Room6"//booking.room_name
-            mMyFloorView?.text = "Floor: 11"//booking.room_floor
-            mDateView?.text = "Date: "+ SimpleDateFormat(Constant.FORMAT_DATE).format(booking.date)
-            mTimeView?.text = "7:00 - 8:00"//booking.time_slot_text
+        fun bind(booking: MyBookingModel){
+            mRoomNameView?.text = "Room: " + booking.roomName
+            mMyFloorView?.text = "Floor: " + booking.roomFloor.toString()
+            mDateView?.text = "Date: "+ booking.dateText
+            mTimeView?.text = "Time: "+ booking.timeText
 
         }
 

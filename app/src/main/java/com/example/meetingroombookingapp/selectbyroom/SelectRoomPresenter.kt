@@ -138,24 +138,24 @@ class SelectRoomPresenter(private val view: SelectRoomContract.View) : SelectRoo
 
     override fun checkRoomAvaliable(roomList: MutableList<RoomModel>, timeList: MutableList<BookingModel>, dateTimeStart: Date, dateTimeEnd: Date): MutableList<RoomModel> {
 
-        val arrTimeStart = arrayListOf<Date?>()
-        val arrTimeEnd = arrayListOf<Date?>()
-        val arrID = arrayListOf<String?>()
-
-        for (time in timeList) {
-            arrTimeStart.add(time.date_time_start)
-            arrTimeEnd.add(time.date_time_end)
-            arrID.add(time.room_id)
-        }
-
-        for (i in arrTimeStart.indices) {
-                if (dateTimeStart.after(arrTimeStart[i]) && dateTimeStart.before(arrTimeEnd[i])
-                        || dateTimeEnd.after(arrTimeStart[i]) && dateTimeEnd.before(arrTimeEnd[i])) {
-                    roomList.removeAll { it.id.equals(arrID[i]) }
+//               val arrTimeStart = arrayListOf<Date?>()
+//        val arrTimeEnd = arrayListOf<Date?>()
+//        val arrID = arrayListOf<String?>()
 //
-//                     Log.d("TAG", "-------------------0000${arrID[i]}000----------------------------")
-                }
-            }
+//        for (time in timeList) {
+//            arrTimeStart.add(time.date_time_start)
+//            arrTimeEnd.add(time.date_time_end)
+//            arrID.add(time.room_id)
+//        }
+//
+//        for (i in arrTimeStart.indices) {
+//                if (dateTimeStart.after(arrTimeStart[i]) && dateTimeStart.before(arrTimeEnd[i])
+//                        || dateTimeEnd.after(arrTimeStart[i]) && dateTimeEnd.before(arrTimeEnd[i])) {
+//                    roomList.removeAll { it.id.equals(arrID[i]) }
+////
+////                     Log.d("TAG", "-------------------0000${arrID[i]}000----------------------------")
+//                }
+//            }
 
         return roomList
     }

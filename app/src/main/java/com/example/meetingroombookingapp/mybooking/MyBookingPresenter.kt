@@ -1,43 +1,103 @@
 package com.example.meetingroombookingapp.mybooking
 
-import android.content.ContentValues
+import android.annotation.SuppressLint
+import android.content.ContentValues.TAG
 import android.util.Log
 import com.example.meetingroombookingapp.common.Constant
 import com.example.meetingroombookingapp.model.BookingModel
-import com.google.firebase.firestore.EventListener
+import com.example.meetingroombookingapp.model.MyBookingModel
+import com.example.meetingroombookingapp.model.RoomModel
+import com.example.meetingroombookingapp.model.TimeModel
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.ListenerRegistration
+import com.google.firebase.firestore.Query
+import java.text.SimpleDateFormat
 
 class MyBookingPresenter(private val view: MyBookingContract.View): MyBookingContract.Presenter {
 
     private val db = FirebaseFirestore.getInstance()
-    private val queryBooking = db.collection(Constant.FIREBASE_COLLECTION_BOOKING)
-    private var fireStoreListenerBooking: ListenerRegistration? = null
 
-    override fun onGetMyBooking(userName: String?, userPhone: String?){
+    private val queryTime = db.collection(Constant.FIREBASE_COLLECTION_TIME)
+    private val queryBooking = db.collection(Constant.FIREBASE_COLLECTION_BOOKING)
+    private val queryRoom = db.collection(Constant.FIREBASE_COLLECTION_MEETINGROOM)
+
+    override fun onGetTimeList() {
+
+        val timeList = mutableListOf<TimeModel>()
+
+        queryTime
+                .orderBy("id", Query.Direction.ASCENDING)
+                .get().addOnSuccessListener {
+                    for (doc in it.documents) {
+                        val book = doc.toObject(TimeModel::class.java)
+                        if (book != null) {
+                            timeList.add(book)
+                        }
+                    }
+                    view.onGetTimeListDone(timeList)
+                }.addOnFailureListener { exception ->
+                    Log.d(TAG, "get failed with ", exception)
+                }
+    }
+
+    override fun onGetRoomList() {
+
+        val roomList = mutableListOf<RoomModel>()
+
+        queryRoom
+                .orderBy("name", Query.Direction.ASCENDING)
+                .get().addOnSuccessListener {
+                    for (doc in it.documents) {
+                        val book = doc.toObject(RoomModel::class.java)
+                        book?.id = doc.id
+                        if (book != null) {
+                            roomList.add(book)
+                        }
+                    }
+                    view.onGetRoomListDone(roomList)
+                }.addOnFailureListener { exception ->
+                    Log.d(TAG, "get failed with ", exception)
+                }
+    }
+
+    override fun onGetMyBooking(userName: String, userPhone: String) {
 
         val bookingList = mutableListOf<BookingModel>()
 
-        fireStoreListenerBooking = queryBooking
-                .whereEqualTo("user_name",userName)
-                .whereEqualTo("user_phone",userPhone)
-                .addSnapshotListener(EventListener { documentSnapshots, e ->
-                    if (e != null) {
-                        Log.e(ContentValues.TAG, "Listen failed!", e)
-                        return@EventListener
-                    }
-
-                    if (documentSnapshots != null) {
-                        bookingList.clear()
-                        for (doc in documentSnapshots) {
-                            val room = doc.toObject(BookingModel::class.java)
-                            room.id = doc.id
-                            bookingList.add(room)
+        queryBooking
+                .whereEqualTo(Constant.FIREBASE_USER_NAME, userName)
+                .whereEqualTo(Constant.FIREBASE_USER_PHONE, userPhone)
+                .orderBy("date", Query.Direction.ASCENDING)
+                .orderBy("time_booking", Query.Direction.ASCENDING)
+                .get().addOnSuccessListener {
+                    for (doc in it.documents) {
+                        val book = doc.toObject(BookingModel::class.java)
+                        book?.id = doc.id
+                        if (book != null) {
+                            bookingList.add(book)
                         }
                     }
-                })
+                    view.onGetMyBookingDone(bookingList)
+                }.addOnFailureListener { exception ->
+                    Log.d(TAG, "get failed with ", exception)
+                }
+    }
 
-        view.onShowMyBooking(bookingList)
+    @SuppressLint("SimpleDateFormat")
+    override fun onSetMyBooking(myBooking: MutableList<BookingModel>, timeList: MutableList<TimeModel>, roomList: MutableList<RoomModel>) {
+
+        val myBookingList = mutableListOf<MyBookingModel>()
+
+        for (i in myBooking) {
+            myBookingList.add(MyBookingModel(
+                    i.id,
+                    roomList.filter { it.id == i.room_id }[0].name,
+                    roomList.filter { it.id == i.room_id }[0].floor,
+                    SimpleDateFormat(Constant.FORMAT_DATE).format(i.date),
+                    timeList.filter { it.id == i.time_booking }[0].text
+            ))
+        }
+
+        view.onShowMyBooking(myBookingList)
     }
 
 }

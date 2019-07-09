@@ -35,16 +35,6 @@ class SelectRoomActivity : AppCompatActivity(), SelectRoomContract.View, RoomRec
 
         val sp: SharedPreferences = this.getSharedPreferences(Constant.PREF_NAME, Context.MODE_PRIVATE)
 
-//        val datePick = sp.getString(Constant.PREF_DATE_PICK, "")
-//        val pickStartTime = sp.getString(Constant.PREF_PICK_START_TIME, "")
-//        val pickEndTime = sp.getString(Constant.PREF_PICK_END_TIME, "")
-
-//        val date = SimpleDateFormat(Constant.FORMAT_DATE).parse(datePick)
-//        val start = "$datePick $pickStartTime"
-//        val dateTimeStart = SimpleDateFormat(Constant.FORMAT_DATE_TIME).parse(start)
-//        val end = "$datePick $pickEndTime"
-//        val dateTimeEnd = SimpleDateFormat(Constant.FORMAT_DATE_TIME).parse(end)
-
         presenter.setFloorSpinner()
 
         var roomList = presenter.getRoomFromFirebase()
@@ -53,17 +43,11 @@ class SelectRoomActivity : AppCompatActivity(), SelectRoomContract.View, RoomRec
             override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
 
                 if (show == "roomAll") {
-//                    presenter.fetchRoomAll(spinner_floor.getItemAtPosition(position).toString())
                     presenter.setRoomList(spinner_floor.getItemAtPosition(position).toString(), roomList as MutableList<RoomModel>)
                 }
-
-//                else if (show == "roomByTime") {
-//                    presenter.fetchRoomByTime(spinner_floor.getItemAtPosition(position).toString(), date, dateTimeStart, dateTimeEnd)
-//                }
             }
             override fun onNothingSelected(parent: AdapterView<*>) {
                 if (show == "roomAll") {
-//                    presenter.fetchRoomAll(spinner_floor.getItemAtPosition(position).toString())
                     presenter.setRoomList("All", roomList as MutableList<RoomModel>)
                 }
             }

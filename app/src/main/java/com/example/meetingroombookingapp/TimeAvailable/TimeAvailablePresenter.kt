@@ -62,10 +62,10 @@ class TimeAvailablePresenter(private val view: TimeAvailableContract.View) : Tim
 
         if (timeList.isNotEmpty()) {
 
-            for (time in timeList) {
-                arrTimeStart.add(time.date_time_start)
-                arrTimeEnd.add(time.date_time_end)
-            }
+//            for (time in timeList) {
+//                arrTimeStart.add(time.date_time_start)
+//                arrTimeEnd.add(time.date_time_end)
+//            }
 
             if ((pickStartTime!!.before(arrTimeStart[0]) && pickEndTime!!.before(arrTimeStart[0])) || (pickStartTime.after(arrTimeEnd.last()) && pickEndTime!!.after(arrTimeEnd.last()))) {
                 x = 99

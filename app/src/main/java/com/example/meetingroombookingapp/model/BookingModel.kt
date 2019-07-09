@@ -10,12 +10,6 @@ class BookingModel {
     @ServerTimestamp
     var date: Date? = null
 
-    @ServerTimestamp
-    var date_time_end: Date? = null
-
-    @ServerTimestamp
-    var date_time_start: Date? = null
-
     var room_id: String? = null
 
     var time_booking: Int? = null

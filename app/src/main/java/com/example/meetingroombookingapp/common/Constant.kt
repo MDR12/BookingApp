@@ -36,6 +36,8 @@ object  Constant {
     const val FIREBASE_COLLECTION_MEETINGROOM = "MeetingRoom"
     const val FIREBASE_COLLECTION_BOOKING = "Booking"
     const val FIREBASE_COLLECTION_TIME = "Time"
+    const val FIREBASE_USER_NAME = "user_name"
+    const val FIREBASE_USER_PHONE = "user_phone"
 
     //Floor
     const val FLOOR_ALL = "All"
