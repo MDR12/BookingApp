@@ -9,29 +9,23 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-        <activity android:name=".mybooking.MyBookingActivity">
-        </activity>
-        <activity android:name=".byroom.BookByRoomActivity">
-        </activity>
-        <activity android:name=".home.LoginActivity">
+        <activity
+            android:name=".mybooking.MyBookingActivity"
+            android:screenOrientation="portrait">
         </activity>
         <activity
-                android:name=".viewroom.ViewRoomActivity"
-                android:screenOrientation="portrait"/>
+            android:name=".byroom.BookByRoomActivity"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".home.LoginActivity"
+            android:screenOrientation="portrait">
+        </activity>
         <activity
                 android:name=".selectbytime.SelectDateTimeActivity"
                 android:label="@string/title_activity_select_date_time"
                 android:screenOrientation="portrait"
                 android:theme="@style/AppTheme.NoActionBar"/>
-        <activity
-                android:name=".userinfo.UserInfoActivity"
-                android:screenOrientation="portrait"/>
-        <activity
-                android:name=".TimeAvailable.TimeAvailableActivity"
-                android:screenOrientation="portrait"/>
-        <activity
-                android:name=".calendar.CalendarActivity"
-                android:screenOrientation="portrait"/>
         <activity
                 android:name=".selectmeetingroom.SelectRoomActivity"
                 android:screenOrientation="portrait"/>
@@ -44,7 +38,8 @@
         </activity>
         <activity
                 android:name=".home.MainEmptyActivity"
-                android:theme="@android:style/Theme.NoDisplay">
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoDisplay">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
