@@ -44,10 +44,10 @@ class BookByRoomActivity : AppCompatActivity(),BookByRoomContract.View {
 
         val dpd = DatePickerDialog(this, DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
 
-            var date = "$dayOfMonth-" + (month + 1) + "-$year"
+            var date = dayOfMonth.toString() + Constant.TEXT_DATH + (month + 1).toString() +  Constant.TEXT_DATH + year.toString()
             date_picker.text = date
 
-            dateFormat = SimpleDateFormat(Constant.FORMAT_DATE, Locale("th")  ).parse(date)
+            dateFormat = SimpleDateFormat(Constant.FORMAT_DATE, Locale(Constant.TH)  ).parse(date)
 
             presenter.fetchTimeCheckBox(timeList, bookingList, dateFormat, roomId)
 

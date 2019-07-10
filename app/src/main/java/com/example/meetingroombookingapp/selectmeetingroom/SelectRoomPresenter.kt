@@ -11,7 +11,6 @@ import com.google.firebase.firestore.ListenerRegistration
 import com.google.firebase.firestore.Query
 import java.util.*
 
-@Suppress("NAME_SHADOWING", "LABEL_NAME_CLASH")
 class SelectRoomPresenter(private val view: SelectRoomContract.View) : SelectRoomContract.Presenter {
 
     private val queryRoom = FirebaseFirestore.getInstance().collection(Constant.FIREBASE_COLLECTION_MEETINGROOM)
@@ -23,10 +22,10 @@ class SelectRoomPresenter(private val view: SelectRoomContract.View) : SelectRoo
         val roomList = mutableListOf<RoomModel>()
 
         fireStoreListenerRoom = queryRoom
-                .orderBy("name", Query.Direction.ASCENDING)
+                .orderBy(Constant.FIREBASE_NAME, Query.Direction.ASCENDING)
                 .addSnapshotListener(EventListener { documentSnapshots, e ->
                     if (e != null) {
-                        Log.e(TAG, "Listen failed!", e)
+                        Log.e(TAG, Constant.TEXT_LISTEN_FAILED, e)
                         return@EventListener
                     }
 
@@ -45,7 +44,7 @@ class SelectRoomPresenter(private val view: SelectRoomContract.View) : SelectRoo
 
     override fun setRoomList(floorSelect: String, roomList: MutableList<RoomModel>) {
 
-        if (floorSelect == "All"){
+        if (floorSelect == Constant.FLOOR_ALL){
             view.onShowRoomList(roomList)
         } else {
             val newList = roomList.filter { it.floor == floorSelect.toInt() }
@@ -56,8 +55,8 @@ class SelectRoomPresenter(private val view: SelectRoomContract.View) : SelectRoo
 
     override fun fetchRoomByTime(floorSelect: String, date: Date, dateTimeStart: Date, dateTimeEnd: Date) {
 
-        val timeList = mutableListOf<BookingModel>()
-        val roomList = mutableListOf<RoomModel>()
+//        val timeList = mutableListOf<BookingModel>()
+//        val roomList = mutableListOf<RoomModel>()
 
 //        fireStoreListenerTime = queryBookingTime
 //                .whereEqualTo("date", date)

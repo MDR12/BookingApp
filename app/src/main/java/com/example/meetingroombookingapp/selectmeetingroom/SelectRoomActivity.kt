@@ -1,6 +1,5 @@
 package com.example.meetingroombookingapp.selectmeetingroom
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -15,7 +14,6 @@ import com.example.meetingroombookingapp.byroom.BookByRoomActivity
 import com.example.meetingroombookingapp.common.Constant
 import com.example.meetingroombookingapp.model.BookingModel
 import com.example.meetingroombookingapp.model.RoomModel
-import com.example.meetingroombookingapp.model.TimeModel
 import com.example.meetingroombookingapp.selectmeetingroom.adapter.RoomRecyclerViewAdapter
 import kotlinx.android.synthetic.main.activity_select_room.*
 import java.util.*
@@ -24,13 +22,10 @@ import java.util.*
 class SelectRoomActivity : AppCompatActivity(), SelectRoomContract.View, RoomRecyclerViewAdapter.OnRoomListener {
 
     private val presenter: SelectRoomContract.Presenter = SelectRoomPresenter(this)
-
-    private var myTimeList = mutableListOf<TimeModel>()
     private var myRoomList = mutableListOf<RoomModel>()
 
     private lateinit var show: String
 
-    @SuppressLint("SimpleDateFormat")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_select_room)
@@ -45,13 +40,13 @@ class SelectRoomActivity : AppCompatActivity(), SelectRoomContract.View, RoomRec
         spinner_floor.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
 
-                if (show == "roomAll") {
+                if (show == Constant.EXTRA_SHOW_ROOMALL) {
                     presenter.setRoomList(spinner_floor.getItemAtPosition(position).toString(), myRoomList)
                 }
             }
             override fun onNothingSelected(parent: AdapterView<*>) {
-                if (show == "roomAll") {
-                    presenter.setRoomList("All", myRoomList)
+                if (show == Constant.EXTRA_SHOW_ROOMALL) {
+                    presenter.setRoomList(Constant.FLOOR_ALL, myRoomList)
                 }
             }
         }
@@ -74,24 +69,25 @@ class SelectRoomActivity : AppCompatActivity(), SelectRoomContract.View, RoomRec
         spinner_floor?.adapter = floor
     }
 
-    override fun onRoomClick(id: String?, itemName: String?, itemFloor: String?) {
+    override fun onRoomClick(position: String?, itemName: String?, itemFloor: String?) {
 
         val sp = getSharedPreferences(Constant.PREF_NAME, Context.MODE_PRIVATE)
         val editor = sp.edit()
-        editor.putString(Constant.PREF_ROOM_ID, id)
+        editor.putString(Constant.PREF_ROOM_ID, position)
         editor.putString(Constant.PREF_ROOM_NAME, itemName)
         editor.putString(Constant.PREF_ROOM_FLOOR, itemFloor)
         editor.apply()
 
-        if (show == "roomAll") {
+        if (show == Constant.EXTRA_SHOW_ROOMALL) {
 
             val intent = Intent(this, BookByRoomActivity::class.java)
             startActivity(intent)
 
-        } else if (show == "roomByTime") {
+        }
+//        else if (show == Constant.EXTRA_SHOW_ROOM_BY_TIME) {
 //            val intent = Intent(this, UserInfoActivity::class.java)
 //            startActivity(intent)
-        }
+//        }
 
     }
 

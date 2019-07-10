@@ -1,12 +1,12 @@
 package com.example.meetingroombookingapp.selectmeetingroom.adapter
 
-import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.meetingroombookingapp.R
+import com.example.meetingroombookingapp.common.Constant
 import com.example.meetingroombookingapp.model.RoomModel
 
 class RoomRecyclerViewAdapter(private val roomList: MutableList<RoomModel>, private var mOnRoomClickListener: OnRoomListener)
@@ -42,11 +42,10 @@ class RoomRecyclerViewAdapter(private val roomList: MutableList<RoomModel>, priv
             itemView.setOnClickListener(this)
         }
 
-        @SuppressLint("SetTextI18n")
         fun bind(room: RoomModel){
             mRoomNameView?.text = room.name
-            mCapacityView?.text = "${room.capacity.toString()} people"
-            mFloorView?.text = "Floor ${room.floor.toString()}"
+            mCapacityView?.text = room.capacity.toString() + Constant.TEXT_PEOPLE
+            mFloorView?.text = Constant.TEXT_PEOPLE + room.floor.toString()
             itemID = room.id.toString()
             itemName = room.name.toString()
             itemFloor = room.floor.toString()

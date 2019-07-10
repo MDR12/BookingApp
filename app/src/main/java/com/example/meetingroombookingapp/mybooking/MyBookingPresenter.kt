@@ -89,7 +89,7 @@ class MyBookingPresenter(private val view: MyBookingContract.View): MyBookingCon
                     i.id,
                     roomList.filter { it.id == i.room_id }[0].name,
                     roomList.filter { it.id == i.room_id }[0].floor,
-                    SimpleDateFormat(Constant.FORMAT_DATE, Locale("th")).format(i.date),
+                    SimpleDateFormat(Constant.FORMAT_DATE, Locale(Constant.TH)).format(i.date),
                     timeList.filter { it.id == i.time_booking }[0].text
             ))
         }

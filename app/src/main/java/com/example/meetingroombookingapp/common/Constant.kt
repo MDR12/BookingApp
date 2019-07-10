@@ -24,6 +24,7 @@ object  Constant {
     //putExtra
     const val EXTRA_SHOW = "show"
     const val EXTRA_SHOW_ROOMALL = "roomAll"
+    const val EXTRA_SHOW_ROOM_BY_TIME = "roomByTime"
 
     //Text
     const val TEXT_FILL_ALL_INFO = "Please fill all information"
@@ -38,6 +39,7 @@ object  Constant {
     const val TEXT_ROOM_LIST = "room list"
     const val TEXT_MY_BOOKING_LIST = "booking list"
     const val TEXT_CONFIRM = "Confirm"
+    const val TEXT_PEOPLE = " people"
     const val TEXT_HI = "Hi, "
     const val TEXT_FROM = "from "
     const val TEXT_ROOM = "Room: "
@@ -50,6 +52,7 @@ object  Constant {
     const val TEXT_SPACE = "      "
     const val TEXT_BOOK_BY = "Booked by: "
     const val TEXT_NO = "No"
+    const val TEXT_DATH = "-"
 
 
     //Firebase collection
@@ -79,6 +82,7 @@ object  Constant {
     //HTML
     const val HTML_LOGOUT = "<p><u>Logout</u></p>"
 
-
+    //language
+    const val TH = "th"
 
 }
