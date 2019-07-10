@@ -18,7 +18,7 @@ class SelectRoomPresenter(private val view: SelectRoomContract.View) : SelectRoo
 
     private var fireStoreListenerRoom: ListenerRegistration? = null
 
-    override fun getRoomFromFirebase(): List<RoomModel> {
+    override fun getRoomFromFirebase(){
 
         val roomList = mutableListOf<RoomModel>()
 
@@ -37,11 +37,10 @@ class SelectRoomPresenter(private val view: SelectRoomContract.View) : SelectRoo
                             room.id = doc.id
                             roomList.add(room)
                         }
+
+                        view.onGetRoomDone(roomList)
                     }
                 })
-
-        return roomList
-
     }
 
     override fun setRoomList(floorSelect: String, roomList: MutableList<RoomModel>) {

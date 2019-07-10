@@ -15,6 +15,7 @@ import com.example.meetingroombookingapp.byroom.BookByRoomActivity
 import com.example.meetingroombookingapp.common.Constant
 import com.example.meetingroombookingapp.model.BookingModel
 import com.example.meetingroombookingapp.model.RoomModel
+import com.example.meetingroombookingapp.model.TimeModel
 import com.example.meetingroombookingapp.selectmeetingroom.adapter.RoomRecyclerViewAdapter
 import kotlinx.android.synthetic.main.activity_select_room.*
 import java.util.*
@@ -23,6 +24,10 @@ import java.util.*
 class SelectRoomActivity : AppCompatActivity(), SelectRoomContract.View, RoomRecyclerViewAdapter.OnRoomListener {
 
     private val presenter: SelectRoomContract.Presenter = SelectRoomPresenter(this)
+
+    private var myTimeList = mutableListOf<TimeModel>()
+    private var myRoomList = mutableListOf<RoomModel>()
+
     private lateinit var show: String
 
     @SuppressLint("SimpleDateFormat")
@@ -35,19 +40,18 @@ class SelectRoomActivity : AppCompatActivity(), SelectRoomContract.View, RoomRec
         val sp: SharedPreferences = this.getSharedPreferences(Constant.PREF_NAME, Context.MODE_PRIVATE)
 
         presenter.setFloorSpinner()
-
-        var roomList = presenter.getRoomFromFirebase()
+        presenter.getRoomFromFirebase()
 
         spinner_floor.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
 
                 if (show == "roomAll") {
-                    presenter.setRoomList(spinner_floor.getItemAtPosition(position).toString(), roomList as MutableList<RoomModel>)
+                    presenter.setRoomList(spinner_floor.getItemAtPosition(position).toString(), myRoomList)
                 }
             }
             override fun onNothingSelected(parent: AdapterView<*>) {
                 if (show == "roomAll") {
-                    presenter.setRoomList("All", roomList as MutableList<RoomModel>)
+                    presenter.setRoomList("All", myRoomList)
                 }
             }
         }
@@ -62,6 +66,7 @@ class SelectRoomActivity : AppCompatActivity(), SelectRoomContract.View, RoomRec
             adapter = adapt
         }
     }
+
 
     override fun onShowFloorSpinner(mAllFloor: Array<String>) {
         val floor = ArrayAdapter(this, android.R.layout.simple_spinner_item, mAllFloor)
@@ -84,12 +89,14 @@ class SelectRoomActivity : AppCompatActivity(), SelectRoomContract.View, RoomRec
             startActivity(intent)
 
         } else if (show == "roomByTime") {
-//
 //            val intent = Intent(this, UserInfoActivity::class.java)
 //            startActivity(intent)
-
         }
 
+    }
+
+    override fun onGetRoomDone(roomList: MutableList<RoomModel>) {
+        myRoomList = roomList
     }
 
     override fun onShowRoomListByTime(roomList: MutableList<RoomModel>, timeList: MutableList<BookingModel>, dateTimeStart: Date, dateTimeEnd: Date) {
