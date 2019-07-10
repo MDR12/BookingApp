@@ -25,7 +25,7 @@ class CheckboxAdapter(private val timeList: MutableList<CheckboxAdapterDataModel
                     .inflate(R.layout.item_select_time_booked, parent, false)
                 BookedViewHolder(view)
             }
-            else -> throw IllegalArgumentException("Invalid view type")
+            else -> throw IllegalArgumentException(Constant.TEXT_INVALIID)
         }
     }
 

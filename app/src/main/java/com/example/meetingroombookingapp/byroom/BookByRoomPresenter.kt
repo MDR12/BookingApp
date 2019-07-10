@@ -1,6 +1,5 @@
 package com.example.meetingroombookingapp.byroom
 
-import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.util.Log
 import com.example.meetingroombookingapp.common.Constant
@@ -22,16 +21,15 @@ class BookByRoomPresenter(private val view: BookByRoomContract.View) : BookByRoo
     private var fireStoreListenerTime: ListenerRegistration? = null
     private var fireStoreListenerBooking: ListenerRegistration? = null
 
-    @SuppressLint("SimpleDateFormat")
     override fun getTimeList(): MutableList<TimeModel> {
 
         val timeList = mutableListOf<TimeModel>()
 
         fireStoreListenerTime = queryTime
-                .orderBy("id", Query.Direction.ASCENDING)
+                .orderBy(Constant.FIREBASE_ID, Query.Direction.ASCENDING)
                 .addSnapshotListener(EventListener { documentSnapshots, e ->
                     if (e != null) {
-                        Log.e(ContentValues.TAG, "Listen failed!", e)
+                        Log.e(ContentValues.TAG, Constant.TEXT_LISTEN_FAILED, e)
                         return@EventListener
                     }
 
@@ -53,7 +51,7 @@ class BookByRoomPresenter(private val view: BookByRoomContract.View) : BookByRoo
         fireStoreListenerBooking = queryBooking
                 .addSnapshotListener(EventListener { documentSnapshots, e ->
                     if (e != null) {
-                        Log.e(ContentValues.TAG, "Listen failed!", e)
+                        Log.e(ContentValues.TAG, Constant.TEXT_LISTEN_FAILED, e)
                         return@EventListener
                     }
 
@@ -95,8 +93,8 @@ class BookByRoomPresenter(private val view: BookByRoomContract.View) : BookByRoo
                     timeCheckboxListData.add(
                         CheckboxAdapterDataModel(
                             timeList[i].text,
-                            "Booked by " + hasDateTimeBooking[0].user_name,
-                            "Tel. " + hasDateTimeBooking[0].user_phone,
+                            Constant.TEXT_BOOK_BY + hasDateTimeBooking[0].user_name,
+                            Constant.TEXT_TEL + hasDateTimeBooking[0].user_phone,
                             hasDateTimeBooking[0].time_booking,
                             Constant.TYPE_BOOKED
                         )
@@ -136,11 +134,10 @@ class BookByRoomPresenter(private val view: BookByRoomContract.View) : BookByRoo
 
     override fun addBookingToDataBase(allData: MutableList<BookingDataModel>) {
 
-        for (i in allData){
-            db.collection("Booking")
+          for (i in allData){
+            db.collection(Constant.FIREBASE_COLLECTION_BOOKING)
                     .add(i)
 //                    .addOnSuccessListener { documentReference ->
-//                        view.onShowSuccess()
 //                    }
 //                    .addOnFailureListener {
 //                        view.onShowFail()
