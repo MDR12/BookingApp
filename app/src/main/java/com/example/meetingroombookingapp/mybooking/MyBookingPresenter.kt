@@ -1,8 +1,5 @@
 package com.example.meetingroombookingapp.mybooking
 
-import android.annotation.SuppressLint
-import android.content.ContentValues.TAG
-import android.util.Log
 import com.example.meetingroombookingapp.common.Constant
 import com.example.meetingroombookingapp.model.BookingModel
 import com.example.meetingroombookingapp.model.MyBookingModel
@@ -11,6 +8,7 @@ import com.example.meetingroombookingapp.model.TimeModel
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import java.text.SimpleDateFormat
+import java.util.*
 
 class MyBookingPresenter(private val view: MyBookingContract.View): MyBookingContract.Presenter {
 
@@ -25,7 +23,7 @@ class MyBookingPresenter(private val view: MyBookingContract.View): MyBookingCon
         val timeList = mutableListOf<TimeModel>()
 
         queryTime
-                .orderBy("id", Query.Direction.ASCENDING)
+                .orderBy(Constant.FIREBASE_ID, Query.Direction.ASCENDING)
                 .get().addOnSuccessListener {
                     for (doc in it.documents) {
                         val book = doc.toObject(TimeModel::class.java)
@@ -35,7 +33,7 @@ class MyBookingPresenter(private val view: MyBookingContract.View): MyBookingCon
                     }
                     view.onGetTimeListDone(timeList)
                 }.addOnFailureListener { exception ->
-                    Log.d(TAG, "get failed with ", exception)
+                    view.onfailLoad(Constant.TEXT_TIME_LIST)
                 }
     }
 
@@ -44,7 +42,7 @@ class MyBookingPresenter(private val view: MyBookingContract.View): MyBookingCon
         val roomList = mutableListOf<RoomModel>()
 
         queryRoom
-                .orderBy("name", Query.Direction.ASCENDING)
+                .orderBy( Constant.FIREBASE_NAME, Query.Direction.ASCENDING)
                 .get().addOnSuccessListener {
                     for (doc in it.documents) {
                         val book = doc.toObject(RoomModel::class.java)
@@ -55,19 +53,19 @@ class MyBookingPresenter(private val view: MyBookingContract.View): MyBookingCon
                     }
                     view.onGetRoomListDone(roomList)
                 }.addOnFailureListener { exception ->
-                    Log.d(TAG, "get failed with ", exception)
+                    view.onfailLoad(Constant.TEXT_ROOM_LIST)
                 }
     }
 
-    override fun onGetMyBooking(userName: String, userPhone: String) {
+    override fun onGetMyBooking(userName: String?, userPhone: String?) {
 
         val bookingList = mutableListOf<BookingModel>()
 
         queryBooking
                 .whereEqualTo(Constant.FIREBASE_USER_NAME, userName)
                 .whereEqualTo(Constant.FIREBASE_USER_PHONE, userPhone)
-                .orderBy("date", Query.Direction.ASCENDING)
-                .orderBy("time_booking", Query.Direction.ASCENDING)
+                .orderBy(Constant.FIREBASE_DATE, Query.Direction.ASCENDING)
+                .orderBy(Constant.FIREBASE_TIME_BOOKING, Query.Direction.ASCENDING)
                 .get().addOnSuccessListener {
                     for (doc in it.documents) {
                         val book = doc.toObject(BookingModel::class.java)
@@ -78,11 +76,10 @@ class MyBookingPresenter(private val view: MyBookingContract.View): MyBookingCon
                     }
                     view.onGetMyBookingDone(bookingList)
                 }.addOnFailureListener { exception ->
-                    Log.d(TAG, "get failed with ", exception)
+                    view.onfailLoad(Constant.TEXT_MY_BOOKING_LIST)
                 }
     }
 
-    @SuppressLint("SimpleDateFormat")
     override fun onSetMyBooking(myBooking: MutableList<BookingModel>, timeList: MutableList<TimeModel>, roomList: MutableList<RoomModel>) {
 
         val myBookingList = mutableListOf<MyBookingModel>()
@@ -92,7 +89,7 @@ class MyBookingPresenter(private val view: MyBookingContract.View): MyBookingCon
                     i.id,
                     roomList.filter { it.id == i.room_id }[0].name,
                     roomList.filter { it.id == i.room_id }[0].floor,
-                    SimpleDateFormat(Constant.FORMAT_DATE).format(i.date),
+                    SimpleDateFormat(Constant.FORMAT_DATE, Locale("th")).format(i.date),
                     timeList.filter { it.id == i.time_booking }[0].text
             ))
         }

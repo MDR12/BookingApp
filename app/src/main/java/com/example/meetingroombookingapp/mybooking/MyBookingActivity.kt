@@ -2,6 +2,7 @@ package com.example.meetingroombookingapp.mybooking
 
 import android.content.Context
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.meetingroombookingapp.R
@@ -13,7 +14,6 @@ import com.example.meetingroombookingapp.model.TimeModel
 import com.example.meetingroombookingapp.mybooking.adapter.MyBookingAdapter
 import kotlinx.android.synthetic.main.activity_my_booking.*
 
-@Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 class MyBookingActivity : AppCompatActivity(),MyBookingContract.View {
 
     private val presenter: MyBookingContract.Presenter = MyBookingPresenter(this)
@@ -69,4 +69,9 @@ class MyBookingActivity : AppCompatActivity(),MyBookingContract.View {
             adapter = adapt
         }
     }
+
+    override fun onfailLoad(type: String) {
+        Toast.makeText(this, Constant.TEXT_FAIL + type, Toast.LENGTH_SHORT).show()
+    }
+
 }

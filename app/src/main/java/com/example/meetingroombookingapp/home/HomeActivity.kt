@@ -10,7 +10,6 @@ import com.example.meetingroombookingapp.R
 import com.example.meetingroombookingapp.addroom.AddRoomActivity
 import com.example.meetingroombookingapp.common.Constant
 import com.example.meetingroombookingapp.mybooking.MyBookingActivity
-import com.example.meetingroombookingapp.selectbytime.SelectDateTimeActivity
 import com.example.meetingroombookingapp.selectmeetingroom.SelectRoomActivity
 import kotlinx.android.synthetic.main.activity_home.*
 
@@ -42,10 +41,10 @@ class HomeActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        bt_time.setOnClickListener {
-            val intent = Intent(this, SelectDateTimeActivity::class.java)
-            startActivity(intent)
-        }
+//        bt_time.setOnClickListener {
+//            val intent = Intent(this, SelectDateTimeActivity::class.java)
+//            startActivity(intent)
+//        }
 
         bt_view_room.setOnClickListener {
             val intent = Intent(this, MyBookingActivity::class.java)

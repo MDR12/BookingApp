@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.meetingroombookingapp.R
+import com.example.meetingroombookingapp.common.Constant
 import com.example.meetingroombookingapp.model.MyBookingModel
 
 class MyBookingAdapter(private val bookingList: MutableList<MyBookingModel>): RecyclerView.Adapter<MyBookingAdapter.ViewHolder>() {
@@ -34,12 +35,12 @@ class MyBookingAdapter(private val bookingList: MutableList<MyBookingModel>): Re
         var mDateView: TextView? = itemView.findViewById(R.id.tv_my_date)
         var mTimeView: TextView? = itemView.findViewById(R.id.tv_my_time)
 
-        @SuppressLint("SetTextI18n", "SimpleDateFormat")
+        @SuppressLint("SetTextI18n")
         fun bind(booking: MyBookingModel){
-            mRoomNameView?.text = "Room: " + booking.roomName
-            mMyFloorView?.text = "Floor: " + booking.roomFloor.toString()
-            mDateView?.text = "Date: "+ booking.dateText
-            mTimeView?.text = "Time: "+ booking.timeText
+            mRoomNameView?.text = Constant.TEXT_ROOM + booking.roomName
+            mMyFloorView?.text = Constant.TEXT_FLOOR + booking.roomFloor.toString()
+            mDateView?.text = Constant.TEXT_DATE + booking.dateText
+            mTimeView?.text = Constant.TEXT_TIME + booking.timeText
 
         }
 
