@@ -23,12 +23,10 @@ object  Constant {
 
     //putExtra
     const val EXTRA_SHOW = "show"
+    const val EXTRA_SHOW_ROOMALL = "roomAll"
 
     //Text
     const val TEXT_FILL_ALL_INFO = "Please fill all information"
-    const val TEXT_ROOM_USED = "Someone used the room at that time"
-    const val TEXT_TIME_PARADOX = "Time start can't be less than time end"
-    const val TEXT_TIME_NOT_PICK = "Please pick the time"
     const val TEXT_ADD_SUCCESS = "Adding time booking successfully"
     const val TEXT_ADD_ERROR = "Error adding time booking"
     const val TEXT_INVALIID = "Invalid view type"
@@ -36,6 +34,8 @@ object  Constant {
     const val TEXT_LISTEN_FAILED ="Listen failed!"
     const val TEXT_CONFIRM_BOOKING = "Confirm Booking"
     const val TEXT_CONFIRM = "Confirm"
+    const val TEXT_HI = "Hi, "
+    const val TEXT_FROM = "from "
     const val TEXT_ROOM = "Room: "
     const val TEXT_NAME = "Name: "
     const val TEXT_TEL = "Tel.: "
@@ -65,6 +65,9 @@ object  Constant {
     //view Type
     const val TYPE_BOOKED = 0
     const val TYPE_AVALIABLE = 1
+
+    //HTML
+    const val HTML_LOGOUT = "<p><u>Logout</u></p>"
 
 
 

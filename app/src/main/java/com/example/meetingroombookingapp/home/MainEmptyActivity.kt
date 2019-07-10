@@ -1,6 +1,5 @@
 package com.example.meetingroombookingapp.home
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -9,7 +8,7 @@ import androidx.annotation.Nullable
 import androidx.appcompat.app.AppCompatActivity
 import com.example.meetingroombookingapp.common.Constant
 
-@SuppressLint("Registered")
+
 class MainEmptyActivity : AppCompatActivity() {
 
     override fun onCreate(@Nullable savedInstanceState: Bundle?) {
