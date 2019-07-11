@@ -46,7 +46,6 @@ class SelectRoomPresenter(private val view: SelectRoomContract.View) : SelectRoo
     }
 
     override fun checkRoomAvaliable(roomList: MutableList<RoomModel>, timeList: MutableList<BookingModel>, dateTimeStart: Date, dateTimeEnd: Date): MutableList<RoomModel> {
-
         return roomList
     }
 

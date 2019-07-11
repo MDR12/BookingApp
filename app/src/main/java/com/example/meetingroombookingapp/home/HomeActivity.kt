@@ -9,6 +9,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.meetingroombookingapp.R
 import com.example.meetingroombookingapp.addroom.AddRoomActivity
+import com.example.meetingroombookingapp.bytime.BookByTimeActivity
 import com.example.meetingroombookingapp.common.Constant
 import com.example.meetingroombookingapp.mybooking.MyBookingActivity
 import com.example.meetingroombookingapp.selectmeetingroom.SelectRoomActivity
@@ -28,8 +29,9 @@ class HomeActivity : AppCompatActivity() {
 
         bt_logout.text = Html.fromHtml(Constant.HTML_LOGOUT)
 
-        tv_show_user_name.text = Constant.TEXT_HI + name + Constant.TEXT_SPACE_ONE + Constant.TEXT_FROM + team
+        tv_show_user_name.text = Constant.TEXT_HI + name
         tv_show_user_phone.text = Constant.TEXT_TEL + phone
+        tv_show_user_team.text =  Constant.TEXT_TEAM + team
 
         bt_room.setOnClickListener {
             val intent = Intent(this, SelectRoomActivity::class.java)
@@ -42,10 +44,10 @@ class HomeActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-//        bt_time.setOnClickListener {
-//            val intent = Intent(this, SelectDateTimeActivity::class.java)
-//            startActivity(intent)
-//        }
+        bt_time.setOnClickListener {
+            val intent = Intent(this, BookByTimeActivity::class.java)
+            startActivity(intent)
+        }
 
         bt_view_room.setOnClickListener {
             val intent = Intent(this, MyBookingActivity::class.java)

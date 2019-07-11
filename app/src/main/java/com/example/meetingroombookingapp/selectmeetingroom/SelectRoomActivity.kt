@@ -3,6 +3,7 @@ package com.example.meetingroombookingapp.selectmeetingroom
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -29,9 +30,9 @@ class SelectRoomActivity : AppCompatActivity(), SelectRoomContract.View, RoomRec
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_select_room)
 
-        show = intent.getStringExtra(Constant.EXTRA_SHOW)
-
         progressBar_select_room.visibility = View.VISIBLE
+
+        show = intent.getStringExtra(Constant.EXTRA_SHOW)
 
         presenter.setFloorSpinner()
         presenter.getRoomFromFirebase()
@@ -54,15 +55,17 @@ class SelectRoomActivity : AppCompatActivity(), SelectRoomContract.View, RoomRec
 
     override fun onShowRoomList(data: MutableList<RoomModel>) {
 
-        progressBar_select_room.visibility = View.GONE
-
         val adapt = RoomRecyclerViewAdapter(data, this)
 
-        recyclerview_floor.apply {
-            layoutManager = LinearLayoutManager(applicationContext)
-            adapter = adapt
-            visibility = View.VISIBLE
-        }
+        Handler().postDelayed({
+            recyclerview_floor.visibility = View.VISIBLE
+            progressBar_select_room.visibility = View.GONE
+
+            recyclerview_floor.apply {
+                layoutManager = LinearLayoutManager(applicationContext)
+                adapter = adapt
+            }
+        }, 500)
     }
 
 

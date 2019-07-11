@@ -43,6 +43,7 @@ object  Constant {
     const val TEXT_CONFIRM = "Confirm"
     const val TEXT_PEOPLE = " people"
     const val TEXT_HI = "Hi, "
+    const val TEXT_TEAM = "Team: "
     const val TEXT_FROM = "from "
     const val TEXT_ROOM = "Room: "
     const val TEXT_NAME = "Name: "
@@ -90,5 +91,22 @@ object  Constant {
 
     //language
     const val TH = "th"
+
+    //Time Slot
+    const val TS_1 = "7:00"
+    const val TS_2 = "8:00"
+    const val TS_3 = "9:00"
+    const val TS_4 = "10:00"
+    const val TS_5 = "11:00"
+    const val TS_6 = "12:00"
+    const val TS_7 = "13:00"
+    const val TS_8 = "14:00"
+    const val TS_9 = "15:00"
+    const val TS_10 = "16:00"
+    const val TS_11 = "17:00"
+    const val TS_12 = "18:00"
+    const val TS_13 = "19:00"
+    const val TS_14 = "20:00"
+
 
 }
