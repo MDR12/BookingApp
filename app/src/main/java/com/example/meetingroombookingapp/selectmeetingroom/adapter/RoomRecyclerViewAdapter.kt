@@ -45,7 +45,7 @@ class RoomRecyclerViewAdapter(private val roomList: MutableList<RoomModel>, priv
         fun bind(room: RoomModel){
             mRoomNameView?.text = room.name
             mCapacityView?.text = room.capacity.toString() + Constant.TEXT_PEOPLE
-            mFloorView?.text = Constant.TEXT_PEOPLE + room.floor.toString()
+            mFloorView?.text = Constant.TEXT_FLOOR + Constant.TEXT_SPACE_ONE + room.floor.toString()
             itemID = room.id.toString()
             itemName = room.name.toString()
             itemFloor = room.floor.toString()

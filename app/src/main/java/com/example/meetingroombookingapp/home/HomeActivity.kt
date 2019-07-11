@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.Html
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.meetingroombookingapp.R
 import com.example.meetingroombookingapp.addroom.AddRoomActivity
@@ -27,7 +28,7 @@ class HomeActivity : AppCompatActivity() {
 
         bt_logout.text = Html.fromHtml(Constant.HTML_LOGOUT)
 
-        tv_show_user_name.text = Constant.TEXT_HI+ name + Constant.TEXT_FROM + team
+        tv_show_user_name.text = Constant.TEXT_HI + name + Constant.TEXT_SPACE_ONE + Constant.TEXT_FROM + team
         tv_show_user_phone.text = Constant.TEXT_TEL + phone
 
         bt_room.setOnClickListener {
@@ -52,8 +53,32 @@ class HomeActivity : AppCompatActivity() {
         }
 
         bt_logout.setOnClickListener {
-            val intent = Intent(this, LoginActivity::class.java)
-            startActivity(intent)
+
+            val builder = AlertDialog.Builder(this)
+
+            builder.setTitle(Constant.TEXT_CONFIRM_LOGOUT)
+
+            builder.setPositiveButton(Constant.TEXT_LOGOUT) { _, _ ->
+
+                val intent = Intent(this, LoginActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+
+                val editor = sp.edit()
+                editor.putString(Constant.PREF_USER_NAME, null)
+                editor.putString(Constant.PREF_USER_PHONE, null)
+                editor.putString(Constant.PREF_USER_TEAM, null)
+                editor.apply()
+
+                startActivity(intent)
+                finish()
+
+            }
+
+            builder.setNegativeButton(Constant.TEXT_NO) { _, _ -> }
+
+            val dialog: AlertDialog = builder.create()
+            dialog.show()
+
         }
         
 

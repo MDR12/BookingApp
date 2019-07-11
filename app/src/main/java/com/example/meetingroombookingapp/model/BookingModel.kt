@@ -16,4 +16,5 @@ class BookingModel {
 
     var user_name: String? = null
     var user_phone: String? = null
+    var user_team: String? = null
 }

@@ -27,11 +27,13 @@ object  Constant {
     const val EXTRA_SHOW_ROOM_BY_TIME = "roomByTime"
 
     //Text
+    const val TEXT_CONFIRM_LOGOUT = "Are you sure you want to logout?"
+    const val TEXT_LOGOUT = "Logout"
     const val TEXT_FILL_ALL_INFO = "Please fill all information"
     const val TEXT_ADD_SUCCESS = "Adding time booking successfully"
     const val TEXT_ADD_ERROR = "Error adding time booking"
     const val TEXT_INVALIID = "Invalid view type"
-    const val TEXT_TIME_SLOT_YOU_PICK = "Time slot you pick:"
+    const val TEXT_TIME_SLOT_YOU_PICK = "Time:"
     const val TEXT_LISTEN_FAILED ="Listen failed!"
     const val TEXT_CONFIRM_BOOKING = "Confirm Booking"
     const val TEXT_FAIL = "get failed with load"
@@ -44,14 +46,17 @@ object  Constant {
     const val TEXT_FROM = "from "
     const val TEXT_ROOM = "Room: "
     const val TEXT_NAME = "Name: "
-    const val TEXT_TEL = "Tel.: "
-    const val TEXT_FLOOR = "Floor: "
+    const val TEXT_TEL = "Tel. "
+    const val TEXT_FLOOR = "Floor "
     const val TEXT_DATE = "Date: "
     const val TEXT_TIME = "Time: "
     const val TEXT_NEW_LINE = "\n"
     const val TEXT_SPACE = "      "
+    const val TEXT_V1 = "("
+    const val TEXT_V2 = ")"
+    const val TEXT_SPACE_ONE = " "
     const val TEXT_BOOK_BY = "Booked by: "
-    const val TEXT_NO = "No"
+    const val TEXT_NO = "Cancel"
     const val TEXT_DATH = "-"
 
 
@@ -68,6 +73,7 @@ object  Constant {
     const val FIREBASE_TIME_BOOKING = "time_booking"
 
     //Floor
+    const val FLOOR_SELECT = "Select floor"
     const val FLOOR_ALL = "All"
     const val FLOOR_11 = "11"
     const val FLOOR_10 = "10"

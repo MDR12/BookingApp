@@ -68,13 +68,14 @@ class BookByRoomActivity : AppCompatActivity(),BookByRoomContract.View {
             val floor = sp.getString(Constant.PREF_ROOM_FLOOR, null)
             val userName = sp.getString(Constant.PREF_USER_NAME, null)
             val userPhone = sp.getString(Constant.PREF_USER_PHONE, null)
+            val userTeam = sp.getString(Constant.PREF_USER_TEAM, null)
 
             val datePick = sp.getString(Constant.PREF_DATE_PICK, null)
-            val date = SimpleDateFormat(Constant.FORMAT_DATE).parse(datePick)
+            val date = SimpleDateFormat(Constant.FORMAT_DATE, Locale(Constant.TH)).parse(datePick)
 
-            var allData = mutableListOf<BookingDataModel>()
-            var timeText: ArrayList<String?> = ArrayList()
-            var checkList =  timeSlotPick.filter { it.isCheck }
+            val allData = mutableListOf<BookingDataModel>()
+            val timeText: ArrayList<String?> = ArrayList()
+            val checkList = timeSlotPick.filter { it.isCheck }
 
             for (i in 0 until checkList.size) {
 
@@ -83,6 +84,7 @@ class BookByRoomActivity : AppCompatActivity(),BookByRoomContract.View {
                         roomId,
                         userName,
                         userPhone,
+                        userTeam,
                         checkList[i].timeSlotID
 
                 ))
@@ -93,10 +95,13 @@ class BookByRoomActivity : AppCompatActivity(),BookByRoomContract.View {
             if (datePick != null && allData.isNotEmpty()) {
 
                 val builder = AlertDialog.Builder(this)
-                var str = Constant.TEXT_NAME + userName + Constant.TEXT_TEL + userPhone + TEXT_NEW_LINE +
-                          Constant.TEXT_ROOM + roomName + Constant.TEXT_FLOOR + floor + TEXT_NEW_LINE +
-                         Constant.TEXT_DATE + datePick + TEXT_NEW_LINE +
-                        Constant.TEXT_TIME_SLOT_YOU_PICK
+                var str =
+                    Constant.TEXT_NAME + userName + Constant.TEXT_SPACE_ONE +
+                            Constant.TEXT_TEL + userPhone + TEXT_NEW_LINE +
+                            Constant.TEXT_ROOM + roomName + Constant.TEXT_SPACE_ONE +
+                            Constant.TEXT_FLOOR + floor + TEXT_NEW_LINE +
+                            Constant.TEXT_DATE + datePick + TEXT_NEW_LINE +
+                            Constant.TEXT_TIME_SLOT_YOU_PICK + TEXT_NEW_LINE
 
                 for (element in timeText)
                     str += Constant.TEXT_SPACE + element + TEXT_NEW_LINE

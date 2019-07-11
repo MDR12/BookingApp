@@ -2,7 +2,6 @@ package com.example.meetingroombookingapp.selectmeetingroom
 
 import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
@@ -32,7 +31,7 @@ class SelectRoomActivity : AppCompatActivity(), SelectRoomContract.View, RoomRec
 
         show = intent.getStringExtra(Constant.EXTRA_SHOW)
 
-        val sp: SharedPreferences = this.getSharedPreferences(Constant.PREF_NAME, Context.MODE_PRIVATE)
+        progressBar_select_room.visibility = View.VISIBLE
 
         presenter.setFloorSpinner()
         presenter.getRoomFromFirebase()
@@ -45,6 +44,7 @@ class SelectRoomActivity : AppCompatActivity(), SelectRoomContract.View, RoomRec
                 }
             }
             override fun onNothingSelected(parent: AdapterView<*>) {
+
                 if (show == Constant.EXTRA_SHOW_ROOMALL) {
                     presenter.setRoomList(Constant.FLOOR_ALL, myRoomList)
                 }
@@ -54,11 +54,14 @@ class SelectRoomActivity : AppCompatActivity(), SelectRoomContract.View, RoomRec
 
     override fun onShowRoomList(data: MutableList<RoomModel>) {
 
+        progressBar_select_room.visibility = View.GONE
+
         val adapt = RoomRecyclerViewAdapter(data, this)
 
         recyclerview_floor.apply {
             layoutManager = LinearLayoutManager(applicationContext)
             adapter = adapt
+            visibility = View.VISIBLE
         }
     }
 

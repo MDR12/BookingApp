@@ -18,14 +18,6 @@ class LoginActivity : AppCompatActivity() {
 
         val sp = getSharedPreferences(Constant.PREF_NAME , Context.MODE_PRIVATE)
 
-        val name = sp.getString(Constant.PREF_USER_NAME, null)
-        val phone = sp.getString(Constant.PREF_USER_PHONE, null)
-        val team = sp.getString(Constant.PREF_USER_TEAM, null)
-
-        edt_user_name.setText(name)
-        edt_user_phone.setText(phone)
-        edt_user_team.setText(team)
-
         bt_register.setOnClickListener {
 
             if (edt_user_name.text.isNotEmpty() && edt_user_phone.text.isNotEmpty() && edt_user_team.text.isNotEmpty()) {

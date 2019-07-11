@@ -30,6 +30,7 @@
         app:layout_constraintTop_toTopOf="@+id/tv_floor" />
 
     <androidx.recyclerview.widget.RecyclerView
+            android:visibility="gone"
         android:id="@+id/recyclerview_floor"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -39,5 +40,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_floor" />
+
+    <ProgressBar
+            android:visibility="gone"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/progressBar_select_room"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/spinner_floor"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

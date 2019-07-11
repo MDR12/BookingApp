@@ -84,7 +84,7 @@ class BookByRoomPresenter(private val view: BookByRoomContract.View) : BookByRoo
             //create checkbox data model
             for (i in 0 until timeList.size) {
 
-                var hasDateTimeBooking = bookingList.filter { it.time_booking == i }
+                var hasDateTimeBooking = checkTimeDate.filter { it.time_booking == i }
 
                 if (hasDateTimeBooking.isNotEmpty()) {
 
@@ -93,7 +93,7 @@ class BookByRoomPresenter(private val view: BookByRoomContract.View) : BookByRoo
                     timeCheckboxListData.add(
                         CheckboxAdapterDataModel(
                             timeList[i].text,
-                            Constant.TEXT_BOOK_BY + hasDateTimeBooking[0].user_name,
+                            hasDateTimeBooking[0].user_name + Constant.TEXT_SPACE_ONE + Constant.TEXT_V1 + hasDateTimeBooking[0].user_team + Constant.TEXT_V2 ,
                             Constant.TEXT_TEL + hasDateTimeBooking[0].user_phone,
                             hasDateTimeBooking[0].time_booking,
                             Constant.TYPE_BOOKED

@@ -2,6 +2,7 @@ package com.example.meetingroombookingapp.mybooking
 
 import android.content.Context
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -30,6 +31,8 @@ class MyBookingActivity : AppCompatActivity(),MyBookingContract.View {
 
         val userName = sp.getString(Constant.PREF_USER_NAME, null)
         val userPhone = sp.getString(Constant.PREF_USER_PHONE, null)
+
+        progressBar_myBook.visibility = View.VISIBLE
 
         presenter.onGetMyBooking(userName, userPhone)
         presenter.onGetTimeList()
@@ -61,6 +64,9 @@ class MyBookingActivity : AppCompatActivity(),MyBookingContract.View {
     }
 
     override fun onShowMyBooking(bookingList: MutableList<MyBookingModel>) {
+
+        progressBar_myBook.visibility = View.GONE
+        recyclerview_my_booking.visibility = View.VISIBLE
 
         val adapt = MyBookingAdapter(bookingList)
 
