@@ -28,6 +28,7 @@ object  Constant {
 
     //Text
     const val TEXT_CONFIRM_LOGOUT = "Are you sure you want to logout?"
+    const val TEXT_CANT_SELECT_TIME = "something wrong with your time"
     const val TEXT_LOGOUT = "Logout"
     const val TEXT_FILL_ALL_INFO = "Please fill all information"
     const val TEXT_ADD_SUCCESS = "Adding time booking successfully"
