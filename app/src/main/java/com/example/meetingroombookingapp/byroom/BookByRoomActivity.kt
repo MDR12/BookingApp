@@ -101,7 +101,7 @@ class BookByRoomActivity : AppCompatActivity(),BookByRoomContract.View {
                             Constant.TEXT_ROOM + roomName + Constant.TEXT_SPACE_ONE +
                             Constant.TEXT_FLOOR + floor + TEXT_NEW_LINE +
                             Constant.TEXT_DATE + datePick + TEXT_NEW_LINE +
-                            Constant.TEXT_TIME_SLOT_YOU_PICK + TEXT_NEW_LINE
+                            Constant.TEXT_TIME_SLOT_YOU_PICK
 
                 for (element in timeText)
                     str += Constant.TEXT_SPACE + element + TEXT_NEW_LINE

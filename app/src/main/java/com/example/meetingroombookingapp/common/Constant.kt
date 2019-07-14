@@ -25,6 +25,9 @@ object  Constant {
     const val EXTRA_SHOW = "show"
     const val EXTRA_SHOW_ROOMALL = "roomAll"
     const val EXTRA_SHOW_ROOM_BY_TIME = "roomByTime"
+    const val EXTRA_DATE = "date"
+    const val EXTRA_TIME_START = "time_start"
+    const val EXTRA_TIME_END = "time_end"
 
     //Text
     const val TEXT_CONFIRM_LOGOUT = "Are you sure you want to logout?"
@@ -36,6 +39,8 @@ object  Constant {
     const val TEXT_INVALIID = "Invalid view type"
     const val TEXT_TIME_SLOT_YOU_PICK = "Time:"
     const val TEXT_LISTEN_FAILED ="Listen failed!"
+    const val TEXT_DELETE_COMPLETE = "Delete Complete"
+    const val TEXT_DELETEING = "Deleteing..."
     const val TEXT_CONFIRM_BOOKING = "Confirm Booking"
     const val TEXT_FAIL = "get failed with load"
     const val TEXT_TIME_LIST = "time list"
@@ -60,6 +65,7 @@ object  Constant {
     const val TEXT_BOOK_BY = "Booked by: "
     const val TEXT_NO = "Cancel"
     const val TEXT_DATH = "-"
+    const val TEXT_DELETE = "Delete"
 
 
     //Firebase collection

@@ -1,15 +1,19 @@
 package com.example.meetingroombookingapp.selectmeetingroom
 
 import com.example.meetingroombookingapp.common.Constant
+import com.example.meetingroombookingapp.model.BookingDataModel
 import com.example.meetingroombookingapp.model.BookingModel
 import com.example.meetingroombookingapp.model.RoomModel
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
+import java.text.SimpleDateFormat
 import java.util.*
 
 class SelectRoomPresenter(private val view: SelectRoomContract.View) : SelectRoomContract.Presenter {
 
-    private val queryRoom = FirebaseFirestore.getInstance().collection(Constant.FIREBASE_COLLECTION_MEETINGROOM)
+    private val db = FirebaseFirestore.getInstance()
+    private val queryRoom = db.collection(Constant.FIREBASE_COLLECTION_MEETINGROOM)
+    private val queryBooking = db.collection(Constant.FIREBASE_COLLECTION_BOOKING)
 
     override fun getRoomFromFirebase(){
 
@@ -41,17 +45,72 @@ class SelectRoomPresenter(private val view: SelectRoomContract.View) : SelectRoo
 
     }
 
-    override fun fetchRoomByTime(floorSelect: String, date: Date, dateTimeStart: Date, dateTimeEnd: Date) {
+    override fun setRoomListByTime(date: String, timeStart: Int, timeEnd: Int) {
 
-    }
+        val dateFormat = SimpleDateFormat(Constant.FORMAT_DATE, Locale(Constant.TH)).parse(date)
+        val arrTimeSlot = mutableListOf<Int>()
 
-    override fun checkRoomAvaliable(roomList: MutableList<RoomModel>, timeList: MutableList<BookingModel>, dateTimeStart: Date, dateTimeEnd: Date): MutableList<RoomModel> {
-        return roomList
+        val m = timeEnd - timeStart
+        var start = timeStart
+
+        if (m == 1) {
+            arrTimeSlot.add(timeStart)
+        } else {
+            for (i in 0 until m) {
+                arrTimeSlot.add(start++)
+            }
+        }
+
+        val bookingRemoveList = mutableListOf<BookingModel>()
+        val myRoomList = mutableListOf<RoomModel>()
+
+        queryBooking
+            .whereEqualTo(Constant.FIREBASE_DATE, dateFormat)
+            .get().addOnSuccessListener { it ->
+                for (doc in it.documents) {
+                    val book = doc.toObject(BookingModel::class.java)
+                    book?.id = doc.id
+                    if (book != null && arrTimeSlot.contains(book.time_booking)) {
+                        bookingRemoveList.add(book)
+                    }
+                }
+
+                queryRoom
+                    .orderBy(Constant.FIREBASE_NAME, Query.Direction.ASCENDING)
+                    .get().addOnSuccessListener { it ->
+                        for (doc in it.documents) {
+                            val room = doc.toObject(RoomModel::class.java)
+                            room?.id = doc.id
+                            if (room != null) {
+                                myRoomList.add(room)
+                            }
+                        }
+
+                        if (bookingRemoveList.isNotEmpty()) {
+                            for (removeThisBook in bookingRemoveList) {
+                                val removeRoom = myRoomList.find { it.id == removeThisBook.room_id }
+                                myRoomList.remove(removeRoom)
+                            }
+                        }
+                        view.onGetRoomDone(myRoomList)
+                        view.onShowRoomList(myRoomList)
+                    }
+
+            }
+
+//        Log.d("TAG", m.toString() + "<<<<<<<<<<")
+//        for (element in arrTimeSlot) {
+//            Log.d("TAG", element.toString() + " ----------------------------------")
+//        }
     }
 
     override fun setFloorSpinner() {
         val category = arrayOf(Constant.FLOOR_ALL, Constant.FLOOR_11, Constant.FLOOR_10, Constant.FLOOR_9, Constant.FLOOR_8, Constant.FLOOR_7)
         view.onShowFloorSpinner(category)
+    }
+
+    override fun addBookingToDataBase(allData: MutableList<BookingDataModel>) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
 }

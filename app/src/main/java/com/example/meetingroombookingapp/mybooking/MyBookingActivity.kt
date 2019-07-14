@@ -2,6 +2,7 @@ package com.example.meetingroombookingapp.mybooking
 
 import android.content.Context
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -37,6 +38,19 @@ class MyBookingActivity : AppCompatActivity(),MyBookingContract.View {
         presenter.onGetMyBooking(userName, userPhone)
         presenter.onGetTimeList()
         presenter.onGetRoomList()
+    }
+
+    override fun onContextItemSelected(item: MenuItem?): Boolean {
+        if (item?.order == 0){
+
+            progressBar_myBook.visibility = View.VISIBLE
+            recyclerview_my_booking.visibility = View.GONE
+
+            presenter.deleteBooking(myBooking[item.groupId].id, item.groupId)
+            Toast.makeText(this, Constant.TEXT_DELETEING, Toast.LENGTH_SHORT).show()
+        }
+
+        return super.onContextItemSelected(item)
     }
 
     override fun onGetMyBookingDone(myBookingList: MutableList<BookingModel>) {
@@ -80,4 +94,9 @@ class MyBookingActivity : AppCompatActivity(),MyBookingContract.View {
         Toast.makeText(this, Constant.TEXT_FAIL + type, Toast.LENGTH_SHORT).show()
     }
 
+    override fun onDeleteOK(groupId: Int) {
+        Toast.makeText(this, Constant.TEXT_DELETE_COMPLETE, Toast.LENGTH_SHORT).show()
+        myBooking.removeAt(groupId)
+        handleFinishQuery()
+    }
 }

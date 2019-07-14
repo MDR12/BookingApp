@@ -97,4 +97,15 @@ class MyBookingPresenter(private val view: MyBookingContract.View): MyBookingCon
         view.onShowMyBooking(myBookingList)
     }
 
+    override fun deleteBooking(id: String?, groupId: Int) {
+
+        queryBooking
+            .document(id.toString())
+            .delete()
+            .addOnSuccessListener {
+                view.onDeleteOK(groupId) }
+            .addOnFailureListener {
+                view.onfailLoad(Constant.TEXT_MY_BOOKING_LIST) }
+    }
+
 }

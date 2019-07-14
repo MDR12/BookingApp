@@ -2,6 +2,7 @@ package com.example.meetingroombookingapp.bytime
 
 import android.app.DatePickerDialog
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
@@ -10,14 +11,15 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.meetingroombookingapp.R
 import com.example.meetingroombookingapp.common.Constant
+import com.example.meetingroombookingapp.selectmeetingroom.SelectRoomActivity
 import kotlinx.android.synthetic.main.activity_book_by_time.*
-import java.text.SimpleDateFormat
 import java.util.*
 
+@Suppress("NAME_SHADOWING")
 class BookByTimeActivity : AppCompatActivity(),BookByTimeContract.View {
 
     val presenter : BookByTimeContract.Presenter = BookByTimePersenter(this)
-    private lateinit var dateFormat: Date
+    private var date: String? = null
     var positionTimeStart: Int = 99
     var positionTimeEnd: Int = 99
 
@@ -36,12 +38,12 @@ class BookByTimeActivity : AppCompatActivity(),BookByTimeContract.View {
         presenter.setTimeStartSpinner()
         presenter.setTimeEndSpinner()
 
-        val dpd = DatePickerDialog(this, DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+        val dpd = DatePickerDialog(this, DatePickerDialog.OnDateSetListener { _, year, _, dayOfMonth ->
 
-            var date = dayOfMonth.toString() + Constant.TEXT_DATH + (month + 1).toString() +  Constant.TEXT_DATH + year.toString()
+            date = dayOfMonth.toString() + Constant.TEXT_DATH + (month + 1).toString() +  Constant.TEXT_DATH + year.toString()
             book_by_time_get_date.text = date
 
-            dateFormat = SimpleDateFormat(Constant.FORMAT_DATE, Locale(Constant.TH)  ).parse(date)
+//            dateFormat = SimpleDateFormat(Constant.FORMAT_DATE, Locale(Constant.TH)  ).parse(date)
 
             editor.putString(Constant.PREF_DATE_PICK, date)
             editor.apply()
@@ -75,26 +77,14 @@ class BookByTimeActivity : AppCompatActivity(),BookByTimeContract.View {
 
         bt_book_by_time_find_room.setOnClickListener {
 
-//            val arrTimeSlot = mutableListOf<Int>()
+            if (positionTimeStart != 99 && positionTimeEnd != 99 && positionTimeStart < positionTimeEnd && date != null) {
 
-            if (positionTimeStart != 99 && positionTimeEnd != 99 && positionTimeStart < positionTimeEnd) {
-
-
-
-//                val m = positionTimeEnd - positionTimeStart
-//                var start = positionTimeStart
-//
-//                if (m == 1) {
-//                    arrTimeSlot.add(positionTimeStart)
-//                } else {
-//                    for (i in 0 until m) {
-//                        arrTimeSlot.add(start++)
-//                    }
-//                }
-//                Log.d("TAG", m.toString() + "<<<<<<<<<<")
-//                for (element in arrTimeSlot) {
-//                    Log.d("TAG", element.toString() + " ----------------------------------")
-//                }
+                val intent = Intent(this, SelectRoomActivity::class.java)
+                intent.putExtra(Constant.EXTRA_SHOW, Constant.EXTRA_SHOW_ROOM_BY_TIME)
+                intent.putExtra(Constant.EXTRA_TIME_START, positionTimeStart)
+                intent.putExtra(Constant.EXTRA_TIME_END, positionTimeEnd)
+                intent.putExtra(Constant.EXTRA_DATE, date)
+                startActivity(intent)
 
             } else {
                 Toast.makeText(this, Constant.TEXT_CANT_SELECT_TIME, Toast.LENGTH_SHORT).show()
