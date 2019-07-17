@@ -137,11 +137,12 @@ class BookByRoomPresenter(private val view: BookByRoomContract.View) : BookByRoo
           for (i in allData){
             db.collection(Constant.FIREBASE_COLLECTION_BOOKING)
                     .add(i)
-//                    .addOnSuccessListener { documentReference ->
-//                    }
-//                    .addOnFailureListener {
-//                        view.onShowFail()
-//                    }
+                    .addOnSuccessListener {
+                        view.onShowSuccess()
+                    }
+                    .addOnFailureListener {
+                        view.onShowFail()
+                    }
         }
     }
 

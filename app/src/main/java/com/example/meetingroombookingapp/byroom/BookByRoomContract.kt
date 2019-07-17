@@ -17,7 +17,6 @@ interface BookByRoomContract {
     interface Presenter{
         fun getTimeList(): MutableList<TimeModel>
         fun getBookingList(): MutableList<BookingModel>
-        //fun getBookListInDate(date: Date, roomId: String?): MutableList<CheckBoxModel>
         fun fetchTimeCheckBox(
             timeList: MutableList<TimeModel>,
             bookingList: MutableList<BookingModel>,

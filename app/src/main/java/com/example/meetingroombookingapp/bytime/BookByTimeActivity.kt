@@ -15,7 +15,6 @@ import com.example.meetingroombookingapp.selectmeetingroom.SelectRoomActivity
 import kotlinx.android.synthetic.main.activity_book_by_time.*
 import java.util.*
 
-@Suppress("NAME_SHADOWING")
 class BookByTimeActivity : AppCompatActivity(),BookByTimeContract.View {
 
     val presenter : BookByTimeContract.Presenter = BookByTimePersenter(this)
@@ -38,13 +37,10 @@ class BookByTimeActivity : AppCompatActivity(),BookByTimeContract.View {
         presenter.setTimeStartSpinner()
         presenter.setTimeEndSpinner()
 
-        val dpd = DatePickerDialog(this, DatePickerDialog.OnDateSetListener { _, year, _, dayOfMonth ->
+        val dpd = DatePickerDialog(this, DatePickerDialog.OnDateSetListener { _, pYear, pMonth, pDayOfMonth ->
 
-            date = dayOfMonth.toString() + Constant.TEXT_DATH + (month + 1).toString() +  Constant.TEXT_DATH + year.toString()
+            date = pDayOfMonth.toString() + Constant.TEXT_DATH + (pMonth + 1).toString() +  Constant.TEXT_DATH + pYear.toString()
             book_by_time_get_date.text = date
-
-//            dateFormat = SimpleDateFormat(Constant.FORMAT_DATE, Locale(Constant.TH)  ).parse(date)
-
             editor.putString(Constant.PREF_DATE_PICK, date)
             editor.apply()
 

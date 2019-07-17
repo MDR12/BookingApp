@@ -42,12 +42,13 @@ class BookByRoomActivity : AppCompatActivity(),BookByRoomContract.View {
         val timeList = presenter.getTimeList()
         val bookingList = presenter.getBookingList()
 
-        val dpd = DatePickerDialog(this, DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+        val dpd = DatePickerDialog(this, DatePickerDialog.OnDateSetListener { _, pYear, pMonth, pDayOfMonth ->
 
-            var date = dayOfMonth.toString() + Constant.TEXT_DATH + (month + 1).toString() +  Constant.TEXT_DATH + year.toString()
+            val date =
+                pDayOfMonth.toString() + Constant.TEXT_DATH + (pMonth + 1).toString() + Constant.TEXT_DATH + pYear.toString()
             date_picker.text = date
 
-            dateFormat = SimpleDateFormat(Constant.FORMAT_DATE, Locale(Constant.TH)  ).parse(date)
+            dateFormat = SimpleDateFormat(Constant.FORMAT_DATE, Locale(Constant.TH)).parse(date)
 
             presenter.fetchTimeCheckBox(timeList, bookingList, dateFormat, roomId)
 
@@ -63,9 +64,9 @@ class BookByRoomActivity : AppCompatActivity(),BookByRoomContract.View {
 
         bt_book_byroom.setOnClickListener {
 
-            val roomId = sp.getString(Constant.PREF_ROOM_ID, null)
+            val getRoomId = sp.getString(Constant.PREF_ROOM_ID, null)
             val roomName = sp.getString(Constant.PREF_ROOM_NAME, null)
-            val floor = sp.getString(Constant.PREF_ROOM_FLOOR, null)
+            val floor = sp.getInt(Constant.PREF_ROOM_FLOOR, 99)
             val userName = sp.getString(Constant.PREF_USER_NAME, null)
             val userPhone = sp.getString(Constant.PREF_USER_PHONE, null)
             val userTeam = sp.getString(Constant.PREF_USER_TEAM, null)
@@ -78,14 +79,16 @@ class BookByRoomActivity : AppCompatActivity(),BookByRoomContract.View {
             val checkList = timeSlotPick.filter { it.isCheck }
 
             for (i in 0 until checkList.size) {
-
                 allData.add(i, BookingDataModel(
-                        date,
-                        roomId,
-                        userName,
-                        userPhone,
-                        userTeam,
-                        checkList[i].timeSlotID
+                    date,
+                    getRoomId,
+                    floor,
+                    roomName,
+                    userName,
+                    userPhone,
+                    userTeam,
+                    checkList[i].timeSlotID,
+                    checkList[i].timeText
 
                 ))
 
@@ -103,8 +106,13 @@ class BookByRoomActivity : AppCompatActivity(),BookByRoomContract.View {
                             Constant.TEXT_DATE + datePick + TEXT_NEW_LINE +
                             Constant.TEXT_TIME_SLOT_YOU_PICK
 
-                for (element in timeText)
-                    str += Constant.TEXT_SPACE + element + TEXT_NEW_LINE
+                if (timeText.size == 1) {
+                    str += Constant.TEXT_SPACE_ONE + timeText[0]
+                } else {
+                    for (element in timeText)
+                        str += TEXT_NEW_LINE + Constant.TEXT_SPACE + element
+                }
+
 
                 builder.setTitle(Constant.TEXT_CONFIRM_BOOKING)
                 builder.setMessage(str)

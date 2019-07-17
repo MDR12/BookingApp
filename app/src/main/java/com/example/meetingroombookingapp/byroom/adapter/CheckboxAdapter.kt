@@ -61,7 +61,7 @@ class CheckboxAdapter(private val timeList: MutableList<CheckboxAdapterDataModel
 
             myCheckbox.setOnCheckedChangeListener(null)
             myCheckbox.isChecked = item.isCheck
-            myCheckbox.setOnCheckedChangeListener { buttonView, isChecked ->
+            myCheckbox.setOnCheckedChangeListener { _, isChecked ->
                 item.isCheck = isChecked
             }
         }

@@ -35,7 +35,7 @@ class RoomRecyclerViewAdapter(private val roomList: MutableList<RoomModel>, priv
         var mFloorView: TextView? = itemView.findViewById(R.id.tv_floor)
         var itemID: String? = null
         var itemName: String? = null
-        var itemFloor: String? = null
+        var itemFloor: Int = 99
 
         init {
             this.onRoomClickListener
@@ -48,7 +48,7 @@ class RoomRecyclerViewAdapter(private val roomList: MutableList<RoomModel>, priv
             mFloorView?.text = Constant.TEXT_FLOOR + Constant.TEXT_SPACE_ONE + room.floor.toString()
             itemID = room.id.toString()
             itemName = room.name.toString()
-            itemFloor = room.floor.toString()
+            itemFloor = room.floor
         }
 
         override fun onClick(v: View?) {
@@ -57,6 +57,6 @@ class RoomRecyclerViewAdapter(private val roomList: MutableList<RoomModel>, priv
     }
 
     interface OnRoomListener {
-        fun onRoomClick(position: String?, itemName: String?, itemFloor: String?)
+        fun onRoomClick(position: String?, itemName: String?, itemFloor: Int)
     }
 }

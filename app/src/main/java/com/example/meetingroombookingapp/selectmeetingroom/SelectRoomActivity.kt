@@ -7,6 +7,7 @@ import android.os.Handler
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -81,11 +82,8 @@ class SelectRoomActivity : AppCompatActivity(), SelectRoomContract.View, RoomRec
     }
 
     override fun onGetRoomDone(roomList: MutableList<RoomModel>) {
-
         myRoomList = roomList
-
     }
-
 
     override fun onShowFloorSpinner(mAllFloor: Array<String>) {
         val floor = ArrayAdapter(this, android.R.layout.simple_spinner_item, mAllFloor)
@@ -93,90 +91,107 @@ class SelectRoomActivity : AppCompatActivity(), SelectRoomContract.View, RoomRec
         spinner_floor?.adapter = floor
     }
 
-    override fun onRoomClick(position: String?, itemName: String?, itemFloor: String?) {
-
+    override fun onRoomClick(position: String?, itemName: String?, itemFloor: Int) {
         val sp = getSharedPreferences(Constant.PREF_NAME, Context.MODE_PRIVATE)
         val editor = sp.edit()
         editor.putString(Constant.PREF_ROOM_ID, position)
         editor.putString(Constant.PREF_ROOM_NAME, itemName)
-        editor.putString(Constant.PREF_ROOM_FLOOR, itemFloor)
+        editor.putInt(Constant.PREF_ROOM_FLOOR, itemFloor)
         editor.apply()
 
         if (show == Constant.EXTRA_SHOW_ROOMALL) {
-
             val intent = Intent(this, BookByRoomActivity::class.java)
             startActivity(intent)
-
         } else if (show == Constant.EXTRA_SHOW_ROOM_BY_TIME) {
+            addToFireBase()
+        }
+    }
 
-            val roomId = sp.getString(Constant.PREF_ROOM_ID, null)
-            val roomName = sp.getString(Constant.PREF_ROOM_NAME, null)
-            val floor = sp.getString(Constant.PREF_ROOM_FLOOR, null)
-            val userName = sp.getString(Constant.PREF_USER_NAME, null)
-            val userPhone = sp.getString(Constant.PREF_USER_PHONE, null)
-            val userTeam = sp.getString(Constant.PREF_USER_TEAM, null)
+    override fun onShowSuccess() {
+        Toast.makeText(this, Constant.TEXT_ADD_SUCCESS, Toast.LENGTH_SHORT).show()
+    }
 
-            val dateFormat = SimpleDateFormat(Constant.FORMAT_DATE, Locale(Constant.TH)).parse(date)
+    override fun onShowFail() {
+        Toast.makeText(this, Constant.TEXT_ADD_ERROR, Toast.LENGTH_SHORT).show()
+    }
 
-            val allData = mutableListOf<BookingDataModel>()
-            val arrTimeSlot = mutableListOf<Int>()
+    private fun addToFireBase() {
+        val sp = getSharedPreferences(Constant.PREF_NAME, Context.MODE_PRIVATE)
 
-            val m = endTime - startTime
-            var start = startTime
+        val roomId = sp.getString(Constant.PREF_ROOM_ID, null)
+        val roomName = sp.getString(Constant.PREF_ROOM_NAME, null)
+        val floor = sp.getInt(Constant.PREF_ROOM_FLOOR, 99)
+        val userName = sp.getString(Constant.PREF_USER_NAME, null)
+        val userPhone = sp.getString(Constant.PREF_USER_PHONE, null)
+        val userTeam = sp.getString(Constant.PREF_USER_TEAM, null)
 
-            if (m == 1) {
-                arrTimeSlot.add(startTime)
-            } else {
-                for (i in 0 until m) {
-                    arrTimeSlot.add(start++)
-                }
+        val dateFormat = SimpleDateFormat(Constant.FORMAT_DATE, Locale(Constant.TH)).parse(date)
+
+        val allData = mutableListOf<BookingDataModel>()
+        val arrTimeSlot = mutableListOf<Int>()
+
+        val m = endTime - startTime
+        var start = startTime
+
+        if (m == 1) {
+            arrTimeSlot.add(startTime)
+        } else {
+            for (i in 0 until m) {
+                arrTimeSlot.add(start++)
             }
+        }
 
-            for (i in 0 until arrTimeSlot.size) {
+        for (i in 0 until arrTimeSlot.size) {
 
-                allData.add(i, BookingDataModel(
+            allData.add(
+                i, BookingDataModel(
                     dateFormat,
                     roomId,
+                    floor,
+                    roomName,
                     userName,
                     userPhone,
                     userTeam,
-                    arrTimeSlot[i]
-
-                ))
-            }
-
-            val builder = AlertDialog.Builder(this)
-            var str =
-                Constant.TEXT_NAME + userName + Constant.TEXT_SPACE_ONE +
-                        Constant.TEXT_TEL + userPhone + Constant.TEXT_NEW_LINE +
-                        Constant.TEXT_ROOM + roomName + Constant.TEXT_SPACE_ONE +
-                        Constant.TEXT_FLOOR + floor + Constant.TEXT_NEW_LINE +
-                        Constant.TEXT_DATE + date + Constant.TEXT_NEW_LINE +
-                        Constant.TEXT_TIME_SLOT_YOU_PICK
-
-            for (element in arrTimeSlot)
-                str += Constant.TEXT_SPACE + element + Constant.TEXT_NEW_LINE
-
-            builder.setTitle(Constant.TEXT_CONFIRM_BOOKING)
-            builder.setMessage(str)
-
-            builder.setPositiveButton(Constant.TEXT_CONFIRM) { _, _ ->
-
-                presenter.addBookingToDataBase(allData)
-
-                val i = Intent(this, HomeActivity::class.java)
-                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                startActivity(i)
-            }
-
-            builder.setNegativeButton(Constant.TEXT_NO) { _, _ -> }
-
-            val dialog: AlertDialog = builder.create()
-            dialog.show()
-
-
+                    arrTimeSlot[i],
+                    Constant.ARR_TIME_ALL_TEXT[arrTimeSlot[i]]
+                )
+            )
         }
 
+        val builder = AlertDialog.Builder(this)
+        var str =
+            Constant.TEXT_NAME + userName + Constant.TEXT_SPACE_ONE +
+                    Constant.TEXT_TEL + userPhone + Constant.TEXT_NEW_LINE +
+                    Constant.TEXT_ROOM + roomName + Constant.TEXT_SPACE_ONE +
+                    Constant.TEXT_FLOOR + floor + Constant.TEXT_NEW_LINE +
+                    Constant.TEXT_DATE + date + Constant.TEXT_NEW_LINE +
+                    Constant.TEXT_TIME_SLOT_YOU_PICK
+
+        if (arrTimeSlot.size == 1){
+            str += Constant.TEXT_SPACE_ONE + Constant.ARR_TIME_ALL_TEXT[arrTimeSlot[0]]
+        }else{
+            for (element in arrTimeSlot)
+                str += Constant.TEXT_NEW_LINE + Constant.TEXT_SPACE + Constant.ARR_TIME_ALL_TEXT[element]
+        }
+
+
+        builder.setTitle(Constant.TEXT_CONFIRM_BOOKING)
+        builder.setMessage(str)
+
+        builder.setPositiveButton(Constant.TEXT_CONFIRM) { _, _ ->
+
+            presenter.addBookingToDataBase(allData)
+
+            val i = Intent(this, HomeActivity::class.java)
+            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            startActivity(i)
+        }
+
+        builder.setNegativeButton(Constant.TEXT_NO) { _, _ -> }
+
+        val dialog: AlertDialog = builder.create()
+        dialog.show()
     }
+
 
 }

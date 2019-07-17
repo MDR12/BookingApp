@@ -9,6 +9,8 @@ interface SelectRoomContract {
         fun onShowRoomList(data: MutableList<RoomModel>)
         fun onShowFloorSpinner(mAllFloor: Array<String>)
         fun onGetRoomDone(roomList: MutableList<RoomModel>)
+        fun onShowSuccess()
+        fun onShowFail()
     }
     interface Presenter{
         fun setFloorSpinner()

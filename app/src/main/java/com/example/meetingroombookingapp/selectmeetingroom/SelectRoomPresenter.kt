@@ -77,7 +77,10 @@ class SelectRoomPresenter(private val view: SelectRoomContract.View) : SelectRoo
 
                 queryRoom
                     .orderBy(Constant.FIREBASE_NAME, Query.Direction.ASCENDING)
-                    .get().addOnSuccessListener { it ->
+                    .get()
+                    //.continueWith {}
+
+                    .addOnSuccessListener {
                         for (doc in it.documents) {
                             val room = doc.toObject(RoomModel::class.java)
                             room?.id = doc.id
@@ -110,7 +113,16 @@ class SelectRoomPresenter(private val view: SelectRoomContract.View) : SelectRoo
     }
 
     override fun addBookingToDataBase(allData: MutableList<BookingDataModel>) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        for (i in allData){
+            db.collection(Constant.FIREBASE_COLLECTION_BOOKING)
+                .add(i)
+                .addOnSuccessListener {
+                    view.onShowSuccess()
+                }
+                .addOnFailureListener {
+                    view.onShowFail()
+                }
+        }
     }
 
 }

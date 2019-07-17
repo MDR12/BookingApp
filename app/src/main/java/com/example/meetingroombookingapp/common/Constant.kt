@@ -31,6 +31,7 @@ object  Constant {
 
     //Text
     const val TEXT_CONFIRM_LOGOUT = "Are you sure you want to logout?"
+    const val TEXT_CANT_PICK_DAY_AFTER = "Can not select the date of the past"
     const val TEXT_CANT_SELECT_TIME = "something wrong with your time"
     const val TEXT_LOGOUT = "Logout"
     const val TEXT_FILL_ALL_INFO = "Please fill all information"
@@ -99,21 +100,10 @@ object  Constant {
     //language
     const val TH = "th"
 
-    //Time Slot
-    const val TS_1 = "7:00"
-    const val TS_2 = "8:00"
-    const val TS_3 = "9:00"
-    const val TS_4 = "10:00"
-    const val TS_5 = "11:00"
-    const val TS_6 = "12:00"
-    const val TS_7 = "13:00"
-    const val TS_8 = "14:00"
-    const val TS_9 = "15:00"
-    const val TS_10 = "16:00"
-    const val TS_11 = "17:00"
-    const val TS_12 = "18:00"
-    const val TS_13 = "19:00"
-    const val TS_14 = "20:00"
+    //array
+    val ARR_TIME_ALL_TEXT: Array<String> = arrayOf("7:00 - 8:00","8:00 - 9:00","9:00 - 10:00","10:00 - 11:00","11:00 - 12:00","12:00 - 13:00","13:00 - 14:00","14:00 - 15:00","15:00 - 16:00","16:00 - 17:00","17:00 - 18:00","18:00 -19:00","19:00 - 20:00")
 
+    val ARR_TIME_START_TEXT: Array<String> = arrayOf("7:00","8:00","9:00","10:00","11:00","12:00","13:00","14:00","15:00","16:00","17:00","18:00","19:00")
+    val ARR_TIME_END_TEXT: Array<String> = arrayOf("8:00","9:00","10:00","11:00","12:00","13:00","14:00","15:00","16:00","17:00","18:00","19:00","20:00")
 
 }

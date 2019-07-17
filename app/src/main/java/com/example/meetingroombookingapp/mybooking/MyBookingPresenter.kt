@@ -32,8 +32,8 @@ class MyBookingPresenter(private val view: MyBookingContract.View): MyBookingCon
                         }
                     }
                     view.onGetTimeListDone(timeList)
-                }.addOnFailureListener { exception ->
-                    view.onfailLoad(Constant.TEXT_TIME_LIST)
+                }.addOnFailureListener {
+                view.onfailLoad(Constant.TEXT_TIME_LIST)
                 }
     }
 
@@ -52,8 +52,8 @@ class MyBookingPresenter(private val view: MyBookingContract.View): MyBookingCon
                         }
                     }
                     view.onGetRoomListDone(roomList)
-                }.addOnFailureListener { exception ->
-                    view.onfailLoad(Constant.TEXT_ROOM_LIST)
+                }.addOnFailureListener {
+                view.onfailLoad(Constant.TEXT_ROOM_LIST)
                 }
     }
 
@@ -75,8 +75,8 @@ class MyBookingPresenter(private val view: MyBookingContract.View): MyBookingCon
                         }
                     }
                     view.onGetMyBookingDone(bookingList)
-                }.addOnFailureListener { exception ->
-                    view.onfailLoad(Constant.TEXT_MY_BOOKING_LIST)
+                }.addOnFailureListener {
+                view.onfailLoad(Constant.TEXT_MY_BOOKING_LIST)
                 }
     }
 

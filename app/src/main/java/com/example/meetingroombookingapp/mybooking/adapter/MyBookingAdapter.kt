@@ -1,6 +1,5 @@
 package com.example.meetingroombookingapp.mybooking.adapter
 
-import android.annotation.SuppressLint
 import android.view.ContextMenu
 import android.view.LayoutInflater
 import android.view.View
@@ -41,7 +40,6 @@ class MyBookingAdapter(private val bookingList: MutableList<MyBookingModel>): Re
         var bookingID: String? = null
 
 
-        @SuppressLint("SetTextI18n")
         fun bind(booking: MyBookingModel){
             mRoomNameView?.text = Constant.TEXT_ROOM + booking.roomName
             mMyFloorView?.text = Constant.TEXT_FLOOR + booking.roomFloor.toString()
