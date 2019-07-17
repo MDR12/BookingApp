@@ -17,7 +17,7 @@ import java.util.*
 
 class BookByTimeActivity : AppCompatActivity(),BookByTimeContract.View {
 
-    val presenter : BookByTimeContract.Presenter = BookByTimePersenter(this)
+    val presenter : BookByTimeContract.Presenter = BookByTimePresenter(this)
     private var date: String? = null
     var positionTimeStart: Int = 99
     var positionTimeEnd: Int = 99
@@ -38,7 +38,6 @@ class BookByTimeActivity : AppCompatActivity(),BookByTimeContract.View {
         presenter.setTimeEndSpinner()
 
         val dpd = DatePickerDialog(this, DatePickerDialog.OnDateSetListener { _, pYear, pMonth, pDayOfMonth ->
-
             date = pDayOfMonth.toString() + Constant.TEXT_DATH + (pMonth + 1).toString() +  Constant.TEXT_DATH + pYear.toString()
             book_by_time_get_date.text = date
             editor.putString(Constant.PREF_DATE_PICK, date)
@@ -72,7 +71,6 @@ class BookByTimeActivity : AppCompatActivity(),BookByTimeContract.View {
         }
 
         bt_book_by_time_find_room.setOnClickListener {
-
             if (positionTimeStart != 99 && positionTimeEnd != 99 && positionTimeStart < positionTimeEnd && date != null) {
 
                 val intent = Intent(this, SelectRoomActivity::class.java)

@@ -2,7 +2,7 @@ package com.example.meetingroombookingapp.bytime
 
 import com.example.meetingroombookingapp.common.Constant
 
-class BookByTimePersenter(private val view: BookByTimeContract.View): BookByTimeContract.Presenter {
+class BookByTimePresenter(private val view: BookByTimeContract.View): BookByTimeContract.Presenter {
 
     override fun setTimeStartSpinner() {
         val time = Constant.ARR_TIME_START_TEXT

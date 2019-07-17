@@ -31,6 +31,7 @@ object  Constant {
 
     //Text
     const val TEXT_CONFIRM_LOGOUT = "Are you sure you want to logout?"
+    const val TEXT_CONFIRM_CANCEL_MYBOOKING = "Are you sure, you want to cancel this booking?"
     const val TEXT_CANT_PICK_DAY_AFTER = "Can not select the date of the past"
     const val TEXT_CANT_SELECT_TIME = "something wrong with your time"
     const val TEXT_LOGOUT = "Logout"
@@ -42,6 +43,8 @@ object  Constant {
     const val TEXT_LISTEN_FAILED ="Listen failed!"
     const val TEXT_DELETE_COMPLETE = "Delete Complete"
     const val TEXT_DELETEING = "Deleteing..."
+    const val TEXT_YES = "Yes"
+    const val TEXT_NO = "No"
     const val TEXT_CONFIRM_BOOKING = "Confirm Booking"
     const val TEXT_FAIL = "get failed with load"
     const val TEXT_TIME_LIST = "time list"
@@ -64,7 +67,7 @@ object  Constant {
     const val TEXT_V2 = ")"
     const val TEXT_SPACE_ONE = " "
     const val TEXT_BOOK_BY = "Booked by: "
-    const val TEXT_NO = "Cancel"
+    const val TEXT_CANCEL = "Cancel"
     const val TEXT_DATH = "-"
     const val TEXT_DELETE = "Delete"
 
@@ -101,7 +104,7 @@ object  Constant {
     const val TH = "th"
 
     //array
-    val ARR_TIME_ALL_TEXT: Array<String> = arrayOf("7:00 - 8:00","8:00 - 9:00","9:00 - 10:00","10:00 - 11:00","11:00 - 12:00","12:00 - 13:00","13:00 - 14:00","14:00 - 15:00","15:00 - 16:00","16:00 - 17:00","17:00 - 18:00","18:00 -19:00","19:00 - 20:00")
+    val ARR_TIME_ALL_TEXT: Array<String> = arrayOf("7:00 - 8:00","8:00 - 9:00","9:00 - 10:00","10:00 - 11:00","11:00 - 12:00","12:00 - 13:00","13:00 - 14:00","14:00 - 15:00","15:00 - 16:00","16:00 - 17:00","17:00 - 18:00","18:00 - 19:00","19:00 - 20:00")
 
     val ARR_TIME_START_TEXT: Array<String> = arrayOf("7:00","8:00","9:00","10:00","11:00","12:00","13:00","14:00","15:00","16:00","17:00","18:00","19:00")
     val ARR_TIME_END_TEXT: Array<String> = arrayOf("8:00","9:00","10:00","11:00","12:00","13:00","14:00","15:00","16:00","17:00","18:00","19:00","20:00")

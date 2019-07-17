@@ -19,9 +19,7 @@ class LoginActivity : AppCompatActivity() {
         val sp = getSharedPreferences(Constant.PREF_NAME , Context.MODE_PRIVATE)
 
         bt_register.setOnClickListener {
-
             if (edt_user_name.text.isNotEmpty() && edt_user_phone.text.isNotEmpty() && edt_user_team.text.isNotEmpty()) {
-
                 val editor = sp.edit()
                 editor.putString(Constant.PREF_USER_NAME, edt_user_name.text.toString())
                 editor.putString(Constant.PREF_USER_PHONE, edt_user_phone.text.toString())
@@ -32,7 +30,6 @@ class LoginActivity : AppCompatActivity() {
                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                 startActivity(i)
                 finish()
-
             }else{
                 Toast.makeText(this, TEXT_FILL_ALL_INFO, Toast.LENGTH_SHORT).show()
             }

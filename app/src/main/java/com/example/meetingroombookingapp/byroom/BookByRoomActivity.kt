@@ -39,18 +39,13 @@ class BookByRoomActivity : AppCompatActivity(),BookByRoomContract.View {
         val month = c.get(Calendar.MONTH)
         val day = c.get(Calendar.DAY_OF_MONTH)
 
-        val timeList = presenter.getTimeList()
-        val bookingList = presenter.getBookingList()
-
         val dpd = DatePickerDialog(this, DatePickerDialog.OnDateSetListener { _, pYear, pMonth, pDayOfMonth ->
-
             val date =
                 pDayOfMonth.toString() + Constant.TEXT_DATH + (pMonth + 1).toString() + Constant.TEXT_DATH + pYear.toString()
             date_picker.text = date
 
             dateFormat = SimpleDateFormat(Constant.FORMAT_DATE, Locale(Constant.TH)).parse(date)
-
-            presenter.fetchTimeCheckBox(timeList, bookingList, dateFormat, roomId)
+            presenter.fetchTimeCheckBox(Constant.ARR_TIME_ALL_TEXT, dateFormat, roomId)
 
             val editor = sp.edit()
             editor.putString(Constant.PREF_DATE_PICK, date)
@@ -63,14 +58,12 @@ class BookByRoomActivity : AppCompatActivity(),BookByRoomContract.View {
         }
 
         bt_book_byroom.setOnClickListener {
-
             val getRoomId = sp.getString(Constant.PREF_ROOM_ID, null)
             val roomName = sp.getString(Constant.PREF_ROOM_NAME, null)
             val floor = sp.getInt(Constant.PREF_ROOM_FLOOR, 99)
             val userName = sp.getString(Constant.PREF_USER_NAME, null)
             val userPhone = sp.getString(Constant.PREF_USER_PHONE, null)
             val userTeam = sp.getString(Constant.PREF_USER_TEAM, null)
-
             val datePick = sp.getString(Constant.PREF_DATE_PICK, null)
             val date = SimpleDateFormat(Constant.FORMAT_DATE, Locale(Constant.TH)).parse(datePick)
 
@@ -89,14 +82,11 @@ class BookByRoomActivity : AppCompatActivity(),BookByRoomContract.View {
                     userTeam,
                     checkList[i].timeSlotID,
                     checkList[i].timeText
-
                 ))
-
                 timeText.add(checkList[i].timeText)
             }
 
             if (datePick != null && allData.isNotEmpty()) {
-
                 val builder = AlertDialog.Builder(this)
                 var str =
                     Constant.TEXT_NAME + userName + Constant.TEXT_SPACE_ONE +
@@ -112,8 +102,6 @@ class BookByRoomActivity : AppCompatActivity(),BookByRoomContract.View {
                     for (element in timeText)
                         str += TEXT_NEW_LINE + Constant.TEXT_SPACE + element
                 }
-
-
                 builder.setTitle(Constant.TEXT_CONFIRM_BOOKING)
                 builder.setMessage(str)
 
@@ -134,7 +122,6 @@ class BookByRoomActivity : AppCompatActivity(),BookByRoomContract.View {
             }else{
                 Toast.makeText(this, Constant.TEXT_FILL_ALL_INFO, Toast.LENGTH_SHORT).show()
             }
-
         }
     }
 

@@ -17,6 +17,6 @@ data class BookingDataModel(
         var user_team: String?,
 
         var time_booking: Int,
-        var time_text: String?
+        var time_text: String
 
         )

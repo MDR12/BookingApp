@@ -16,7 +16,6 @@ class SelectRoomPresenter(private val view: SelectRoomContract.View) : SelectRoo
     private val queryBooking = db.collection(Constant.FIREBASE_COLLECTION_BOOKING)
 
     override fun getRoomFromFirebase(){
-
         val roomList = mutableListOf<RoomModel>()
 
         queryRoom
@@ -46,13 +45,11 @@ class SelectRoomPresenter(private val view: SelectRoomContract.View) : SelectRoo
     }
 
     override fun setRoomListByTime(date: String, timeStart: Int, timeEnd: Int) {
-
         val dateFormat = SimpleDateFormat(Constant.FORMAT_DATE, Locale(Constant.TH)).parse(date)
         val arrTimeSlot = mutableListOf<Int>()
 
         val m = timeEnd - timeStart
         var start = timeStart
-
         if (m == 1) {
             arrTimeSlot.add(timeStart)
         } else {
@@ -100,11 +97,6 @@ class SelectRoomPresenter(private val view: SelectRoomContract.View) : SelectRoo
                     }
 
             }
-
-//        Log.d("TAG", m.toString() + "<<<<<<<<<<")
-//        for (element in arrTimeSlot) {
-//            Log.d("TAG", element.toString() + " ----------------------------------")
-//        }
     }
 
     override fun setFloorSpinner() {
@@ -116,13 +108,8 @@ class SelectRoomPresenter(private val view: SelectRoomContract.View) : SelectRoo
         for (i in allData){
             db.collection(Constant.FIREBASE_COLLECTION_BOOKING)
                 .add(i)
-                .addOnSuccessListener {
-                    view.onShowSuccess()
-                }
-                .addOnFailureListener {
-                    view.onShowFail()
-                }
         }
+        view.onShowSuccess()
     }
 
 }

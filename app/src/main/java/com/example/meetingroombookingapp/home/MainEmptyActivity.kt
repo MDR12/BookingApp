@@ -15,13 +15,10 @@ class MainEmptyActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         val sp: SharedPreferences = this.getSharedPreferences(Constant.PREF_NAME, Context.MODE_PRIVATE)
-
-            val userName = sp.getString(Constant.PREF_USER_NAME, null)
-            val userPhone = sp.getString(Constant.PREF_USER_PHONE, null)
-
+        val userName = sp.getString(Constant.PREF_USER_NAME, null)
+        val userPhone = sp.getString(Constant.PREF_USER_PHONE, null)
         val activityIntent: Intent
 
-        // go straight to main if a token is stored
         activityIntent = if (userName != null && userPhone != null) {
             Intent(this, HomeActivity::class.java)
         } else {

@@ -39,19 +39,14 @@ class CheckboxAdapter(private val timeList: MutableList<CheckboxAdapterDataModel
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val time = timeList[position]
-
         if(holder is BookedViewHolder){
-
             holder.bind(time)
-
         } else if (holder is AvailableViewHolder) {
-
             holder.bind(time)
         }
     }
 
     class AvailableViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-
         var myCheckbox: CheckBox = itemView.findViewById(R.id.checkbox_time)
         var itemID: Int? = null
 
@@ -68,13 +63,11 @@ class CheckboxAdapter(private val timeList: MutableList<CheckboxAdapterDataModel
     }
 
     class BookedViewHolder (view: View) : RecyclerView.ViewHolder(view) {
-
         private var mUserName: TextView = itemView.findViewById(R.id.show_book_by_user_name)
         private var mUserPhone: TextView = itemView.findViewById(R.id.show_book_by_user_phone)
         private var mTime: TextView = itemView.findViewById(R.id.tv_time)
 
         fun bind(item: CheckboxAdapterDataModel){
-
             mUserName.text = item.userName
             mUserPhone.text = item.userPhone
             mTime.text = item.timeText
