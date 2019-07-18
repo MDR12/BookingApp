@@ -133,11 +133,11 @@ class BookByRoomActivity : AppCompatActivity(), BookByRoomContract.View {
         val mMonth = c.get(Calendar.MONTH)
         val mDay = c.get(Calendar.DAY_OF_MONTH)
 
-        val toDay = Date(mYear, mMonth + 1, mDay, 0, 0)
+        val toDay = GregorianCalendar(mYear, mMonth + 1, mDay, 0, 0,0)
 
         val dpd = DatePickerDialog(this, DatePickerDialog.OnDateSetListener { _, pYear, pMonth, pDayOfMonth ->
 
-            val pickDay = Date(pYear, pMonth + 1, pDayOfMonth, 0, 0)
+            val pickDay = GregorianCalendar(pYear, pMonth + 1, pDayOfMonth, 0, 0,0)
 
             if (toDay.before(pickDay) || toDay == pickDay){
                 val date =
