@@ -129,23 +129,32 @@ class BookByRoomActivity : AppCompatActivity(), BookByRoomContract.View {
     private fun initDatePickerDialog() {
         val roomId = sharePref.getString(Constant.PREF_ROOM_ID, null)
         val c = Calendar.getInstance()
-        val year = c.get(Calendar.YEAR)
-        val month = c.get(Calendar.MONTH)
-        val day = c.get(Calendar.DAY_OF_MONTH)
+        val mYear = c.get(Calendar.YEAR)
+        val mMonth = c.get(Calendar.MONTH)
+        val mDay = c.get(Calendar.DAY_OF_MONTH)
+
+        val toDay = Date(mYear, mMonth + 1, mDay, 0, 0)
 
         val dpd = DatePickerDialog(this, DatePickerDialog.OnDateSetListener { _, pYear, pMonth, pDayOfMonth ->
-            val date =
-                pDayOfMonth.toString() + Constant.TEXT_DATH + (pMonth + 1).toString() + Constant.TEXT_DATH + pYear.toString()
-            date_picker.text = date
 
-            dateFormat = SimpleDateFormat(Constant.FORMAT_DATE, Locale(Constant.TH)).parse(date)
-            presenter.fetchTimeCheckBox(Constant.ARR_TIME_ALL_TEXT, dateFormat, roomId)
+            val pickDay = Date(pYear, pMonth + 1, pDayOfMonth, 0, 0)
 
-            val editor = sharePref.edit()
-            editor.putString(Constant.PREF_DATE_PICK, date)
-            editor.apply()
+            if (toDay.before(pickDay) || toDay == pickDay){
+                val date =
+                        pDayOfMonth.toString() + Constant.TEXT_DATH + (pMonth + 1).toString() + Constant.TEXT_DATH + pYear.toString()
+                date_picker.text = date
 
-        }, year, month, day)
+                dateFormat = SimpleDateFormat(Constant.FORMAT_DATE, Locale(Constant.TH)).parse(date)
+                presenter.fetchTimeCheckBox(Constant.ARR_TIME_ALL_TEXT, dateFormat, roomId)
+
+                val editor = sharePref.edit()
+                editor.putString(Constant.PREF_DATE_PICK, date)
+                editor.apply()
+            }else{
+                Toast.makeText(this, Constant.TEXT_CANT_PICK_DAY_AFTER, Toast.LENGTH_SHORT).show()
+            }
+
+        }, mYear, mMonth, mDay)
 
         date_picker.setOnClickListener {
             dpd.show()

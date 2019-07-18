@@ -68,20 +68,29 @@ class BookByTimeActivity : AppCompatActivity(),BookByTimeContract.View {
         val editor = sharePref.edit()
 
         val c = Calendar.getInstance()
-        val year = c.get(Calendar.YEAR)
-        val month = c.get(Calendar.MONTH)
-        val day = c.get(Calendar.DAY_OF_MONTH)
+        val mYear = c.get(Calendar.YEAR)
+        val mMonth = c.get(Calendar.MONTH)
+        val mDay = c.get(Calendar.DAY_OF_MONTH)
+
+        val toDay = Date(mYear, mMonth + 1, mDay, 0, 0)
 
         presenter.setTimeStartSpinner()
         presenter.setTimeEndSpinner()
 
         val dpd = DatePickerDialog(this, DatePickerDialog.OnDateSetListener { _, pYear, pMonth, pDayOfMonth ->
-            date = pDayOfMonth.toString() + Constant.TEXT_DATH + (pMonth + 1).toString() +  Constant.TEXT_DATH + pYear.toString()
-            btn_bookByTimeGetDate.text = date
-            editor.putString(Constant.PREF_DATE_PICK, date)
-            editor.apply()
 
-        }, year, month, day)
+            val pickDay = Date(pYear, pMonth + 1, pDayOfMonth, 0, 0)
+
+            if (toDay.before(pickDay) || toDay == pickDay) {
+                date =
+                    pDayOfMonth.toString() + Constant.TEXT_DATH + (pMonth + 1).toString() + Constant.TEXT_DATH + pYear.toString()
+                btn_bookByTimeGetDate.text = date
+                editor.putString(Constant.PREF_DATE_PICK, date)
+                editor.apply()
+            } else {
+                Toast.makeText(this, Constant.TEXT_CANT_PICK_DAY_AFTER, Toast.LENGTH_SHORT).show()
+            }
+        }, mYear, mMonth, mDay)
 
 
         btn_bookByTimeGetDate.setOnClickListener{

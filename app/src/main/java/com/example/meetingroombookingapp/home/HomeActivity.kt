@@ -4,9 +4,9 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.text.Html
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.text.HtmlCompat
 import com.example.meetingroombookingapp.R
 import com.example.meetingroombookingapp.addroom.AddRoomActivity
 import com.example.meetingroombookingapp.bytime.BookByTimeActivity
@@ -27,7 +27,7 @@ class HomeActivity : AppCompatActivity() {
         val phone = sp.getString(Constant.PREF_USER_PHONE, null)
         val team = sp.getString(Constant.PREF_USER_TEAM, null)
 
-        btn_logout.text = Html.fromHtml(Constant.HTML_LOGOUT)
+        btn_logout.text = HtmlCompat.fromHtml(Constant.HTML_LOGOUT, HtmlCompat.FROM_HTML_MODE_LEGACY)
 
         tv_showUserName.text = Constant.TEXT_HI + name
         tv_showUserPhone.text = Constant.TEXT_TEL + phone
