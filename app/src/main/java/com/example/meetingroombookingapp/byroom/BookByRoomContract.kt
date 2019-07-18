@@ -13,11 +13,7 @@ interface BookByRoomContract {
 
     }
     interface Presenter{
-        fun fetchTimeCheckBox(
-            timeList: Array<String>,
-            dateFormat: Date,
-            roomId: String?
-        )
+        fun fetchTimeCheckBox(timeList: Array<String>, dateFormat: Date, roomId: String?)
         fun addBookingToDataBase(allData: MutableList<BookingDataModel>)
     }
 }

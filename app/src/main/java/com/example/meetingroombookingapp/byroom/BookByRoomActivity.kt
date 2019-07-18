@@ -3,6 +3,7 @@ package com.example.meetingroombookingapp.byroom
 import android.app.DatePickerDialog
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -20,51 +21,49 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
-class BookByRoomActivity : AppCompatActivity(),BookByRoomContract.View {
+class BookByRoomActivity : AppCompatActivity(), BookByRoomContract.View {
 
     private val presenter: BookByRoomContract.Presenter = BookByRoomPresenter(this)
 
     private lateinit var dateFormat: Date
     private var timeSlotPick = mutableListOf<CheckboxAdapterDataModel>()
+    private val sharePref: SharedPreferences by lazy {
+        getSharedPreferences(Constant.PREF_NAME, Context.MODE_PRIVATE)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_book_by_room)
+        initView()
+        initDatePickerDialog()
+    }
 
-        val sp = getSharedPreferences(Constant.PREF_NAME, Context.MODE_PRIVATE)
-        val roomId = sp.getString(Constant.PREF_ROOM_ID, null)
-
-        val c = Calendar.getInstance()
-        val year = c.get(Calendar.YEAR)
-        val month = c.get(Calendar.MONTH)
-        val day = c.get(Calendar.DAY_OF_MONTH)
-
-        val dpd = DatePickerDialog(this, DatePickerDialog.OnDateSetListener { _, pYear, pMonth, pDayOfMonth ->
-            val date =
-                pDayOfMonth.toString() + Constant.TEXT_DATH + (pMonth + 1).toString() + Constant.TEXT_DATH + pYear.toString()
-            date_picker.text = date
-
-            dateFormat = SimpleDateFormat(Constant.FORMAT_DATE, Locale(Constant.TH)).parse(date)
-            presenter.fetchTimeCheckBox(Constant.ARR_TIME_ALL_TEXT, dateFormat, roomId)
-
-            val editor = sp.edit()
-            editor.putString(Constant.PREF_DATE_PICK, date)
-            editor.apply()
-
-        }, year, month, day)
-
-        date_picker.setOnClickListener {
-            dpd.show()
+    override fun onShowListCheckBox(timeList: MutableList<CheckboxAdapterDataModel>) {
+        timeSlotPick = timeList
+        val adapt = CheckboxAdapter(timeSlotPick, this)
+        recyclerview_checkbox.apply {
+            layoutManager = LinearLayoutManager(applicationContext)
+            adapter = adapt
         }
+    }
 
+    override fun onShowSuccess() {
+        Toast.makeText(this, Constant.TEXT_ADD_SUCCESS, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onShowFail() {
+        Toast.makeText(this, Constant.TEXT_ADD_ERROR, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun initView() {
         bt_book_byroom.setOnClickListener {
-            val getRoomId = sp.getString(Constant.PREF_ROOM_ID, null)
-            val roomName = sp.getString(Constant.PREF_ROOM_NAME, null)
-            val floor = sp.getInt(Constant.PREF_ROOM_FLOOR, 99)
-            val userName = sp.getString(Constant.PREF_USER_NAME, null)
-            val userPhone = sp.getString(Constant.PREF_USER_PHONE, null)
-            val userTeam = sp.getString(Constant.PREF_USER_TEAM, null)
-            val datePick = sp.getString(Constant.PREF_DATE_PICK, null)
+            val getRoomId = sharePref.getString(Constant.PREF_ROOM_ID, null)
+            val roomName = sharePref.getString(Constant.PREF_ROOM_NAME, null)
+            val floor = sharePref.getInt(Constant.PREF_ROOM_FLOOR, 99)
+            val userName = sharePref.getString(Constant.PREF_USER_NAME, null)
+            val userPhone = sharePref.getString(Constant.PREF_USER_PHONE, null)
+            val userTeam = sharePref.getString(Constant.PREF_USER_TEAM, null)
+            val datePick = sharePref.getString(Constant.PREF_DATE_PICK, null)
             val date = SimpleDateFormat(Constant.FORMAT_DATE, Locale(Constant.TH)).parse(datePick)
 
             val allData = mutableListOf<BookingDataModel>()
@@ -72,17 +71,19 @@ class BookByRoomActivity : AppCompatActivity(),BookByRoomContract.View {
             val checkList = timeSlotPick.filter { it.isCheck }
 
             for (i in 0 until checkList.size) {
-                allData.add(i, BookingDataModel(
-                    date,
-                    getRoomId,
-                    floor,
-                    roomName,
-                    userName,
-                    userPhone,
-                    userTeam,
-                    checkList[i].timeSlotID,
-                    checkList[i].timeText
-                ))
+                allData.add(
+                    i, BookingDataModel(
+                        date,
+                        getRoomId,
+                        floor,
+                        roomName,
+                        userName,
+                        userPhone,
+                        userTeam,
+                        checkList[i].timeSlotID,
+                        checkList[i].timeText
+                    )
+                )
                 timeText.add(checkList[i].timeText)
             }
 
@@ -119,27 +120,35 @@ class BookByRoomActivity : AppCompatActivity(),BookByRoomContract.View {
                 val dialog: AlertDialog = builder.create()
                 dialog.show()
 
-            }else{
+            } else {
                 Toast.makeText(this, Constant.TEXT_FILL_ALL_INFO, Toast.LENGTH_SHORT).show()
             }
         }
     }
 
-    override fun onShowListCheckBox(timeList: MutableList<CheckboxAdapterDataModel>) {
-        timeSlotPick = timeList
-        val adapt = CheckboxAdapter(timeSlotPick, this)
-        recyclerview_checkbox.apply {
-            layoutManager = LinearLayoutManager(applicationContext)
-            adapter = adapt
+    private fun initDatePickerDialog() {
+        val roomId = sharePref.getString(Constant.PREF_ROOM_ID, null)
+        val c = Calendar.getInstance()
+        val year = c.get(Calendar.YEAR)
+        val month = c.get(Calendar.MONTH)
+        val day = c.get(Calendar.DAY_OF_MONTH)
+
+        val dpd = DatePickerDialog(this, DatePickerDialog.OnDateSetListener { _, pYear, pMonth, pDayOfMonth ->
+            val date =
+                pDayOfMonth.toString() + Constant.TEXT_DATH + (pMonth + 1).toString() + Constant.TEXT_DATH + pYear.toString()
+            date_picker.text = date
+
+            dateFormat = SimpleDateFormat(Constant.FORMAT_DATE, Locale(Constant.TH)).parse(date)
+            presenter.fetchTimeCheckBox(Constant.ARR_TIME_ALL_TEXT, dateFormat, roomId)
+
+            val editor = sharePref.edit()
+            editor.putString(Constant.PREF_DATE_PICK, date)
+            editor.apply()
+
+        }, year, month, day)
+
+        date_picker.setOnClickListener {
+            dpd.show()
         }
     }
-
-    override fun onShowSuccess() {
-        Toast.makeText(this, Constant.TEXT_ADD_SUCCESS, Toast.LENGTH_SHORT).show()
-    }
-
-    override fun onShowFail() {
-        Toast.makeText(this, Constant.TEXT_ADD_ERROR, Toast.LENGTH_SHORT).show()
-    }
 }
-

@@ -1,6 +1,7 @@
 package com.example.meetingroombookingapp.mybooking
 
 import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
@@ -18,19 +19,14 @@ class MyBookingActivity : AppCompatActivity(),MyBookingContract.View {
 
     private val presenter: MyBookingContract.Presenter = MyBookingPresenter(this)
     private var myBooking = mutableListOf<MyBookingModel>()
+    private val sharePref: SharedPreferences by lazy {
+        getSharedPreferences(Constant.PREF_NAME, Context.MODE_PRIVATE)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_my_booking)
-
-        val sp = this.getSharedPreferences(Constant.PREF_NAME, Context.MODE_PRIVATE)
-        val userName = sp.getString(Constant.PREF_USER_NAME, null)
-        val userPhone = sp.getString(Constant.PREF_USER_PHONE, null)
-
-        progressBar_myBook.visibility = View.VISIBLE
-        recyclerview_my_booking.visibility = View.GONE
-
-        presenter.onGetMyBooking(userName, userPhone)
+        initView()
     }
 
     override fun onContextItemSelected(item: MenuItem?): Boolean {
@@ -80,5 +76,15 @@ class MyBookingActivity : AppCompatActivity(),MyBookingContract.View {
         Toast.makeText(this, Constant.TEXT_DELETE_COMPLETE, Toast.LENGTH_SHORT).show()
         myBooking.removeAt(groupId)
         onShowMyBooking(myBooking)
+    }
+
+    private fun initView(){
+        val userName = sharePref.getString(Constant.PREF_USER_NAME, null)
+        val userPhone = sharePref.getString(Constant.PREF_USER_PHONE, null)
+
+        progressBar_myBook.visibility = View.VISIBLE
+        recyclerview_my_booking.visibility = View.GONE
+
+        presenter.onGetMyBooking(userName, userPhone)
     }
 }

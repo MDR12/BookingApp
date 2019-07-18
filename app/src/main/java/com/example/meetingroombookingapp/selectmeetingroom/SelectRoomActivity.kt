@@ -2,6 +2,7 @@ package com.example.meetingroombookingapp.selectmeetingroom
 
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.Handler
 import android.view.View
@@ -26,8 +27,11 @@ class SelectRoomActivity : AppCompatActivity(), SelectRoomContract.View, RoomRec
 
     private val presenter: SelectRoomContract.Presenter = SelectRoomPresenter(this)
     private var myRoomList = mutableListOf<RoomModel>()
-    var startTime: Int = 99
-    var endTime: Int = 99
+    private val sharePref: SharedPreferences by lazy {
+        getSharedPreferences(Constant.PREF_NAME, Context.MODE_PRIVATE)
+    }
+    private var startTime: Int = 99
+    private var endTime: Int = 99
     lateinit var date: String
 
     private lateinit var show: String
@@ -35,39 +39,11 @@ class SelectRoomActivity : AppCompatActivity(), SelectRoomContract.View, RoomRec
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_select_room)
-
-        progressBar_select_room.visibility = View.VISIBLE
-
-        show = intent.getStringExtra(Constant.EXTRA_SHOW)
-
-        presenter.setFloorSpinner()
-
-        if (show == Constant.EXTRA_SHOW_ROOMALL) {
-            presenter.getRoomFromFirebase()
-        }
-
-        if (show == Constant.EXTRA_SHOW_ROOM_BY_TIME) {
-            startTime = intent.getIntExtra(Constant.EXTRA_TIME_START, 99)
-            endTime = intent.getIntExtra(Constant.EXTRA_TIME_END, 99)
-            date = intent.getStringExtra(Constant.EXTRA_DATE)
-
-            presenter.setRoomListByTime(date, startTime, endTime)
-        }
-
-        spinner_floor.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
-
-                presenter.setRoomList(spinner_floor.getItemAtPosition(position).toString(), myRoomList)
-            }
-            override fun onNothingSelected(parent: AdapterView<*>) {
-
-                presenter.setRoomList(Constant.FLOOR_ALL, myRoomList)
-            }
-        }
+        initView()
+        initSpinner()
     }
 
     override fun onShowRoomList(data: MutableList<RoomModel>) {
-
         val adapt = RoomRecyclerViewAdapter(data, this)
 
         Handler().postDelayed({
@@ -92,8 +68,7 @@ class SelectRoomActivity : AppCompatActivity(), SelectRoomContract.View, RoomRec
     }
 
     override fun onRoomClick(position: String?, itemName: String?, itemFloor: Int) {
-        val sp = getSharedPreferences(Constant.PREF_NAME, Context.MODE_PRIVATE)
-        val editor = sp.edit()
+        val editor = sharePref.edit()
         editor.putString(Constant.PREF_ROOM_ID, position)
         editor.putString(Constant.PREF_ROOM_NAME, itemName)
         editor.putInt(Constant.PREF_ROOM_FLOOR, itemFloor)
@@ -116,14 +91,13 @@ class SelectRoomActivity : AppCompatActivity(), SelectRoomContract.View, RoomRec
     }
 
     private fun addToFireBase() {
-        val sp = getSharedPreferences(Constant.PREF_NAME, Context.MODE_PRIVATE)
 
-        val roomId = sp.getString(Constant.PREF_ROOM_ID, null)
-        val roomName = sp.getString(Constant.PREF_ROOM_NAME, null)
-        val floor = sp.getInt(Constant.PREF_ROOM_FLOOR, 99)
-        val userName = sp.getString(Constant.PREF_USER_NAME, null)
-        val userPhone = sp.getString(Constant.PREF_USER_PHONE, null)
-        val userTeam = sp.getString(Constant.PREF_USER_TEAM, null)
+        val roomId = sharePref.getString(Constant.PREF_ROOM_ID, null)
+        val roomName = sharePref.getString(Constant.PREF_ROOM_NAME, null)
+        val floor = sharePref.getInt(Constant.PREF_ROOM_FLOOR, 99)
+        val userName = sharePref.getString(Constant.PREF_USER_NAME, null)
+        val userPhone = sharePref.getString(Constant.PREF_USER_PHONE, null)
+        val userTeam = sharePref.getString(Constant.PREF_USER_TEAM, null)
 
         val dateFormat = SimpleDateFormat(Constant.FORMAT_DATE, Locale(Constant.TH)).parse(date)
 
@@ -193,5 +167,35 @@ class SelectRoomActivity : AppCompatActivity(), SelectRoomContract.View, RoomRec
         dialog.show()
     }
 
+    private fun initSpinner() {
+        spinner_floor.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
+                presenter.setRoomList(spinner_floor.getItemAtPosition(position).toString(), myRoomList)
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {
+                presenter.setRoomList(Constant.FLOOR_ALL, myRoomList)
+            }
+        }
+    }
+
+    private fun initView() {
+        progressBar_select_room.visibility = View.VISIBLE
+        show = intent.getStringExtra(Constant.EXTRA_SHOW)
+
+        presenter.setFloorSpinner()
+
+        if (show == Constant.EXTRA_SHOW_ROOMALL) {
+            presenter.getRoomFromFirebase()
+        }
+
+        if (show == Constant.EXTRA_SHOW_ROOM_BY_TIME) {
+            startTime = intent.getIntExtra(Constant.EXTRA_TIME_START, 99)
+            endTime = intent.getIntExtra(Constant.EXTRA_TIME_END, 99)
+            date = intent.getStringExtra(Constant.EXTRA_DATE)
+
+            presenter.setRoomListByTime(date, startTime, endTime)
+        }
+    }
 
 }
