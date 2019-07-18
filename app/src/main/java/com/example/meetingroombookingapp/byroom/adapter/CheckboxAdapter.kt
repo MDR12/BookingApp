@@ -63,8 +63,8 @@ class CheckboxAdapter(private val timeList: MutableList<CheckboxAdapterDataModel
     }
 
     class BookedViewHolder (view: View) : RecyclerView.ViewHolder(view) {
-        private var mUserName: TextView = itemView.findViewById(R.id.show_book_by_user_name)
-        private var mUserPhone: TextView = itemView.findViewById(R.id.show_book_by_user_phone)
+        private var mUserName: TextView = itemView.findViewById(R.id.tv_showBookByUserName)
+        private var mUserPhone: TextView = itemView.findViewById(R.id.tv_showBookByUserPhone)
         private var mTime: TextView = itemView.findViewById(R.id.tv_time)
 
         fun bind(item: CheckboxAdapterDataModel){

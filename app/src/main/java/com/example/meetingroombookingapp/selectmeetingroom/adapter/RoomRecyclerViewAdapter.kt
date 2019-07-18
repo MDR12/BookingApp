@@ -30,7 +30,7 @@ class RoomRecyclerViewAdapter(private val roomList: MutableList<RoomModel>, priv
 
     inner class ViewHolder internal constructor(view: View, private val onRoomClickListener: OnRoomListener?) : RecyclerView.ViewHolder(view), View.OnClickListener {
 
-        var mRoomNameView: TextView? = itemView.findViewById(R.id.tv_room_name)
+        var mRoomNameView: TextView? = itemView.findViewById(R.id.tv_roomName)
         var mCapacityView: TextView? = itemView.findViewById(R.id.tv_capacity)
         var mFloorView: TextView? = itemView.findViewById(R.id.tv_floor)
         var itemID: String? = null

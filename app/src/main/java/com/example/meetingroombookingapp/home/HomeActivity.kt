@@ -27,34 +27,34 @@ class HomeActivity : AppCompatActivity() {
         val phone = sp.getString(Constant.PREF_USER_PHONE, null)
         val team = sp.getString(Constant.PREF_USER_TEAM, null)
 
-        bt_logout.text = Html.fromHtml(Constant.HTML_LOGOUT)
+        btn_logout.text = Html.fromHtml(Constant.HTML_LOGOUT)
 
-        tv_show_user_name.text = Constant.TEXT_HI + name
-        tv_show_user_phone.text = Constant.TEXT_TEL + phone
-        tv_show_user_team.text =  Constant.TEXT_TEAM + team
+        tv_showUserName.text = Constant.TEXT_HI + name
+        tv_showUserPhone.text = Constant.TEXT_TEL + phone
+        tv_showUserTeam.text =  Constant.TEXT_TEAM + team
 
-        bt_room.setOnClickListener {
+        btn_byRoom.setOnClickListener {
             val intent = Intent(this, SelectRoomActivity::class.java)
             intent.putExtra(Constant.EXTRA_SHOW, Constant.EXTRA_SHOW_ROOMALL)
             startActivity(intent)
         }
 
-        bt_add.setOnClickListener {
+        btn_add.setOnClickListener {
             val intent = Intent(this, AddRoomActivity::class.java)
             startActivity(intent)
         }
 
-        bt_time.setOnClickListener {
+        btn_byTime.setOnClickListener {
             val intent = Intent(this, BookByTimeActivity::class.java)
             startActivity(intent)
         }
 
-        bt_view_room.setOnClickListener {
+        btn_viewRoom.setOnClickListener {
             val intent = Intent(this, MyBookingActivity::class.java)
             startActivity(intent)
         }
 
-        bt_logout.setOnClickListener {
+        btn_logout.setOnClickListener {
 
             val builder = AlertDialog.Builder(this)
 

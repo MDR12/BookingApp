@@ -11,7 +11,7 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/tv_my_room_name"
+        android:id="@+id/tv_myRoomName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -21,33 +21,33 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/tv_my_floor"
+        android:id="@+id/tv_myFloor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:text="Floor: 11"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_my_room_name"
-        app:layout_constraintStart_toEndOf="@+id/tv_my_room_name"
-        app:layout_constraintTop_toTopOf="@+id/tv_my_room_name" />
+        app:layout_constraintBottom_toBottomOf="@+id/tv_myRoomName"
+        app:layout_constraintStart_toEndOf="@+id/tv_myRoomName"
+        app:layout_constraintTop_toTopOf="@+id/tv_myRoomName" />
 
     <TextView
-        android:id="@+id/tv_my_date"
+        android:id="@+id/tv_myDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="Date: 24-12-2019"
-        app:layout_constraintStart_toStartOf="@+id/tv_my_room_name"
-        app:layout_constraintTop_toBottomOf="@+id/tv_my_room_name" />
+        app:layout_constraintStart_toStartOf="@+id/tv_myRoomName"
+        app:layout_constraintTop_toBottomOf="@+id/tv_myRoomName" />
 
     <TextView
-        android:id="@+id/tv_my_time"
+        android:id="@+id/tv_myTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="16dp"
         android:text="Time 9:00 to 10:00"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/tv_my_date"
-        app:layout_constraintTop_toBottomOf="@+id/tv_my_date" />
+        app:layout_constraintStart_toStartOf="@+id/tv_myDate"
+        app:layout_constraintTop_toBottomOf="@+id/tv_myDate" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

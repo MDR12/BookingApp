@@ -18,12 +18,12 @@ class LoginActivity : AppCompatActivity() {
 
         val sp = getSharedPreferences(Constant.PREF_NAME , Context.MODE_PRIVATE)
 
-        bt_register.setOnClickListener {
-            if (edt_user_name.text.isNotEmpty() && edt_user_phone.text.isNotEmpty() && edt_user_team.text.isNotEmpty()) {
+        btn_register.setOnClickListener {
+            if (edt_userName.text.isNotEmpty() && edt_userPhone.text.isNotEmpty() && edt_userTeam.text.isNotEmpty()) {
                 val editor = sp.edit()
-                editor.putString(Constant.PREF_USER_NAME, edt_user_name.text.toString())
-                editor.putString(Constant.PREF_USER_PHONE, edt_user_phone.text.toString())
-                editor.putString(Constant.PREF_USER_TEAM, edt_user_team.text.toString())
+                editor.putString(Constant.PREF_USER_NAME, edt_userName.text.toString())
+                editor.putString(Constant.PREF_USER_PHONE, edt_userPhone.text.toString())
+                editor.putString(Constant.PREF_USER_TEAM, edt_userTeam.text.toString())
                 editor.apply()
 
                 val i = Intent(this, HomeActivity::class.java)

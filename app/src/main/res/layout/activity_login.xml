@@ -10,45 +10,46 @@
         android:padding="32dp">
 
     <EditText
-            android:id="@+id/edt_user_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Your Name"
-            android:textSize="24dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        android:id="@+id/edt_userName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Your Name"
+        android:textSize="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-            android:id="@+id/edt_user_phone"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:hint="Tel."
-            android:textSize="24dp"
-            android:inputType="phone|number"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/edt_user_name" />
+        android:id="@+id/edt_userPhone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:hint="Tel."
+        android:textSize="24dp"
+        android:inputType="phone|number"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edt_userName" />
 
     <EditText
-            android:id="@+id/edt_user_team"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:hint="Team"
-            android:textSize="24dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/edt_user_phone" />
+        android:id="@+id/edt_userTeam"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:hint="Team"
+        android:textSize="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edt_userPhone" />
 
     <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="ok"
-            android:id="@+id/bt_register"
-            app:layout_constraintStart_toStartOf="@+id/edt_user_team"
-            app:layout_constraintEnd_toEndOf="@+id/edt_user_team" android:layout_marginTop="16dp"
-            app:layout_constraintTop_toBottomOf="@+id/edt_user_team"/>
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ok"
+        android:id="@+id/btn_register"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="@+id/edt_userTeam"
+        app:layout_constraintStart_toStartOf="@+id/edt_userTeam"
+        app:layout_constraintTop_toBottomOf="@+id/edt_userTeam" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

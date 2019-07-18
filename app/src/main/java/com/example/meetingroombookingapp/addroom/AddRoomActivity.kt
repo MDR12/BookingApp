@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.meetingroombookingapp.R
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_add_room.*
-import kotlinx.android.synthetic.main.activity_home.bt_add
+import kotlinx.android.synthetic.main.activity_home.btn_add
 
 class AddRoomActivity : AppCompatActivity() {
 
@@ -16,7 +16,7 @@ class AddRoomActivity : AppCompatActivity() {
 
         val db = FirebaseFirestore.getInstance()
 
-        bt_add.setOnClickListener {
+        btn_add.setOnClickListener {
 
             val data = AddRoomModel(
                     edt_capacity.text.toString().toInt(),

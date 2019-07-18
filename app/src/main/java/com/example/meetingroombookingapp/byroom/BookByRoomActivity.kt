@@ -56,7 +56,7 @@ class BookByRoomActivity : AppCompatActivity(), BookByRoomContract.View {
     }
 
     private fun initView() {
-        bt_book_byroom.setOnClickListener {
+        btn_book_byroom.setOnClickListener {
             val getRoomId = sharePref.getString(Constant.PREF_ROOM_ID, null)
             val roomName = sharePref.getString(Constant.PREF_ROOM_NAME, null)
             val floor = sharePref.getInt(Constant.PREF_ROOM_FLOOR, 99)

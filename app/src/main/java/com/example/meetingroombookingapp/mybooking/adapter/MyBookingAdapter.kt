@@ -31,10 +31,10 @@ class MyBookingAdapter(private val bookingList: MutableList<MyBookingModel>): Re
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view), View.OnCreateContextMenuListener {
 
-        var mRoomNameView: TextView? = itemView.findViewById(R.id.tv_my_room_name)
-        var mMyFloorView: TextView? = itemView.findViewById(R.id.tv_my_floor)
-        var mDateView: TextView? = itemView.findViewById(R.id.tv_my_date)
-        var mTimeView: TextView? = itemView.findViewById(R.id.tv_my_time)
+        var mRoomNameView: TextView? = itemView.findViewById(R.id.tv_myRoomName)
+        var mMyFloorView: TextView? = itemView.findViewById(R.id.tv_myFloor)
+        var mDateView: TextView? = itemView.findViewById(R.id.tv_myDate)
+        var mTimeView: TextView? = itemView.findViewById(R.id.tv_myTime)
         var mitem: ConstraintLayout? = itemView.findViewById(R.id.itemMyBooking)
         var mitemName: String? = null
         var bookingID: String? = null

@@ -8,7 +8,7 @@
         tools:context=".mybooking.MyBookingActivity">
 
     <androidx.recyclerview.widget.RecyclerView
-            android:visibility="gone"
+        android:visibility="gone"
         android:id="@+id/recyclerview_my_booking"
         android:layout_width="match_parent"
         android:layout_height="0dp"
