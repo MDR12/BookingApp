@@ -8,7 +8,6 @@ import androidx.annotation.Nullable
 import androidx.appcompat.app.AppCompatActivity
 import com.example.meetingroombookingapp.common.Constant
 
-
 class MainEmptyActivity : AppCompatActivity() {
 
     override fun onCreate(@Nullable savedInstanceState: Bundle?) {

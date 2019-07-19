@@ -68,7 +68,7 @@ class MyBookingActivity : AppCompatActivity(),MyBookingContract.View {
         }
     }
 
-    override fun onfailLoad(type: String) {
+    override fun onFailLoad(type: String) {
         Toast.makeText(this, Constant.TEXT_FAIL + type, Toast.LENGTH_SHORT).show()
     }
 

@@ -47,7 +47,7 @@ class MyBookingPresenter(private val view: MyBookingContract.View): MyBookingCon
                 view.onShowMyBooking(myBookingList)
 
                 }.addOnFailureListener {
-                view.onfailLoad(Constant.TEXT_MY_BOOKING_LIST)
+                view.onFailLoad(Constant.TEXT_MY_BOOKING_LIST)
                 }
     }
 
@@ -59,7 +59,7 @@ class MyBookingPresenter(private val view: MyBookingContract.View): MyBookingCon
             .addOnSuccessListener {
                 view.onDeleteOK(groupId) }
             .addOnFailureListener {
-                view.onfailLoad(Constant.TEXT_MY_BOOKING_LIST) }
+                view.onFailLoad(Constant.TEXT_MY_BOOKING_LIST) }
     }
 
 }

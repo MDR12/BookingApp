@@ -13,5 +13,4 @@ class BookByTimePresenter(private val view: BookByTimeContract.View): BookByTime
         val time = Constant.ARR_TIME_END_TEXT
         view.onShowEndTimeSpinner(time)
     }
-
 }

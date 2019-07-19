@@ -16,7 +16,7 @@ interface SelectRoomContract {
         fun setFloorSpinner()
         fun setRoomListByTime(date: String, timeStart: Int, timeEnd: Int)
         fun setRoomList(floorSelect : String, roomList: MutableList<RoomModel>)
-        fun getRoomFromFirebase()
+        fun getRoomFromFireBase()
         fun addBookingToDataBase(allData: MutableList<BookingDataModel>)
     }
 }

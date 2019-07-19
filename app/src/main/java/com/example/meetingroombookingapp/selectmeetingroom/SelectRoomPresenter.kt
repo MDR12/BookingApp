@@ -1,6 +1,7 @@
 package com.example.meetingroombookingapp.selectmeetingroom
 
 import com.example.meetingroombookingapp.common.Constant
+import com.example.meetingroombookingapp.common.Constant.ONE_HOUR
 import com.example.meetingroombookingapp.model.BookingDataModel
 import com.example.meetingroombookingapp.model.BookingModel
 import com.example.meetingroombookingapp.model.RoomModel
@@ -15,7 +16,7 @@ class SelectRoomPresenter(private val view: SelectRoomContract.View) : SelectRoo
     private val queryRoom = db.collection(Constant.FIREBASE_COLLECTION_MEETINGROOM)
     private val queryBooking = db.collection(Constant.FIREBASE_COLLECTION_BOOKING)
 
-    override fun getRoomFromFirebase(){
+    override fun getRoomFromFireBase(){
         val roomList = mutableListOf<RoomModel>()
 
         queryRoom
@@ -34,26 +35,24 @@ class SelectRoomPresenter(private val view: SelectRoomContract.View) : SelectRoo
     }
 
     override fun setRoomList(floorSelect: String, roomList: MutableList<RoomModel>) {
-
         if (floorSelect == Constant.FLOOR_ALL){
             view.onShowRoomList(roomList)
         } else {
             val newList = roomList.filter { it.floor == floorSelect.toInt() }
             view.onShowRoomList(newList as MutableList<RoomModel>)
         }
-
     }
 
     override fun setRoomListByTime(date: String, timeStart: Int, timeEnd: Int) {
         val dateFormat = SimpleDateFormat(Constant.FORMAT_DATE, Locale(Constant.TH)).parse(date)
         val arrTimeSlot = mutableListOf<Int>()
 
-        val m = timeEnd - timeStart
+        val pickHours = timeEnd - timeStart
         var start = timeStart
-        if (m == 1) {
+        if (pickHours == ONE_HOUR) {
             arrTimeSlot.add(timeStart)
         } else {
-            for (i in 0 until m) {
+            for (i in 0 until pickHours) {
                 arrTimeSlot.add(start++)
             }
         }
@@ -75,8 +74,6 @@ class SelectRoomPresenter(private val view: SelectRoomContract.View) : SelectRoo
                 queryRoom
                     .orderBy(Constant.FIREBASE_NAME, Query.Direction.ASCENDING)
                     .get()
-                    //.continueWith {}
-
                     .addOnSuccessListener {
                         for (doc in it.documents) {
                             val room = doc.toObject(RoomModel::class.java)
@@ -95,7 +92,6 @@ class SelectRoomPresenter(private val view: SelectRoomContract.View) : SelectRoo
                         view.onGetRoomDone(myRoomList)
                         view.onShowRoomList(myRoomList)
                     }
-
             }
     }
 

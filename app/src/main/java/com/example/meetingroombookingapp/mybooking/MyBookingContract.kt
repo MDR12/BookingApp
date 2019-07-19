@@ -6,7 +6,7 @@ interface MyBookingContract {
 
     interface View{
         fun onShowMyBooking(bookingList: MutableList<MyBookingModel>)
-        fun onfailLoad(type:String)
+        fun onFailLoad(type:String)
         fun onDeleteOK(groupId: Int)
     }
 

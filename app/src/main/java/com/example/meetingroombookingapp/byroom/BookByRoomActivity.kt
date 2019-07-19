@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.meetingroombookingapp.R
 import com.example.meetingroombookingapp.byroom.adapter.CheckboxAdapter
 import com.example.meetingroombookingapp.common.Constant
+import com.example.meetingroombookingapp.common.Constant.NOTHING
+import com.example.meetingroombookingapp.common.Constant.ONE_HOUR
 import com.example.meetingroombookingapp.common.Constant.TEXT_NEW_LINE
 import com.example.meetingroombookingapp.home.HomeActivity
 import com.example.meetingroombookingapp.model.BookingDataModel
@@ -24,7 +26,6 @@ import kotlin.collections.ArrayList
 class BookByRoomActivity : AppCompatActivity(), BookByRoomContract.View {
 
     private val presenter: BookByRoomContract.Presenter = BookByRoomPresenter(this)
-
     private lateinit var dateFormat: Date
     private var timeSlotPick = mutableListOf<CheckboxAdapterDataModel>()
     private val sharePref: SharedPreferences by lazy {
@@ -59,7 +60,7 @@ class BookByRoomActivity : AppCompatActivity(), BookByRoomContract.View {
         btn_book_byroom.setOnClickListener {
             val getRoomId = sharePref.getString(Constant.PREF_ROOM_ID, null)
             val roomName = sharePref.getString(Constant.PREF_ROOM_NAME, null)
-            val floor = sharePref.getInt(Constant.PREF_ROOM_FLOOR, 99)
+            val floor = sharePref.getInt(Constant.PREF_ROOM_FLOOR, NOTHING)
             val userName = sharePref.getString(Constant.PREF_USER_NAME, null)
             val userPhone = sharePref.getString(Constant.PREF_USER_PHONE, null)
             val userTeam = sharePref.getString(Constant.PREF_USER_TEAM, null)
@@ -97,7 +98,7 @@ class BookByRoomActivity : AppCompatActivity(), BookByRoomContract.View {
                             Constant.TEXT_DATE + datePick + TEXT_NEW_LINE +
                             Constant.TEXT_TIME_SLOT_YOU_PICK
 
-                if (timeText.size == 1) {
+                if (timeText.size == ONE_HOUR) {
                     str += Constant.TEXT_SPACE_ONE + timeText[0]
                 } else {
                     for (element in timeText)

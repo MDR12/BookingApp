@@ -1,23 +1,24 @@
 package com.example.meetingroombookingapp.model
 
+import com.example.meetingroombookingapp.common.Constant.NOTHING
 import com.google.firebase.firestore.ServerTimestamp
 import java.util.*
 
 class BookingModel {
 
-    var id: String? = null
+    lateinit var id: String
 
     @ServerTimestamp
     var date: Date? = null
 
-    var room_id: String? = null
-    var room_floor: Int = 99
-    var room_name: String? = null
+    lateinit var room_id: String
+    var room_floor: Int = NOTHING
+    lateinit var room_name: String
 
-    var time_booking: Int = 99
-    var time_text: String? = null
+    var time_booking: Int = NOTHING
+    lateinit var time_text: String
 
-    var user_name: String? = null
-    var user_phone: String? = null
-    var user_team: String? = null
+    lateinit var user_name: String
+    lateinit var user_phone: String
+    lateinit var user_team: String
 }

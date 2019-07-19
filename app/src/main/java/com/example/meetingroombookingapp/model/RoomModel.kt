@@ -1,9 +1,10 @@
 package com.example.meetingroombookingapp.model
 
-class RoomModel {
+import com.example.meetingroombookingapp.common.Constant.NOTHING
 
-    var id: String? = null
-    var capacity: Int = 99
-    var floor: Int = 99
-    var name: String? = null
+class RoomModel {
+    lateinit var id: String
+    var capacity: Int = NOTHING
+    var floor: Int = NOTHING
+    lateinit var name: String
 }

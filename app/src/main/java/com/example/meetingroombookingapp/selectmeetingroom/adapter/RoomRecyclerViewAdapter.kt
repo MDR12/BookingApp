@@ -7,6 +7,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.meetingroombookingapp.R
 import com.example.meetingroombookingapp.common.Constant
+import com.example.meetingroombookingapp.common.Constant.NOTHING
 import com.example.meetingroombookingapp.model.RoomModel
 
 class RoomRecyclerViewAdapter(private val roomList: MutableList<RoomModel>, private var mOnRoomClickListener: OnRoomListener)
@@ -35,7 +36,7 @@ class RoomRecyclerViewAdapter(private val roomList: MutableList<RoomModel>, priv
         var mFloorView: TextView? = itemView.findViewById(R.id.tv_floor)
         var itemID: String? = null
         var itemName: String? = null
-        var itemFloor: Int = 99
+        var itemFloor: Int = NOTHING
 
         init {
             this.onRoomClickListener

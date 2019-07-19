@@ -15,6 +15,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.meetingroombookingapp.R
 import com.example.meetingroombookingapp.byroom.BookByRoomActivity
 import com.example.meetingroombookingapp.common.Constant
+import com.example.meetingroombookingapp.common.Constant.NOTHING
+import com.example.meetingroombookingapp.common.Constant.ONE_HOUR
 import com.example.meetingroombookingapp.home.HomeActivity
 import com.example.meetingroombookingapp.model.BookingDataModel
 import com.example.meetingroombookingapp.model.RoomModel
@@ -30,8 +32,8 @@ class SelectRoomActivity : AppCompatActivity(), SelectRoomContract.View, RoomRec
     private val sharePref: SharedPreferences by lazy {
         getSharedPreferences(Constant.PREF_NAME, Context.MODE_PRIVATE)
     }
-    private var startTime: Int = 99
-    private var endTime: Int = 99
+    private var startTime: Int = NOTHING
+    private var endTime: Int = NOTHING
     lateinit var date: String
 
     private lateinit var show: String
@@ -94,7 +96,7 @@ class SelectRoomActivity : AppCompatActivity(), SelectRoomContract.View, RoomRec
 
         val roomId = sharePref.getString(Constant.PREF_ROOM_ID, null)
         val roomName = sharePref.getString(Constant.PREF_ROOM_NAME, null)
-        val floor = sharePref.getInt(Constant.PREF_ROOM_FLOOR, 99)
+        val floor = sharePref.getInt(Constant.PREF_ROOM_FLOOR, NOTHING)
         val userName = sharePref.getString(Constant.PREF_USER_NAME, null)
         val userPhone = sharePref.getString(Constant.PREF_USER_PHONE, null)
         val userTeam = sharePref.getString(Constant.PREF_USER_TEAM, null)
@@ -141,7 +143,7 @@ class SelectRoomActivity : AppCompatActivity(), SelectRoomContract.View, RoomRec
                     Constant.TEXT_DATE + date + Constant.TEXT_NEW_LINE +
                     Constant.TEXT_TIME_SLOT_YOU_PICK
 
-        if (arrTimeSlot.size == 1){
+        if (arrTimeSlot.size == ONE_HOUR){
             str += Constant.TEXT_SPACE_ONE + Constant.ARR_TIME_ALL_TEXT[arrTimeSlot[0]]
         }else{
             for (element in arrTimeSlot)
@@ -186,14 +188,13 @@ class SelectRoomActivity : AppCompatActivity(), SelectRoomContract.View, RoomRec
         presenter.setFloorSpinner()
 
         if (show == Constant.EXTRA_SHOW_ROOMALL) {
-            presenter.getRoomFromFirebase()
+            presenter.getRoomFromFireBase()
         }
 
         if (show == Constant.EXTRA_SHOW_ROOM_BY_TIME) {
-            startTime = intent.getIntExtra(Constant.EXTRA_TIME_START, 99)
-            endTime = intent.getIntExtra(Constant.EXTRA_TIME_END, 99)
+            startTime = intent.getIntExtra(Constant.EXTRA_TIME_START, NOTHING)
+            endTime = intent.getIntExtra(Constant.EXTRA_TIME_END, NOTHING)
             date = intent.getStringExtra(Constant.EXTRA_DATE)
-
             presenter.setRoomListByTime(date, startTime, endTime)
         }
     }

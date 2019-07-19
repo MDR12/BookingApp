@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.meetingroombookingapp.R
 import com.example.meetingroombookingapp.common.Constant
+import com.example.meetingroombookingapp.common.Constant.NOTHING
 import com.example.meetingroombookingapp.selectmeetingroom.SelectRoomActivity
 import kotlinx.android.synthetic.main.activity_book_by_time.*
 import java.util.*
@@ -23,8 +24,8 @@ class BookByTimeActivity : AppCompatActivity(),BookByTimeContract.View {
         getSharedPreferences(Constant.PREF_NAME, Context.MODE_PRIVATE)
     }
     private var date: String? = null
-    var positionTimeStart: Int = 99
-    var positionTimeEnd: Int = 99
+    var positionTimeStart: Int = NOTHING
+    var positionTimeEnd: Int = NOTHING
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,19 +49,16 @@ class BookByTimeActivity : AppCompatActivity(),BookByTimeContract.View {
 
     private fun initView(){
         btn_bookByTimeFindRoom.setOnClickListener {
-            if (positionTimeStart != 99 && positionTimeEnd != 99 && positionTimeStart < positionTimeEnd && date != null) {
-
+            if (positionTimeStart != NOTHING && positionTimeEnd != NOTHING && positionTimeStart < positionTimeEnd && date != null) {
                 val intent = Intent(this, SelectRoomActivity::class.java)
                 intent.putExtra(Constant.EXTRA_SHOW, Constant.EXTRA_SHOW_ROOM_BY_TIME)
                 intent.putExtra(Constant.EXTRA_TIME_START, positionTimeStart)
                 intent.putExtra(Constant.EXTRA_TIME_END, positionTimeEnd)
                 intent.putExtra(Constant.EXTRA_DATE, date)
                 startActivity(intent)
-
             } else {
                 Toast.makeText(this, Constant.TEXT_CANT_SELECT_TIME, Toast.LENGTH_SHORT).show()
             }
-
         }
     }
 
@@ -71,7 +69,6 @@ class BookByTimeActivity : AppCompatActivity(),BookByTimeContract.View {
         val mYear = c.get(Calendar.YEAR)
         val mMonth = c.get(Calendar.MONTH)
         val mDay = c.get(Calendar.DAY_OF_MONTH)
-
         val toDay = GregorianCalendar(mYear, mMonth + 1, mDay, 0, 0,0)
 
         presenter.setTimeStartSpinner()
@@ -92,7 +89,6 @@ class BookByTimeActivity : AppCompatActivity(),BookByTimeContract.View {
             }
         }, mYear, mMonth, mDay)
 
-
         btn_bookByTimeGetDate.setOnClickListener{
             dpd.show()
         }
@@ -104,7 +100,6 @@ class BookByTimeActivity : AppCompatActivity(),BookByTimeContract.View {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 positionTimeStart = position
             }
-
             override fun onNothingSelected(parent: AdapterView<*>) {
                 positionTimeStart = 0
             }
@@ -114,9 +109,8 @@ class BookByTimeActivity : AppCompatActivity(),BookByTimeContract.View {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 positionTimeEnd = position + 1
             }
-
             override fun onNothingSelected(parent: AdapterView<*>) {
-                positionTimeStart = 1
+                positionTimeEnd = 1
             }
         }
     }

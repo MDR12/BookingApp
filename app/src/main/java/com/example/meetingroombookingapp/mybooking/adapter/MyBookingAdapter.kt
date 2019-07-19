@@ -30,29 +30,28 @@ class MyBookingAdapter(private val bookingList: MutableList<MyBookingModel>): Re
     }
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view), View.OnCreateContextMenuListener {
-
-        var mRoomNameView: TextView? = itemView.findViewById(R.id.tv_myRoomName)
-        var mMyFloorView: TextView? = itemView.findViewById(R.id.tv_myFloor)
-        var mDateView: TextView? = itemView.findViewById(R.id.tv_myDate)
-        var mTimeView: TextView? = itemView.findViewById(R.id.tv_myTime)
-        var mitem: ConstraintLayout? = itemView.findViewById(R.id.itemMyBooking)
-        var mitemName: String? = null
+        var mRoomNameView: TextView = itemView.findViewById(R.id.tv_myRoomName)
+        var mMyFloorView: TextView = itemView.findViewById(R.id.tv_myFloor)
+        var mDateView: TextView = itemView.findViewById(R.id.tv_myDate)
+        var mTimeView: TextView = itemView.findViewById(R.id.tv_myTime)
+        var mItem: ConstraintLayout? = itemView.findViewById(R.id.itemMyBooking)
+        var mItemName: String? = null
         var bookingID: String? = null
 
 
         fun bind(booking: MyBookingModel){
-            mRoomNameView?.text = Constant.TEXT_ROOM + booking.roomName
-            mMyFloorView?.text = Constant.TEXT_FLOOR + booking.roomFloor.toString()
-            mDateView?.text = Constant.TEXT_DATE + booking.dateText
-            mTimeView?.text = Constant.TEXT_TIME + booking.timeText
+            mRoomNameView.text = Constant.TEXT_ROOM + booking.roomName
+            mMyFloorView.text = Constant.TEXT_FLOOR + booking.roomFloor.toString()
+            mDateView.text = Constant.TEXT_DATE + booking.dateText
+            mTimeView.text = Constant.TEXT_TIME + booking.timeText
             bookingID = booking.bookingId
-            mitemName = booking.roomName + Constant.TEXT_SPACE_ONE + booking.timeText
+            mItemName = booking.roomName + Constant.TEXT_SPACE_ONE + booking.timeText
 
-            mitem?.setOnCreateContextMenuListener(this)
+            mItem?.setOnCreateContextMenuListener(this)
         }
 
         override fun onCreateContextMenu(menu: ContextMenu?, v: View?, menuInfo: ContextMenu.ContextMenuInfo?) {
-            menu?.setHeaderTitle(mitemName)
+            menu?.setHeaderTitle(mItemName)
             menu?.add(this.adapterPosition, 99, 0, Constant.TEXT_DELETE)
         }
 
