@@ -68,12 +68,13 @@ class BookByRoomActivity : AppCompatActivity(), BookByRoomContract.View {
 
         val allData = mutableListOf<BookingDataModel>()
         val timeText: ArrayList<String?> = ArrayList()
-        val checkList = timeSlotPick.filter { it.isCheck }
 
         tv_BookByRoom_RoomName.text = Constant.TEXT_ROOM + roomName
         tv_BookByRoom_RoomFloor.text = Constant.TEXT_FLOOR + floor.toString()
 
         btn_book_byroom.setOnClickListener {
+
+            val checkList = timeSlotPick.filter { it.isCheck }
 
             for (i in 0 until checkList.size) {
                 allData.add(
