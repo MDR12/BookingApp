@@ -10,7 +10,10 @@ import com.example.meetingroombookingapp.common.Constant
 import com.example.meetingroombookingapp.common.Constant.NOTHING
 import com.example.meetingroombookingapp.model.RoomModel
 
-class RoomRecyclerViewAdapter(private val roomList: MutableList<RoomModel>, private var mOnRoomClickListener: OnRoomListener)
+class RoomRecyclerViewAdapter(
+    private val roomList: MutableList<RoomModel>,
+    private var mOnRoomClickListener: (position: String?, itemName: String?, itemFloor: Int) -> Unit
+)
     : RecyclerView.Adapter<RoomRecyclerViewAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -29,7 +32,9 @@ class RoomRecyclerViewAdapter(private val roomList: MutableList<RoomModel>, priv
         return roomList.size
     }
 
-    inner class ViewHolder internal constructor(view: View, private val onRoomClickListener: OnRoomListener?) : RecyclerView.ViewHolder(view), View.OnClickListener {
+    inner class ViewHolder internal constructor(
+        view: View, private val onRoomClickListener: (position: String?, itemName: String?, itemFloor: Int) -> Unit
+    ) : RecyclerView.ViewHolder(view), View.OnClickListener {
 
         var mRoomNameView: TextView? = itemView.findViewById(R.id.tv_roomName)
         var mCapacityView: TextView? = itemView.findViewById(R.id.tv_capacity)
@@ -47,17 +52,13 @@ class RoomRecyclerViewAdapter(private val roomList: MutableList<RoomModel>, priv
             mRoomNameView?.text = room.name
             mCapacityView?.text = room.capacity.toString() + Constant.TEXT_PEOPLE
             mFloorView?.text = Constant.TEXT_FLOOR + Constant.TEXT_SPACE_ONE + room.floor.toString()
-            itemID = room.id.toString()
-            itemName = room.name.toString()
+            itemID = room.id
+            itemName = room.name
             itemFloor = room.floor
         }
 
         override fun onClick(v: View?) {
-            mOnRoomClickListener.onRoomClick(itemID, itemName, itemFloor)
+            mOnRoomClickListener.invoke(itemID, itemName, itemFloor)
         }
-    }
-
-    interface OnRoomListener {
-        fun onRoomClick(position: String?, itemName: String?, itemFloor: Int)
     }
 }

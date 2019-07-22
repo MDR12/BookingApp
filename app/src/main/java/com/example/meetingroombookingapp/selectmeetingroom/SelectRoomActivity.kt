@@ -25,7 +25,7 @@ import kotlinx.android.synthetic.main.activity_select_room.*
 import java.text.SimpleDateFormat
 import java.util.*
 
-class SelectRoomActivity : AppCompatActivity(), SelectRoomContract.View, RoomRecyclerViewAdapter.OnRoomListener {
+class SelectRoomActivity : AppCompatActivity(), SelectRoomContract.View {
 
     private val presenter: SelectRoomContract.Presenter = SelectRoomPresenter(this)
     private var myRoomList = mutableListOf<RoomModel>()
@@ -46,7 +46,7 @@ class SelectRoomActivity : AppCompatActivity(), SelectRoomContract.View, RoomRec
     }
 
     override fun onShowRoomList(data: MutableList<RoomModel>) {
-        val adapt = RoomRecyclerViewAdapter(data, this)
+        val adapt = RoomRecyclerViewAdapter(data,this::onRoomClick)
 
         Handler().postDelayed({
             recyclerview_floor.visibility = View.VISIBLE
@@ -69,7 +69,7 @@ class SelectRoomActivity : AppCompatActivity(), SelectRoomContract.View, RoomRec
         spinner_floor?.adapter = floor
     }
 
-    override fun onRoomClick(position: String?, itemName: String?, itemFloor: Int) {
+    private fun onRoomClick(position: String?, itemName: String?, itemFloor: Int) {
         val editor = sharePref.edit()
         editor.putString(Constant.PREF_ROOM_ID, position)
         editor.putString(Constant.PREF_ROOM_NAME, itemName)

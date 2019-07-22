@@ -22,7 +22,7 @@ class MyBookingPresenter(private val view: MyBookingContract.View): MyBookingCon
                 .whereEqualTo(Constant.FIREBASE_USER_NAME, userName)
                 .whereEqualTo(Constant.FIREBASE_USER_PHONE, userPhone)
                 .orderBy(Constant.FIREBASE_DATE, Query.Direction.ASCENDING)
-                .orderBy(Constant.FIREBASE_TIME_BOOKING, Query.Direction.ASCENDING)
+                .orderBy(Constant.FIREBASE_TIME_BOOKING, Query.Direction.DESCENDING)
                 .get().addOnSuccessListener {
 
                 for (doc in it.documents) {

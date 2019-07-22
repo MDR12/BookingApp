@@ -57,19 +57,23 @@ class BookByRoomActivity : AppCompatActivity(), BookByRoomContract.View {
     }
 
     private fun initView() {
-        btn_book_byroom.setOnClickListener {
-            val getRoomId = sharePref.getString(Constant.PREF_ROOM_ID, null)
-            val roomName = sharePref.getString(Constant.PREF_ROOM_NAME, null)
-            val floor = sharePref.getInt(Constant.PREF_ROOM_FLOOR, NOTHING)
-            val userName = sharePref.getString(Constant.PREF_USER_NAME, null)
-            val userPhone = sharePref.getString(Constant.PREF_USER_PHONE, null)
-            val userTeam = sharePref.getString(Constant.PREF_USER_TEAM, null)
-            val datePick = sharePref.getString(Constant.PREF_DATE_PICK, null)
-            val date = SimpleDateFormat(Constant.FORMAT_DATE, Locale(Constant.TH)).parse(datePick)
+        val getRoomId = sharePref.getString(Constant.PREF_ROOM_ID, null)
+        val roomName = sharePref.getString(Constant.PREF_ROOM_NAME, null)
+        val floor = sharePref.getInt(Constant.PREF_ROOM_FLOOR, NOTHING)
+        val userName = sharePref.getString(Constant.PREF_USER_NAME, null)
+        val userPhone = sharePref.getString(Constant.PREF_USER_PHONE, null)
+        val userTeam = sharePref.getString(Constant.PREF_USER_TEAM, null)
+        val datePick = sharePref.getString(Constant.PREF_DATE_PICK, null)
+        val date = SimpleDateFormat(Constant.FORMAT_DATE, Locale(Constant.TH)).parse(datePick)
 
-            val allData = mutableListOf<BookingDataModel>()
-            val timeText: ArrayList<String?> = ArrayList()
-            val checkList = timeSlotPick.filter { it.isCheck }
+        val allData = mutableListOf<BookingDataModel>()
+        val timeText: ArrayList<String?> = ArrayList()
+        val checkList = timeSlotPick.filter { it.isCheck }
+
+        tv_BookByRoom_RoomName.text = Constant.TEXT_ROOM + roomName
+        tv_BookByRoom_RoomFloor.text = Constant.TEXT_FLOOR + floor.toString()
+
+        btn_book_byroom.setOnClickListener {
 
             for (i in 0 until checkList.size) {
                 allData.add(

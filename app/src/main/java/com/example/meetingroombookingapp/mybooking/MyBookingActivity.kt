@@ -45,7 +45,6 @@ class MyBookingActivity : AppCompatActivity(),MyBookingContract.View {
             }
 
             builder.setNegativeButton(Constant.TEXT_NO) { _, _ ->
-
             }
 
             val dialog: AlertDialog = builder.create()
