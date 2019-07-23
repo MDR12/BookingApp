@@ -29,9 +29,14 @@ class HomeActivity : AppCompatActivity() {
 
         btn_logout.text = HtmlCompat.fromHtml(Constant.HTML_LOGOUT, HtmlCompat.FROM_HTML_MODE_LEGACY)
 
-        tv_showUserName.text = Constant.TEXT_HI + name
-        tv_showUserPhone.text = Constant.TEXT_TEL + phone
-        tv_showUserTeam.text =  Constant.TEXT_TEAM + team
+        val strName = Constant.TEXT_HI + name
+        tv_showUserName.text = strName
+
+        val strPhone = Constant.TEXT_TEL + phone
+        tv_showUserPhone.text = strPhone
+
+        val strTeam = Constant.TEXT_TEAM + team
+        tv_showUserTeam.text =  strTeam
 
         btn_byRoom.setOnClickListener {
             val intent = Intent(this, SelectRoomActivity::class.java)

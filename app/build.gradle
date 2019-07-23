@@ -45,4 +45,11 @@ dependencies {
     implementation 'com.google.firebase:firebase-firestore:20.1.0'
     implementation 'com.google.firebase:firebase-core:17.0.0'
     implementation 'com.firebaseui:firebase-ui-firestore:5.0.0'
+
+    // ... more entries
+    testImplementation 'junit:junit:4.12'
+    // required if you want to use Mockito for unit tests
+    testImplementation 'org.mockito:mockito-core:2.7.22'
+    // required if you want to use Mockito for Android tests
+    androidTestImplementation 'org.mockito:mockito-android:2.7.22'
 }

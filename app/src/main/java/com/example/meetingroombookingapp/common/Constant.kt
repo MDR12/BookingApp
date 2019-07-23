@@ -40,7 +40,7 @@ object  Constant {
     const val TEXT_ADD_ERROR = "Error adding time booking"
     const val TEXT_INVALIID = "Invalid view type"
     const val TEXT_TIME_SLOT_YOU_PICK = "Time:"
-    const val TEXT_LISTEN_FAILED ="Listen failed!"
+    const val TEXT_PLS_SELECT_DATE_TIME ="Please select date and time"
     const val TEXT_DELETE_COMPLETE = "Delete Complete"
     const val TEXT_DELETEING = "Deleteing..."
     const val TEXT_YES = "Yes"

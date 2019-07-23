@@ -47,7 +47,7 @@ class CheckboxAdapter(private val timeList: MutableList<CheckboxAdapterDataModel
     }
 
     class AvailableViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        var myCheckbox: CheckBox = itemView.findViewById(R.id.checkbox_time)
+        private var myCheckbox: CheckBox = itemView.findViewById(R.id.checkbox_time)
         var itemID: Int? = null
 
         fun bind(item: CheckboxAdapterDataModel){

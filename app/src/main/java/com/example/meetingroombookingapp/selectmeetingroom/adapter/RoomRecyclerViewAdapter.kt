@@ -36,12 +36,12 @@ class RoomRecyclerViewAdapter(
         view: View, private val onRoomClickListener: (position: String?, itemName: String?, itemFloor: Int) -> Unit
     ) : RecyclerView.ViewHolder(view), View.OnClickListener {
 
-        var mRoomNameView: TextView? = itemView.findViewById(R.id.tv_roomName)
-        var mCapacityView: TextView? = itemView.findViewById(R.id.tv_capacity)
-        var mFloorView: TextView? = itemView.findViewById(R.id.tv_floor)
-        var itemID: String? = null
-        var itemName: String? = null
-        var itemFloor: Int = NOTHING
+        private var mRoomNameView: TextView? = itemView.findViewById(R.id.tv_roomName)
+        private var mCapacityView: TextView? = itemView.findViewById(R.id.tv_capacity)
+        private var mFloorView: TextView? = itemView.findViewById(R.id.tv_floor)
+        private var itemID: String? = null
+        private var itemName: String? = null
+        private var itemFloor: Int = NOTHING
 
         init {
             this.onRoomClickListener
@@ -49,9 +49,13 @@ class RoomRecyclerViewAdapter(
         }
 
         fun bind(room: RoomModel){
-            mRoomNameView?.text = room.name
-            mCapacityView?.text = room.capacity.toString() + Constant.TEXT_PEOPLE
-            mFloorView?.text = Constant.TEXT_FLOOR + Constant.TEXT_SPACE_ONE + room.floor.toString()
+            val strRoomName = room.name
+            val strCapacity = room.capacity.toString() + Constant.TEXT_PEOPLE
+            val strRoomFloor = Constant.TEXT_FLOOR + Constant.TEXT_SPACE_ONE + room.floor.toString()
+
+            mRoomNameView?.text = strRoomName
+            mCapacityView?.text = strCapacity
+            mFloorView?.text = strRoomFloor
             itemID = room.id
             itemName = room.name
             itemFloor = room.floor

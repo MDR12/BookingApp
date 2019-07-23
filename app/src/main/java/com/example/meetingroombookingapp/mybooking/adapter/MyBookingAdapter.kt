@@ -30,20 +30,25 @@ class MyBookingAdapter(private val bookingList: MutableList<MyBookingModel>): Re
     }
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view), View.OnCreateContextMenuListener {
-        var mRoomNameView: TextView = itemView.findViewById(R.id.tv_myRoomName)
-        var mMyFloorView: TextView = itemView.findViewById(R.id.tv_myFloor)
-        var mDateView: TextView = itemView.findViewById(R.id.tv_myDate)
-        var mTimeView: TextView = itemView.findViewById(R.id.tv_myTime)
-        var mItem: ConstraintLayout? = itemView.findViewById(R.id.itemMyBooking)
-        var mItemName: String? = null
-        var bookingID: String? = null
-
+        private var mRoomNameView: TextView = itemView.findViewById(R.id.tv_myRoomName)
+        private var mMyFloorView: TextView = itemView.findViewById(R.id.tv_myFloor)
+        private var mDateView: TextView = itemView.findViewById(R.id.tv_myDate)
+        private var mTimeView: TextView = itemView.findViewById(R.id.tv_myTime)
+        private var mItem: ConstraintLayout? = itemView.findViewById(R.id.itemMyBooking)
+        private var mItemName: String? = null
+        private var bookingID: String? = null
 
         fun bind(booking: MyBookingModel){
-            mRoomNameView.text = Constant.TEXT_ROOM + booking.roomName
-            mMyFloorView.text = Constant.TEXT_FLOOR + booking.roomFloor.toString()
-            mDateView.text = Constant.TEXT_DATE + booking.dateText
-            mTimeView.text = Constant.TEXT_TIME + booking.timeText
+
+            val strRoomName = Constant.TEXT_ROOM + booking.roomName
+            val strRoomFloor = Constant.TEXT_FLOOR + booking.roomFloor.toString()
+            val strDate = Constant.TEXT_DATE + booking.dateText
+            val strTime = Constant.TEXT_TIME + booking.timeText
+
+            mRoomNameView.text = strRoomName
+            mMyFloorView.text = strRoomFloor
+            mDateView.text = strDate
+            mTimeView.text = strTime
             bookingID = booking.bookingId
             mItemName = booking.roomName + Constant.TEXT_SPACE_ONE + booking.timeText
 

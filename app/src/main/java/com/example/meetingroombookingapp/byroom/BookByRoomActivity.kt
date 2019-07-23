@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -21,7 +22,6 @@ import com.example.meetingroombookingapp.model.CheckboxAdapterDataModel
 import kotlinx.android.synthetic.main.activity_book_by_room.*
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
 class BookByRoomActivity : AppCompatActivity(), BookByRoomContract.View {
 
@@ -45,7 +45,9 @@ class BookByRoomActivity : AppCompatActivity(), BookByRoomContract.View {
         recyclerview_checkbox.apply {
             layoutManager = LinearLayoutManager(applicationContext)
             adapter = adapt
+            visibility = View.VISIBLE
         }
+        ProgressBar_BookByRoom.visibility = View.GONE
     }
 
     override fun onShowSuccess() {
@@ -64,36 +66,39 @@ class BookByRoomActivity : AppCompatActivity(), BookByRoomContract.View {
         val userPhone = sharePref.getString(Constant.PREF_USER_PHONE, null)
         val userTeam = sharePref.getString(Constant.PREF_USER_TEAM, null)
         val datePick = sharePref.getString(Constant.PREF_DATE_PICK, null)
-        val date = SimpleDateFormat(Constant.FORMAT_DATE, Locale(Constant.TH)).parse(datePick)
 
-        val allData = mutableListOf<BookingDataModel>()
-        val timeText: ArrayList<String?> = ArrayList()
+        val strRoomName = Constant.TEXT_ROOM + roomName
+        tv_BookByRoom_RoomName.text = strRoomName
 
-        tv_BookByRoom_RoomName.text = Constant.TEXT_ROOM + roomName
-        tv_BookByRoom_RoomFloor.text = Constant.TEXT_FLOOR + floor.toString()
+        val strRoomFloor = Constant.TEXT_FLOOR + floor.toString()
+        tv_BookByRoom_RoomFloor.text = strRoomFloor
 
         btn_book_byroom.setOnClickListener {
 
             val checkList = timeSlotPick.filter { it.isCheck }
 
-            for (i in 0 until checkList.size) {
-                allData.add(
-                    i, BookingDataModel(
-                        date,
-                        getRoomId,
-                        floor,
-                        roomName,
-                        userName,
-                        userPhone,
-                        userTeam,
-                        checkList[i].timeSlotID,
-                        checkList[i].timeText
-                    )
-                )
-                timeText.add(checkList[i].timeText)
-            }
+            if (datePick != null && checkList.isNotEmpty()) {
+                val date = SimpleDateFormat(Constant.FORMAT_DATE, Locale(Constant.TH)).parse(datePick)
+                val allData = mutableListOf<BookingDataModel>()
+                val timeText: ArrayList<String?> = ArrayList()
 
-            if (datePick != null && allData.isNotEmpty()) {
+                for (i in 0 until checkList.size) {
+                    allData.add(
+                        i, BookingDataModel(
+                            date,
+                            getRoomId,
+                            floor,
+                            roomName,
+                            userName,
+                            userPhone,
+                            userTeam,
+                            checkList[i].timeSlotID,
+                            checkList[i].timeText
+                        )
+                    )
+                    timeText.add(checkList[i].timeText)
+                }
+
                 val builder = AlertDialog.Builder(this)
                 var str =
                     Constant.TEXT_NAME + userName + Constant.TEXT_SPACE_ONE +
@@ -127,7 +132,7 @@ class BookByRoomActivity : AppCompatActivity(), BookByRoomContract.View {
                 dialog.show()
 
             } else {
-                Toast.makeText(this, Constant.TEXT_FILL_ALL_INFO, Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, Constant.TEXT_PLS_SELECT_DATE_TIME, Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -149,6 +154,8 @@ class BookByRoomActivity : AppCompatActivity(), BookByRoomContract.View {
                 val date =
                         pDayOfMonth.toString() + Constant.TEXT_DATH + (pMonth + 1).toString() + Constant.TEXT_DATH + pYear.toString()
                 date_picker.text = date
+
+                ProgressBar_BookByRoom.visibility = View.VISIBLE
 
                 dateFormat = SimpleDateFormat(Constant.FORMAT_DATE, Locale(Constant.TH)).parse(date)
                 presenter.fetchTimeCheckBox(Constant.ARR_TIME_ALL_TEXT, dateFormat, roomId)

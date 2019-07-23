@@ -17,9 +17,11 @@
         android:textSize="24dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:maxLength="30"/>
 
     <EditText
+            android:maxLength="12"
         android:id="@+id/edt_userPhone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -32,6 +34,7 @@
         app:layout_constraintTop_toBottomOf="@+id/edt_userName" />
 
     <EditText
+            android:maxLength="20"
         android:id="@+id/edt_userTeam"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
