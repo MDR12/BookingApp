@@ -93,7 +93,6 @@ class SelectRoomActivity : AppCompatActivity(), SelectRoomContract.View {
     }
 
     private fun addToFireBase() {
-
         val roomId = sharePref.getString(Constant.PREF_ROOM_ID, null)
         val roomName = sharePref.getString(Constant.PREF_ROOM_NAME, null)
         val floor = sharePref.getInt(Constant.PREF_ROOM_FLOOR, NOTHING)
@@ -118,7 +117,6 @@ class SelectRoomActivity : AppCompatActivity(), SelectRoomContract.View {
         }
 
         for (i in 0 until arrTimeSlot.size) {
-
             allData.add(
                 i, BookingDataModel(
                     dateFormat,
@@ -155,9 +153,7 @@ class SelectRoomActivity : AppCompatActivity(), SelectRoomContract.View {
         builder.setMessage(str)
 
         builder.setPositiveButton(Constant.TEXT_CONFIRM) { _, _ ->
-
             presenter.addBookingToDataBase(allData)
-
             val i = Intent(this, HomeActivity::class.java)
             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
             startActivity(i)
