@@ -11,7 +11,8 @@ import com.example.meetingroombookingapp.R
 import com.example.meetingroombookingapp.common.Constant
 import com.example.meetingroombookingapp.model.CheckboxAdapterDataModel
 
-class CheckboxAdapter(private val timeList: MutableList<CheckboxAdapterDataModel>, private val c: Context): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class CheckboxAdapter(private val timeList: MutableList<CheckboxAdapterDataModel>, private val c: Context):
+    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
@@ -48,7 +49,7 @@ class CheckboxAdapter(private val timeList: MutableList<CheckboxAdapterDataModel
 
     class AvailableViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private var myCheckbox: CheckBox = itemView.findViewById(R.id.checkbox_time)
-        var itemID: Int? = null
+        private var itemID: Int? = null
 
         fun bind(item: CheckboxAdapterDataModel){
             myCheckbox.text = item.timeText
