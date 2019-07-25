@@ -13,6 +13,8 @@ interface SelectRoomContract {
         fun onShowFail()
     }
     interface Presenter{
+        fun subscribe(view: View)
+        fun unSubscribe()
         fun setFloorSpinner()
         fun setRoomListByTime(date: String, timeStart: Int, timeEnd: Int)
         fun setRoomList(floorSelect : String, roomList: MutableList<RoomModel>)

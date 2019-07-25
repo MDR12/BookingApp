@@ -22,12 +22,14 @@ import com.example.meetingroombookingapp.model.BookingDataModel
 import com.example.meetingroombookingapp.model.RoomModel
 import com.example.meetingroombookingapp.selectmeetingroom.adapter.RoomRecyclerViewAdapter
 import kotlinx.android.synthetic.main.activity_select_room.*
+import org.koin.android.ext.android.inject
 import java.text.SimpleDateFormat
 import java.util.*
 
 class SelectRoomActivity : AppCompatActivity(), SelectRoomContract.View {
 
-    private val presenter: SelectRoomContract.Presenter = SelectRoomPresenter(this)
+    private val presenter: SelectRoomContract.Presenter by inject()
+
     private var myRoomList = mutableListOf<RoomModel>()
     private val sharePref: SharedPreferences by lazy {
         getSharedPreferences(Constant.PREF_NAME, Context.MODE_PRIVATE)
@@ -45,6 +47,10 @@ class SelectRoomActivity : AppCompatActivity(), SelectRoomContract.View {
         initSpinner()
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        presenter.unSubscribe()
+    }
     override fun onShowRoomList(data: MutableList<RoomModel>) {
         val adapt = RoomRecyclerViewAdapter(data,this::onRoomClick)
 
@@ -178,6 +184,7 @@ class SelectRoomActivity : AppCompatActivity(), SelectRoomContract.View {
     }
 
     private fun initView() {
+        presenter.subscribe(this)
         progressBar_select_room.visibility = View.VISIBLE
         show = intent.getStringExtra(Constant.EXTRA_SHOW)
 
