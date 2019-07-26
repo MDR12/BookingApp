@@ -1,7 +1,7 @@
 package com.example.meetingroombookingapp.selectmeetingroom
 
-import com.example.meetingroombookingapp.model.BookingDataModel
 import com.example.meetingroombookingapp.model.RoomModel
+import java.util.*
 
 interface SelectRoomContract {
 
@@ -16,9 +16,19 @@ interface SelectRoomContract {
         fun subscribe(view: View)
         fun unSubscribe()
         fun setFloorSpinner()
-        fun setRoomListByTime(date: String, timeStart: Int, timeEnd: Int)
+        fun getRoomByTime(date: String, timeStart: Int, timeEnd: Int)
         fun setRoomList(floorSelect : String, roomList: MutableList<RoomModel>)
-        fun getRoomFromFireBase()
-        fun addBookingToDataBase(allData: MutableList<BookingDataModel>)
+        fun getRoomAll()
+        fun addBooking(
+            dateFormat: Date,
+            roomId: String?,
+            floor: Int,
+            roomName: String?,
+            userName: String?,
+            userPhone: String?,
+            userTeam: String?,
+            timeStart: Int,
+            timeEnd: Int
+        )
     }
 }

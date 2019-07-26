@@ -1,23 +1,13 @@
 package com.example.meetingroombookingapp.selectmeetingroom
 
 import com.example.meetingroombookingapp.common.Constant
-import com.example.meetingroombookingapp.common.Constant.ONE_HOUR
 import com.example.meetingroombookingapp.model.BookingDataModel
-import com.example.meetingroombookingapp.model.BookingModel
 import com.example.meetingroombookingapp.model.RoomModel
 import com.example.meetingroombookingapp.repo.RoomRepo
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.Query
-import java.text.SimpleDateFormat
 import java.util.*
 
 class SelectRoomPresenter(private val repo: RoomRepo) : SelectRoomContract.Presenter {
-
     private var view: SelectRoomContract.View? = null
-
-    private val db = FirebaseFirestore.getInstance()
-    private val queryRoom = db.collection(Constant.FIREBASE_COLLECTION_MEETINGROOM)
-    private val queryBooking = db.collection(Constant.FIREBASE_COLLECTION_BOOKING)
 
     override fun subscribe(view: SelectRoomContract.View) {
         this.view = view
@@ -27,14 +17,67 @@ class SelectRoomPresenter(private val repo: RoomRepo) : SelectRoomContract.Prese
         view = null
     }
 
-    override fun getRoomFromFireBase(){
-        repo.getRoom(
+    override fun getRoomAll(){
+        repo.getRoomAll(
             onSuccess = { roomList ->
                 view?.onGetRoomDone(roomList)
                 view?.onShowRoomList(roomList)
             },
-            onFail = {  }
+            onFail = {}
         )
+    }
+
+    override fun getRoomByTime(date: String, timeStart: Int, timeEnd: Int) {
+        repo.getRoomByTime(
+            date,
+            timeStart,
+            timeEnd,
+            onSuccess = {
+                    RoomList ->
+                view?.onGetRoomDone(RoomList)
+                view?.onShowRoomList(RoomList)
+            },
+            onFail = {}
+        )
+    }
+
+    override fun addBooking(dateFormat: Date,
+                            roomId: String?,
+                            floor: Int,
+                            roomName: String?,
+                            userName: String?,
+                            userPhone: String?,
+                            userTeam: String?,
+                            timeStart: Int,
+                            timeEnd: Int ) {
+
+        val data = mutableListOf<BookingDataModel>()
+        val arrTimeSlot = setArrTimeSlot(timeStart, timeEnd)
+
+        for (i in 0 until arrTimeSlot.size) {
+            data.add(
+                i, BookingDataModel(
+                    dateFormat,
+                    roomId,
+                    floor,
+                    roomName,
+                    userName,
+                    userPhone,
+                    userTeam,
+                    arrTimeSlot[i],
+                    Constant.ARR_TIME_ALL_TEXT[arrTimeSlot[i]]
+                )
+            )
+        }
+
+        repo.addBooking(data,
+            onSuccess = {size ->
+                if (size == data.size)
+                    view?.onShowSuccess()
+            },
+            onFail = {
+                view?.onShowFail()
+            })
     }
 
     override fun setRoomList(floorSelect: String, roomList: MutableList<RoomModel>) {
@@ -46,69 +89,20 @@ class SelectRoomPresenter(private val repo: RoomRepo) : SelectRoomContract.Prese
         }
     }
 
-    override fun setRoomListByTime(date: String, timeStart: Int, timeEnd: Int) {
-        val dateFormat = SimpleDateFormat(Constant.FORMAT_DATE, Locale(Constant.TH)).parse(date)
-        val arrTimeSlot = mutableListOf<Int>()
-
-        val pickHours = timeEnd - timeStart
-        var start = timeStart
-        if (pickHours == ONE_HOUR) {
-            arrTimeSlot.add(timeStart)
-        } else {
-            for (i in 0 until pickHours) {
-                arrTimeSlot.add(start++)
-            }
-        }
-
-        val bookingRemoveList = mutableListOf<BookingModel>()
-        val myRoomList = mutableListOf<RoomModel>()
-
-        queryBooking
-            .whereEqualTo(Constant.FIREBASE_DATE, dateFormat)
-            .get().addOnSuccessListener { it ->
-                for (doc in it.documents) {
-                    val book = doc.toObject(BookingModel::class.java)
-                    book?.id = doc.id
-                    if (book != null && arrTimeSlot.contains(book.time_booking)) {
-                        bookingRemoveList.add(book)
-                    }
-                }
-
-                queryRoom
-                    .orderBy(Constant.FIREBASE_NAME, Query.Direction.ASCENDING)
-                    .get()
-                    .addOnSuccessListener {
-                        for (doc in it.documents) {
-                            val room = doc.toObject(RoomModel::class.java)
-                            room?.id = doc.id
-                            if (room != null) {
-                                myRoomList.add(room)
-                            }
-                        }
-
-                        if (bookingRemoveList.isNotEmpty()) {
-                            for (removeThisBook in bookingRemoveList) {
-                                val removeRoom = myRoomList.find { it.id == removeThisBook.room_id }
-                                myRoomList.remove(removeRoom)
-                            }
-                        }
-                        view?.onGetRoomDone(myRoomList)
-                        view?.onShowRoomList(myRoomList)
-                    }
-            }
-    }
-
     override fun setFloorSpinner() {
         val category = arrayOf(Constant.FLOOR_ALL, Constant.FLOOR_11, Constant.FLOOR_10, Constant.FLOOR_9, Constant.FLOOR_8, Constant.FLOOR_7)
         view?.onShowFloorSpinner(category)
     }
 
-    override fun addBookingToDataBase(allData: MutableList<BookingDataModel>) {
-        for (i in allData){
-            db.collection(Constant.FIREBASE_COLLECTION_BOOKING)
-                .add(i)
-        }
-        view?.onShowSuccess()
-    }
+    private fun setArrTimeSlot(timeStart: Int, timeEnd: Int): MutableList<Int> {
+        val hour = timeEnd - timeStart
+        var start = timeStart
+        val arrTimeSlot = mutableListOf<Int>()
 
+        for (i in 0 until hour) {
+            arrTimeSlot.add(start++)
+        }
+
+        return arrTimeSlot
+    }
 }
