@@ -5,7 +5,6 @@ import com.example.meetingroombookingapp.model.BookingDataModel
 import com.example.meetingroombookingapp.model.BookingModel
 import com.example.meetingroombookingapp.model.RoomModel
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.Query
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -36,7 +35,8 @@ class RoomRepoImpl(private val firestore: FirebaseFirestore): RoomRepo{
         val roomList = mutableListOf<RoomModel>()
 
         firestore.collection(Constant.FIREBASE_COLLECTION_MEETINGROOM)
-            .orderBy( Constant.FIREBASE_NAME, Query.Direction.ASCENDING)
+            .orderBy(Constant.FIREBASE_FLOOR)
+            .orderBy(Constant.FIREBASE_NAME)
             .get().addOnSuccessListener {
                 for (doc in it.documents) {
                     val room = doc.toObject(RoomModel::class.java)
@@ -84,7 +84,8 @@ class RoomRepoImpl(private val firestore: FirebaseFirestore): RoomRepo{
                 }
 
                 firestore.collection(Constant.FIREBASE_COLLECTION_MEETINGROOM)
-                    .orderBy(Constant.FIREBASE_NAME, Query.Direction.ASCENDING)
+                    .orderBy(Constant.FIREBASE_FLOOR)
+                    .orderBy(Constant.FIREBASE_NAME)
                     .get()
                     .addOnSuccessListener {
                         for (doc in it.documents) {
