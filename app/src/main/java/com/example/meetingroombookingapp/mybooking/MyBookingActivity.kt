@@ -14,10 +14,11 @@ import com.example.meetingroombookingapp.common.Constant
 import com.example.meetingroombookingapp.model.MyBookingModel
 import com.example.meetingroombookingapp.mybooking.adapter.MyBookingAdapter
 import kotlinx.android.synthetic.main.activity_my_booking.*
+import org.koin.android.ext.android.inject
 
 class MyBookingActivity : AppCompatActivity(),MyBookingContract.View {
 
-    private val presenter: MyBookingContract.Presenter = MyBookingPresenter(this)
+    private val presenter: MyBookingContract.Presenter by inject()
     private var myBooking = mutableListOf<MyBookingModel>()
     private val sharePref: SharedPreferences by lazy {
         getSharedPreferences(Constant.PREF_NAME, Context.MODE_PRIVATE)
@@ -29,9 +30,13 @@ class MyBookingActivity : AppCompatActivity(),MyBookingContract.View {
         initView()
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        presenter.unSubscribe()
+    }
+
     override fun onContextItemSelected(item: MenuItem?): Boolean {
         if (item?.order == 0){
-
             val builder = AlertDialog.Builder(this)
             builder.setTitle(Constant.TEXT_CONFIRM_CANCEL_MYBOOKING)
 
@@ -78,6 +83,7 @@ class MyBookingActivity : AppCompatActivity(),MyBookingContract.View {
     }
 
     private fun initView(){
+        presenter.subscribe(this)
         val userName = sharePref.getString(Constant.PREF_USER_NAME, null)
         val userPhone = sharePref.getString(Constant.PREF_USER_PHONE, null)
 

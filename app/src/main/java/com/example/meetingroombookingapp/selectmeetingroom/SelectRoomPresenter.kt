@@ -3,10 +3,10 @@ package com.example.meetingroombookingapp.selectmeetingroom
 import com.example.meetingroombookingapp.common.Constant
 import com.example.meetingroombookingapp.model.BookingDataModel
 import com.example.meetingroombookingapp.model.RoomModel
-import com.example.meetingroombookingapp.repo.RoomRepo
+import com.example.meetingroombookingapp.repo.SelectRoomRepo
 import java.util.*
 
-class SelectRoomPresenter(private val repo: RoomRepo) : SelectRoomContract.Presenter {
+class SelectRoomPresenter(private val repo: SelectRoomRepo) : SelectRoomContract.Presenter {
     private var view: SelectRoomContract.View? = null
 
     override fun subscribe(view: SelectRoomContract.View) {

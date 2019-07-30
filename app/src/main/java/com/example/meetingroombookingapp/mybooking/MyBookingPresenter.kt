@@ -1,67 +1,39 @@
 package com.example.meetingroombookingapp.mybooking
 
-import com.example.meetingroombookingapp.common.Constant
-import com.example.meetingroombookingapp.model.BookingModel
-import com.example.meetingroombookingapp.model.MyBookingModel
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.Query
-import java.text.SimpleDateFormat
-import java.util.*
+import com.example.meetingroombookingapp.repo.MyBookingRepo
 
-class MyBookingPresenter(private val view: MyBookingContract.View): MyBookingContract.Presenter {
+class MyBookingPresenter(private val repo: MyBookingRepo) : MyBookingContract.Presenter {
+    private var view: MyBookingContract.View? = null
 
-    private val db = FirebaseFirestore.getInstance()
+    override fun subscribe(view: MyBookingContract.View) {
+        this.view = view
+    }
 
-    private val queryBooking = db.collection(Constant.FIREBASE_COLLECTION_BOOKING)
+    override fun unSubscribe() {
+        view = null
+    }
 
-    override fun onGetMyBooking(userName: String?, userPhone: String?) {
-        val bookingList = mutableListOf<BookingModel>()
-        val myBookingList = mutableListOf<MyBookingModel>()
+    override fun onGetMyBooking(userName: String, userPhone: String) {
+        repo.getMyBooking(
+            userName,
+            userPhone,
+            onSuccess = { myBookingList ->
+                view?.onShowMyBooking(myBookingList)
+            },
+            onFail = {
 
-        queryBooking
-                .whereEqualTo(Constant.FIREBASE_USER_NAME, userName)
-                .whereEqualTo(Constant.FIREBASE_USER_PHONE, userPhone)
-                .orderBy(Constant.FIREBASE_DATE, Query.Direction.DESCENDING)
-                .orderBy(Constant.FIREBASE_TIME_BOOKING, Query.Direction.DESCENDING)
-                .orderBy(Constant.FIREBASE_ROOM_FLOOR)
-                .orderBy(Constant.FIREBASE_ROOM_NAME)
-                .get().addOnSuccessListener {
-
-                for (doc in it.documents) {
-                        val book = doc.toObject(BookingModel::class.java)
-                        book?.id = doc.id
-                        if (book != null) {
-                            bookingList.add(book)
-                        }
-                    }
-
-                for (i in bookingList) {
-                    myBookingList.add(
-                        MyBookingModel(
-                            i.id,
-                            i.room_name,
-                            i.room_floor,
-                            SimpleDateFormat(Constant.FORMAT_DATE, Locale(Constant.TH)).format(i.date),
-                            Constant.ARR_TIME_ALL_TEXT[i.time_booking]
-                        )
-                    )
-                }
-                view.onShowMyBooking(myBookingList)
-
-                }.addOnFailureListener {
-                view.onFailLoad(Constant.TEXT_MY_BOOKING_LIST)
-                }
+            })
     }
 
     override fun deleteBooking(id: String?, groupId: Int) {
+        repo.deleteBooking(
+            id,
+            groupId,
+            onSuccess = { deleteID ->
+                view?.onDeleteOK(deleteID)
+            }, onFail = {
 
-        queryBooking
-            .document(id.toString())
-            .delete()
-            .addOnSuccessListener {
-                view.onDeleteOK(groupId) }
-            .addOnFailureListener {
-                view.onFailLoad(Constant.TEXT_MY_BOOKING_LIST) }
+            })
     }
 
 }

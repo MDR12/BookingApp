@@ -11,7 +11,9 @@ interface MyBookingContract {
     }
 
     interface Presenter{
-        fun onGetMyBooking(userName: String?, userPhone: String?)
+        fun subscribe(view: View)
+        fun unSubscribe()
+        fun onGetMyBooking(userName: String, userPhone: String)
         fun deleteBooking(id: String?, groupId: Int)
     }
 }
