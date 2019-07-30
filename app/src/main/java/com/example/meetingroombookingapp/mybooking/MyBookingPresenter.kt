@@ -21,8 +21,10 @@ class MyBookingPresenter(private val view: MyBookingContract.View): MyBookingCon
         queryBooking
                 .whereEqualTo(Constant.FIREBASE_USER_NAME, userName)
                 .whereEqualTo(Constant.FIREBASE_USER_PHONE, userPhone)
-                .orderBy(Constant.FIREBASE_DATE, Query.Direction.ASCENDING)
+                .orderBy(Constant.FIREBASE_DATE, Query.Direction.DESCENDING)
                 .orderBy(Constant.FIREBASE_TIME_BOOKING, Query.Direction.DESCENDING)
+                .orderBy(Constant.FIREBASE_ROOM_FLOOR)
+                .orderBy(Constant.FIREBASE_ROOM_NAME)
                 .get().addOnSuccessListener {
 
                 for (doc in it.documents) {

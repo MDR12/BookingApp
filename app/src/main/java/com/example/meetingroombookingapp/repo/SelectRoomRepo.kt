@@ -8,7 +8,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import java.text.SimpleDateFormat
 import java.util.*
 
-interface RoomRepo{
+interface SelectRoomRepo{
     fun getRoomAll(
         onSuccess:(MutableList<RoomModel>) -> Unit,
         onFail:() -> Unit
@@ -29,7 +29,7 @@ interface RoomRepo{
     )
 }
 
-class RoomRepoImpl(private val firestore: FirebaseFirestore): RoomRepo{
+class RoomRepoImpl(private val firestore: FirebaseFirestore): SelectRoomRepo{
 
     override fun getRoomAll(onSuccess: (MutableList<RoomModel>) -> Unit, onFail: () -> Unit) {
         val roomList = mutableListOf<RoomModel>()

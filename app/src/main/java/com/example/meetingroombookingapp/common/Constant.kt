@@ -89,6 +89,9 @@ object  Constant {
     const val FIREBASE_NAME = "name"
     const val FIREBASE_DATE = "date"
     const val FIREBASE_TIME_BOOKING = "time_booking"
+    const val FIREBASE_FLOOR = "floor"
+    const val FIREBASE_ROOM_FLOOR = "room_floor"
+    const val FIREBASE_ROOM_NAME = "room_name"
 
     //Floor
     const val FLOOR_SELECT = "Select floor"
