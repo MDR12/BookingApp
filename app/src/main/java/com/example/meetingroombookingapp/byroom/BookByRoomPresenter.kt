@@ -32,15 +32,14 @@ class BookByRoomPresenter(private val repo: BookByRoomRepo) : BookByRoomContract
     }
 
     override fun addBookingToDataBase(allData: MutableList<BookingDataModel>) {
-        val size = allData.size
         repo.addBookingToDataBase(
             allData,
-            onSuccess = {count ->
-                if (count == size){
-                    view?.onShowSuccess()
-                }
+            onSuccess = {
+                view?.onShowSuccess()
             },
-            onFail = {  })
+            onFail = {
+
+            })
     }
 
 }

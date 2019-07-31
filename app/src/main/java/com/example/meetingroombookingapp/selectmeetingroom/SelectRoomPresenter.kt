@@ -71,9 +71,8 @@ class SelectRoomPresenter(private val repo: SelectRoomRepo) : SelectRoomContract
         }
 
         repo.addBooking(data,
-            onSuccess = {size ->
-                if (size == data.size)
-                    view?.onShowSuccess()
+            onSuccess = {
+                view?.onShowSuccess()
             },
             onFail = {
                 view?.onShowFail()

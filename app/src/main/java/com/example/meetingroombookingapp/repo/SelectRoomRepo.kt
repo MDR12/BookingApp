@@ -24,7 +24,7 @@ interface SelectRoomRepo{
 
     fun addBooking(
         data: MutableList<BookingDataModel>,
-        onSuccess: (Int) -> Unit,
+        onSuccess: () -> Unit,
         onFail: () -> Unit
     )
 }
@@ -109,19 +109,34 @@ class RoomRepoImpl(private val firestore: FirebaseFirestore): SelectRoomRepo{
             }
 
     }
+    private var onSuccessAddBook: (() -> Unit)? = null
+    private var onFailAddBook: (() -> Unit)? = null
+    private var books = listOf<BookingDataModel>()
+    private var countAddBook = 0
 
     override fun addBooking(
         data: MutableList<BookingDataModel>,
-        onSuccess: (Int) -> Unit,
+        onSuccess: () -> Unit,
         onFail: () -> Unit
     ) {
-        var n = 0
+        onSuccessAddBook = onSuccess
+        onFailAddBook = onFail
+        books = data
+        countAddBook = 0
 
-        for (i in data) {
+        loopAddBooking()
+    }
+
+    private fun loopAddBooking() {
+        if (countAddBook == books.size) {
+            onSuccessAddBook?.invoke()
+        } else {
             firestore.collection(Constant.FIREBASE_COLLECTION_BOOKING)
-                .add(i).addOnSuccessListener {
-                    n++
-                    onSuccess.invoke(n)
+                .add(books[countAddBook]).addOnSuccessListener {
+                    countAddBook++
+                    loopAddBooking()
+                }.addOnFailureListener {
+                    onFailAddBook?.invoke()
                 }
         }
     }

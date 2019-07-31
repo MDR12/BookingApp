@@ -90,7 +90,6 @@ class SelectRoomActivity : AppCompatActivity(), SelectRoomContract.View {
     }
 
     override fun onShowSuccess() {
-        //loadingDialog.dismiss()
         val i = Intent(this, HomeActivity::class.java)
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         startActivity(i)
