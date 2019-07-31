@@ -1,6 +1,7 @@
 package com.example.meetingroombookingapp.byroom
 
 import android.app.DatePickerDialog
+import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -20,12 +21,13 @@ import com.example.meetingroombookingapp.home.HomeActivity
 import com.example.meetingroombookingapp.model.BookingDataModel
 import com.example.meetingroombookingapp.model.CheckboxAdapterDataModel
 import kotlinx.android.synthetic.main.activity_book_by_room.*
+import org.koin.android.ext.android.inject
 import java.text.SimpleDateFormat
 import java.util.*
 
 class BookByRoomActivity : AppCompatActivity(), BookByRoomContract.View {
 
-    private val presenter: BookByRoomContract.Presenter = BookByRoomPresenter(this)
+    private val presenter: BookByRoomContract.Presenter by inject()
     private lateinit var dateFormat: Date
     private var mDatePick: String? = null
     private var timeSlotPick = mutableListOf<CheckboxAdapterDataModel>()
@@ -38,6 +40,11 @@ class BookByRoomActivity : AppCompatActivity(), BookByRoomContract.View {
         setContentView(R.layout.activity_book_by_room)
         initView()
         initDatePickerDialog()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        presenter.unSubscribe()
     }
 
     override fun onShowListCheckBox(timeList: MutableList<CheckboxAdapterDataModel>) {
@@ -54,6 +61,9 @@ class BookByRoomActivity : AppCompatActivity(), BookByRoomContract.View {
     }
 
     override fun onShowSuccess() {
+        val i = Intent(this, HomeActivity::class.java)
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        startActivity(i)
         Toast.makeText(this, Constant.TEXT_ADD_SUCCESS, Toast.LENGTH_SHORT).show()
     }
 
@@ -62,6 +72,7 @@ class BookByRoomActivity : AppCompatActivity(), BookByRoomContract.View {
     }
 
     private fun initView() {
+        presenter.subscribe(this)
         val getRoomId = sharePref.getString(Constant.PREF_ROOM_ID, null)
         val roomName = sharePref.getString(Constant.PREF_ROOM_NAME, null)
         val floor = sharePref.getInt(Constant.PREF_ROOM_FLOOR, NOTHING)
@@ -120,11 +131,19 @@ class BookByRoomActivity : AppCompatActivity(), BookByRoomContract.View {
                 builder.setMessage(str)
 
                 builder.setPositiveButton(Constant.TEXT_CONFIRM) { _, _ ->
+
+                    val loadingDialog =
+                        ProgressDialog.show(
+                            this@BookByRoomActivity,
+                            Constant.TEXT_ADDING_TITLE,
+                            Constant.TEXT_ADDING,
+                            true,
+                            false
+                        )
+                    loadingDialog.show()
+
                     presenter.addBookingToDataBase(allData)
 
-                    val i = Intent(this, HomeActivity::class.java)
-                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                    startActivity(i)
                 }
 
                 builder.setNegativeButton(Constant.TEXT_NO) { _, _ -> }
@@ -148,7 +167,6 @@ class BookByRoomActivity : AppCompatActivity(), BookByRoomContract.View {
         val toDay = GregorianCalendar(mYear, mMonth + 1, mDay, 0, 0,0)
 
         val dpd = DatePickerDialog(this, DatePickerDialog.OnDateSetListener { _, pYear, pMonth, pDayOfMonth ->
-
             val pickDay = GregorianCalendar(pYear, pMonth + 1, pDayOfMonth, 0, 0,0)
 
             if (toDay.before(pickDay) || toDay == pickDay){

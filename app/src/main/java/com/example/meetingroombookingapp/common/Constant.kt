@@ -87,6 +87,7 @@ object  Constant {
     const val FIREBASE_USER_NAME = "user_name"
     const val FIREBASE_USER_PHONE = "user_phone"
     const val FIREBASE_NAME = "name"
+    const val FIREBASE_ROOM_ID = "room_id"
     const val FIREBASE_DATE = "date"
     const val FIREBASE_TIME_BOOKING = "time_booking"
     const val FIREBASE_FLOOR = "floor"

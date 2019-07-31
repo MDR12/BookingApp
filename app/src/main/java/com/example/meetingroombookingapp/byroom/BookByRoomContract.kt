@@ -13,6 +13,8 @@ interface BookByRoomContract {
 
     }
     interface Presenter{
+        fun subscribe(view: View)
+        fun unSubscribe()
         fun fetchTimeCheckBox(timeList: Array<String>, dateFormat: Date, roomId: String?)
         fun addBookingToDataBase(allData: MutableList<BookingDataModel>)
     }
